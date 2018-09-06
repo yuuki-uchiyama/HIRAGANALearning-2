@@ -1,0 +1,514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		45CA8E69B95270BCB1CDD1D8 /* Pods_HIRAGANALearning2_character_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */; };
+		81F5821C2141053A006556BF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821B2141053A006556BF /* File.swift */; };
+		81F5821E21414C65006556BF /* SyllabaryChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */; };
+		81F5822021415A87006556BF /* GameSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821F21415A87006556BF /* GameSystem.swift */; };
+		81F7E3AE213EDF5800C9D654 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */; };
+		81F7E3B0213EDF5800C9D654 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3AF213EDF5800C9D654 /* ViewController.swift */; };
+		81F7E3B3213EDF5800C9D654 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F7E3B1213EDF5800C9D654 /* Main.storyboard */; };
+		81F7E3B5213EDF5B00C9D654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F7E3B4213EDF5B00C9D654 /* Assets.xcassets */; };
+		81F7E3B8213EDF5B00C9D654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F7E3B6213EDF5B00C9D654 /* LaunchScreen.storyboard */; };
+		81F7E3C0213EE66500C9D654 /* ProblemChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3BF213EE66500C9D654 /* ProblemChoiceViewController.swift */; };
+		81F7E3C2213EE67200C9D654 /* LevelChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3C1213EE67200C9D654 /* LevelChoiceViewController.swift */; };
+		81F7E3C4213EE67F00C9D654 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3C3213EE67F00C9D654 /* GameViewController.swift */; };
+		81F7E3C6213EE68D00C9D654 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3C5213EE68D00C9D654 /* SideMenuViewController.swift */; };
+		81F7E3CA213EE77700C9D654 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3C9213EE77700C9D654 /* ResultViewController.swift */; };
+		81F7E3CC213EE7BD00C9D654 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3CB213EE7BD00C9D654 /* SettingViewController.swift */; };
+		81F7E3CE213EE7C800C9D654 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3CD213EE7C800C9D654 /* CardViewController.swift */; };
+		81F7E3D0213EE7D300C9D654 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3CF213EE7D300C9D654 /* AddCardViewController.swift */; };
+		81F7E3D2213EE7FF00C9D654 /* EditCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3D1213EE7FF00C9D654 /* EditCardViewController.swift */; };
+		81F7E3D4213EE82D00C9D654 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3D3213EE82D00C9D654 /* EditDeckViewController.swift */; };
+		81F7E3D6213EEC0500C9D654 /* CommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3D5213EEC0500C9D654 /* CommunicationViewController.swift */; };
+		81F7E3D8213EEC2500C9D654 /* ImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3D7213EEC2500C9D654 /* ImportViewController.swift */; };
+		81F7E3DA213EEC3B00C9D654 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3D9213EEC3B00C9D654 /* ExportViewController.swift */; };
+		81F7E3DE2140448F00C9D654 /* SearchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3DD2140448F00C9D654 /* SearchingViewController.swift */; };
+		81F7E3E0214044CB00C9D654 /* SortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3DF214044CB00C9D654 /* SortingViewController.swift */; };
+		81F7E3E22140452800C9D654 /* SyllabaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3E12140452800C9D654 /* SyllabaryViewController.swift */; };
+		81F7E3E42140534600C9D654 /* SwitchControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3E32140534600C9D654 /* SwitchControlViewController.swift */; };
+		81F7E3E62140535300C9D654 /* SingleSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3E52140535300C9D654 /* SingleSwitchViewController.swift */; };
+		81F7E3E82140536300C9D654 /* MultipleSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3E72140536300C9D654 /* MultipleSwitchViewController.swift */; };
+		81F7E3EA214079A300C9D654 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3E9214079A300C9D654 /* Card.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		325666A7E21B598C320B76C1 /* Pods-HIRAGANALearning2-character-.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HIRAGANALearning2-character-.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character-.debug.xcconfig"; sourceTree = "<group>"; };
+		81F5821B2141053A006556BF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabaryChoiceViewController.swift; sourceTree = "<group>"; };
+		81F5821F21415A87006556BF /* GameSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSystem.swift; sourceTree = "<group>"; };
+		81F7E3AA213EDF5800C9D654 /* HIRAGANALearning2-character-.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HIRAGANALearning2-character-.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		81F7E3AF213EDF5800C9D654 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		81F7E3B2213EDF5800C9D654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		81F7E3B4213EDF5B00C9D654 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		81F7E3B7213EDF5B00C9D654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81F7E3B9213EDF5B00C9D654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81F7E3BF213EE66500C9D654 /* ProblemChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemChoiceViewController.swift; sourceTree = "<group>"; };
+		81F7E3C1213EE67200C9D654 /* LevelChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelChoiceViewController.swift; sourceTree = "<group>"; };
+		81F7E3C3213EE67F00C9D654 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		81F7E3C5213EE68D00C9D654 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		81F7E3C9213EE77700C9D654 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		81F7E3CB213EE7BD00C9D654 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		81F7E3CD213EE7C800C9D654 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		81F7E3CF213EE7D300C9D654 /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
+		81F7E3D1213EE7FF00C9D654 /* EditCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardViewController.swift; sourceTree = "<group>"; };
+		81F7E3D3213EE82D00C9D654 /* EditDeckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeckViewController.swift; sourceTree = "<group>"; };
+		81F7E3D5213EEC0500C9D654 /* CommunicationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationViewController.swift; sourceTree = "<group>"; };
+		81F7E3D7213EEC2500C9D654 /* ImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportViewController.swift; sourceTree = "<group>"; };
+		81F7E3D9213EEC3B00C9D654 /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
+		81F7E3DD2140448F00C9D654 /* SearchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingViewController.swift; sourceTree = "<group>"; };
+		81F7E3DF214044CB00C9D654 /* SortingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewController.swift; sourceTree = "<group>"; };
+		81F7E3E12140452800C9D654 /* SyllabaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabaryViewController.swift; sourceTree = "<group>"; };
+		81F7E3E32140534600C9D654 /* SwitchControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchControlViewController.swift; sourceTree = "<group>"; };
+		81F7E3E52140535300C9D654 /* SingleSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSwitchViewController.swift; sourceTree = "<group>"; };
+		81F7E3E72140536300C9D654 /* MultipleSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSwitchViewController.swift; sourceTree = "<group>"; };
+		81F7E3E9214079A300C9D654 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HIRAGANALearning2_character_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4BC1ED5E89CE364401D7453 /* Pods-HIRAGANALearning2-character-.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HIRAGANALearning2-character-.release.xcconfig"; path = "Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character-.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		81F7E3A7213EDF5800C9D654 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45CA8E69B95270BCB1CDD1D8 /* Pods_HIRAGANALearning2_character_.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		81F7E3A1213EDF5800C9D654 = {
+			isa = PBXGroup;
+			children = (
+				81F7E3AC213EDF5800C9D654 /* HIRAGANALearning2-character- */,
+				81F7E3AB213EDF5800C9D654 /* Products */,
+				83A72DFFBD9F6519B78F4B04 /* Pods */,
+				E88545C44517C70E99BC71AD /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		81F7E3AB213EDF5800C9D654 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				81F7E3AA213EDF5800C9D654 /* HIRAGANALearning2-character-.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		81F7E3AC213EDF5800C9D654 /* HIRAGANALearning2-character- */ = {
+			isa = PBXGroup;
+			children = (
+				81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */,
+				81F7E3AF213EDF5800C9D654 /* ViewController.swift */,
+				81F7E3C1213EE67200C9D654 /* LevelChoiceViewController.swift */,
+				81F7E3BF213EE66500C9D654 /* ProblemChoiceViewController.swift */,
+				81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */,
+				81F7E3C3213EE67F00C9D654 /* GameViewController.swift */,
+				81F7E3DD2140448F00C9D654 /* SearchingViewController.swift */,
+				81F7E3DF214044CB00C9D654 /* SortingViewController.swift */,
+				81F7E3E12140452800C9D654 /* SyllabaryViewController.swift */,
+				81F7E3C5213EE68D00C9D654 /* SideMenuViewController.swift */,
+				81F7E3C9213EE77700C9D654 /* ResultViewController.swift */,
+				81F7E3CB213EE7BD00C9D654 /* SettingViewController.swift */,
+				81F7E3E32140534600C9D654 /* SwitchControlViewController.swift */,
+				81F7E3E52140535300C9D654 /* SingleSwitchViewController.swift */,
+				81F7E3E72140536300C9D654 /* MultipleSwitchViewController.swift */,
+				81F7E3CD213EE7C800C9D654 /* CardViewController.swift */,
+				81F7E3CF213EE7D300C9D654 /* AddCardViewController.swift */,
+				81F7E3D1213EE7FF00C9D654 /* EditCardViewController.swift */,
+				81F7E3D3213EE82D00C9D654 /* EditDeckViewController.swift */,
+				81F7E3D5213EEC0500C9D654 /* CommunicationViewController.swift */,
+				81F7E3D7213EEC2500C9D654 /* ImportViewController.swift */,
+				81F7E3D9213EEC3B00C9D654 /* ExportViewController.swift */,
+				81F7E3B1213EDF5800C9D654 /* Main.storyboard */,
+				81F5821F21415A87006556BF /* GameSystem.swift */,
+				81F7E3E9214079A300C9D654 /* Card.swift */,
+				81F5821B2141053A006556BF /* File.swift */,
+				81F7E3B4213EDF5B00C9D654 /* Assets.xcassets */,
+				81F7E3B6213EDF5B00C9D654 /* LaunchScreen.storyboard */,
+				81F7E3B9213EDF5B00C9D654 /* Info.plist */,
+			);
+			path = "HIRAGANALearning2-character-";
+			sourceTree = "<group>";
+		};
+		83A72DFFBD9F6519B78F4B04 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				325666A7E21B598C320B76C1 /* Pods-HIRAGANALearning2-character-.debug.xcconfig */,
+				E4BC1ED5E89CE364401D7453 /* Pods-HIRAGANALearning2-character-.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E88545C44517C70E99BC71AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		81F7E3A9213EDF5800C9D654 /* HIRAGANALearning2-character- */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81F7E3BC213EDF5B00C9D654 /* Build configuration list for PBXNativeTarget "HIRAGANALearning2-character-" */;
+			buildPhases = (
+				6003838FE2DDA86305DCCE4E /* [CP] Check Pods Manifest.lock */,
+				81F7E3A6213EDF5800C9D654 /* Sources */,
+				81F7E3A7213EDF5800C9D654 /* Frameworks */,
+				81F7E3A8213EDF5800C9D654 /* Resources */,
+				080FA6BB7C17071571EEAE21 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "HIRAGANALearning2-character-";
+			productName = "HIRAGANALearning2-character-";
+			productReference = 81F7E3AA213EDF5800C9D654 /* HIRAGANALearning2-character-.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		81F7E3A2213EDF5800C9D654 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "yuuki uchiyama";
+				TargetAttributes = {
+					81F7E3A9213EDF5800C9D654 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 81F7E3A5213EDF5800C9D654 /* Build configuration list for PBXProject "HIRAGANALearning2-character-" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 81F7E3A1213EDF5800C9D654;
+			productRefGroup = 81F7E3AB213EDF5800C9D654 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				81F7E3A9213EDF5800C9D654 /* HIRAGANALearning2-character- */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		81F7E3A8213EDF5800C9D654 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F7E3B8213EDF5B00C9D654 /* LaunchScreen.storyboard in Resources */,
+				81F7E3B5213EDF5B00C9D654 /* Assets.xcassets in Resources */,
+				81F7E3B3213EDF5800C9D654 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		080FA6BB7C17071571EEAE21 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character--frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/Gecco/Gecco.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gecco.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character--frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6003838FE2DDA86305DCCE4E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HIRAGANALearning2-character--checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		81F7E3A6213EDF5800C9D654 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F7E3C4213EE67F00C9D654 /* GameViewController.swift in Sources */,
+				81F7E3E42140534600C9D654 /* SwitchControlViewController.swift in Sources */,
+				81F7E3C2213EE67200C9D654 /* LevelChoiceViewController.swift in Sources */,
+				81F7E3B0213EDF5800C9D654 /* ViewController.swift in Sources */,
+				81F7E3CA213EE77700C9D654 /* ResultViewController.swift in Sources */,
+				81F7E3E82140536300C9D654 /* MultipleSwitchViewController.swift in Sources */,
+				81F5821C2141053A006556BF /* File.swift in Sources */,
+				81F7E3E22140452800C9D654 /* SyllabaryViewController.swift in Sources */,
+				81F7E3CC213EE7BD00C9D654 /* SettingViewController.swift in Sources */,
+				81F7E3DA213EEC3B00C9D654 /* ExportViewController.swift in Sources */,
+				81F7E3D2213EE7FF00C9D654 /* EditCardViewController.swift in Sources */,
+				81F5821E21414C65006556BF /* SyllabaryChoiceViewController.swift in Sources */,
+				81F5822021415A87006556BF /* GameSystem.swift in Sources */,
+				81F7E3D0213EE7D300C9D654 /* AddCardViewController.swift in Sources */,
+				81F7E3C0213EE66500C9D654 /* ProblemChoiceViewController.swift in Sources */,
+				81F7E3D4213EE82D00C9D654 /* EditDeckViewController.swift in Sources */,
+				81F7E3E62140535300C9D654 /* SingleSwitchViewController.swift in Sources */,
+				81F7E3E0214044CB00C9D654 /* SortingViewController.swift in Sources */,
+				81F7E3C6213EE68D00C9D654 /* SideMenuViewController.swift in Sources */,
+				81F7E3DE2140448F00C9D654 /* SearchingViewController.swift in Sources */,
+				81F7E3D6213EEC0500C9D654 /* CommunicationViewController.swift in Sources */,
+				81F7E3D8213EEC2500C9D654 /* ImportViewController.swift in Sources */,
+				81F7E3CE213EE7C800C9D654 /* CardViewController.swift in Sources */,
+				81F7E3AE213EDF5800C9D654 /* AppDelegate.swift in Sources */,
+				81F7E3EA214079A300C9D654 /* Card.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		81F7E3B1213EDF5800C9D654 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81F7E3B2213EDF5800C9D654 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		81F7E3B6213EDF5B00C9D654 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81F7E3B7213EDF5B00C9D654 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		81F7E3BA213EDF5B00C9D654 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		81F7E3BB213EDF5B00C9D654 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		81F7E3BD213EDF5B00C9D654 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 325666A7E21B598C320B76C1 /* Pods-HIRAGANALearning2-character-.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 64H8HU437K;
+				INFOPLIST_FILE = "HIRAGANALearning2-character-/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.STAPP.HIRAGANALearning2-character-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		81F7E3BE213EDF5B00C9D654 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4BC1ED5E89CE364401D7453 /* Pods-HIRAGANALearning2-character-.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 64H8HU437K;
+				INFOPLIST_FILE = "HIRAGANALearning2-character-/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.STAPP.HIRAGANALearning2-character-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		81F7E3A5213EDF5800C9D654 /* Build configuration list for PBXProject "HIRAGANALearning2-character-" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F7E3BA213EDF5B00C9D654 /* Debug */,
+				81F7E3BB213EDF5B00C9D654 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81F7E3BC213EDF5B00C9D654 /* Build configuration list for PBXNativeTarget "HIRAGANALearning2-character-" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F7E3BD213EDF5B00C9D654 /* Debug */,
+				81F7E3BE213EDF5B00C9D654 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 81F7E3A2213EDF5800C9D654 /* Project object */;
+}
