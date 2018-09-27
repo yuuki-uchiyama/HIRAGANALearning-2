@@ -6,7 +6,7 @@ target 'HIRAGANALearning2-character-' do
   use_frameworks!
 
   # Pods for HIRAGANALearning2-character-
-  pod 'RealmSwift', '3.5.0'
+  pod 'RealmSwift','3.10.0'
   pod 'SVProgressHUD','2.2.5'
   pod 'SlideMenuControllerSwift'
   pod 'Firebase/Core'
@@ -14,5 +14,6 @@ target 'HIRAGANALearning2-character-' do
   pod 'Gecco'
   pod 'BWWalkthrough'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+  pod 'CropViewController'
 
 end

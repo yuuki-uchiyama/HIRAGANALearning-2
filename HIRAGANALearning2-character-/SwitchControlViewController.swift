@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SwitchControlViewController: UIViewController {
 
@@ -14,11 +15,35 @@ class SwitchControlViewController: UIViewController {
         super.viewDidLoad()
         
         layoutSetting()
+        
+        SVProgressHUD.setMinimumDismissTimeInterval(0)
+
         // Do any additional setup after loading the view.
     }
     
     func layoutSetting(){
-        VisualSetting().colorAdjust(self)
+        VisualSetting().backgraundView(self)
+
+    }
+    
+    @IBAction func removeSwitch(_ sender: Any) {
+        let alertController = UIAlertController(title: "ボタン設定を解除しますか？", message: nil, preferredStyle: .alert)
+        let OK = UIAlertAction(title: "OK", style: .destructive, handler: {
+            (acrion:UIAlertAction) -> Void in
+            let userDefaults = UserDefaults.standard
+            userDefaults.removeObject(forKey: Constants.SwitchKey)
+            userDefaults.removeObject(forKey: Constants.cursorSpeedKey)
+            userDefaults.removeObject(forKey: Constants.singleDecisionKey)
+            userDefaults.removeObject(forKey: Constants.toNextKey)
+            userDefaults.removeObject(forKey: Constants.toPreviousKey)
+            userDefaults.removeObject(forKey: Constants.multiDecisionKey)
+            SVProgressHUD.showSuccess(withStatus: "ボタン操作を解除しました")
+        })
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        
+        alertController.addAction(OK)
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

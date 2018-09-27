@@ -19,14 +19,17 @@ class CardViewController: UIViewController {
     }
     
     func layoutSetting(){
-        VisualSetting().colorAdjust(self)
+        VisualSetting().backgraundView(self)
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToCard(segue:UIStoryboardSegue){
+    }
 
     /*
     // MARK: - Navigation

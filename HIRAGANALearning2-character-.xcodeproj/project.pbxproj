@@ -8,8 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		45CA8E69B95270BCB1CDD1D8 /* Pods_HIRAGANALearning2_character_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */; };
+		81C6A4ED215A88570088312B /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C6A4EC215A88570088312B /* Layout.swift */; };
+		81EC35582152B72C00D8411D /* SwitchControlSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC35572152B72C00D8411D /* SwitchControlSystem.swift */; };
+		81F2EDC02142FB8000D5D47D /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDBF2142FB8000D5D47D /* CompletionView.swift */; };
+		81F2EDC22142FBA100D5D47D /* CompletionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDC12142FBA100D5D47D /* CompletionView.xib */; };
+		81F2EDC52143C4F300D5D47D /* ProblemSetting1View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDC42143C4F300D5D47D /* ProblemSetting1View.xib */; };
+		81F2EDC72143C53B00D5D47D /* ProblemSetting2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDC62143C53B00D5D47D /* ProblemSetting2View.xib */; };
+		81F2EDC92143C56900D5D47D /* ProblemSetting1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDC82143C56900D5D47D /* ProblemSetting1View.swift */; };
+		81F2EDCB2143C58000D5D47D /* ProblemSetting2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDCA2143C58000D5D47D /* ProblemSetting2View.swift */; };
+		81F2EDCF214BC1A700D5D47D /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDCD214BC1A600D5D47D /* CardCollectionViewCell.swift */; };
+		81F2EDD0214BC1A700D5D47D /* CardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDCE214BC1A600D5D47D /* CardCollectionViewCell.xib */; };
 		81F5821C2141053A006556BF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821B2141053A006556BF /* File.swift */; };
-		81F5821E21414C65006556BF /* SyllabaryChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */; };
 		81F5822021415A87006556BF /* GameSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821F21415A87006556BF /* GameSystem.swift */; };
 		81F7E3AE213EDF5800C9D654 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */; };
 		81F7E3B0213EDF5800C9D654 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3AF213EDF5800C9D654 /* ViewController.swift */; };
@@ -40,8 +49,17 @@
 
 /* Begin PBXFileReference section */
 		325666A7E21B598C320B76C1 /* Pods-HIRAGANALearning2-character-.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HIRAGANALearning2-character-.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character-.debug.xcconfig"; sourceTree = "<group>"; };
+		81C6A4EC215A88570088312B /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		81EC35572152B72C00D8411D /* SwitchControlSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchControlSystem.swift; sourceTree = "<group>"; };
+		81F2EDBF2142FB8000D5D47D /* CompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionView.swift; sourceTree = "<group>"; };
+		81F2EDC12142FBA100D5D47D /* CompletionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletionView.xib; sourceTree = "<group>"; };
+		81F2EDC42143C4F300D5D47D /* ProblemSetting1View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProblemSetting1View.xib; sourceTree = "<group>"; };
+		81F2EDC62143C53B00D5D47D /* ProblemSetting2View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProblemSetting2View.xib; sourceTree = "<group>"; };
+		81F2EDC82143C56900D5D47D /* ProblemSetting1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemSetting1View.swift; sourceTree = "<group>"; };
+		81F2EDCA2143C58000D5D47D /* ProblemSetting2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemSetting2View.swift; sourceTree = "<group>"; };
+		81F2EDCD214BC1A600D5D47D /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardCollectionViewCell.swift; path = "HIRAGANALearning2-character-/CollectionView/CardCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		81F2EDCE214BC1A600D5D47D /* CardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CardCollectionViewCell.xib; path = "HIRAGANALearning2-character-/CollectionView/CardCollectionViewCell.xib"; sourceTree = SOURCE_ROOT; };
 		81F5821B2141053A006556BF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabaryChoiceViewController.swift; sourceTree = "<group>"; };
 		81F5821F21415A87006556BF /* GameSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSystem.swift; sourceTree = "<group>"; };
 		81F7E3AA213EDF5800C9D654 /* HIRAGANALearning2-character-.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HIRAGANALearning2-character-.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +104,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		81F2EDC32142FBB400D5D47D /* CompletionView */ = {
+			isa = PBXGroup;
+			children = (
+				81F2EDC12142FBA100D5D47D /* CompletionView.xib */,
+				81F2EDBF2142FB8000D5D47D /* CompletionView.swift */,
+			);
+			path = CompletionView;
+			sourceTree = "<group>";
+		};
+		81F2EDCC2143C58600D5D47D /* ProblemSettingViews */ = {
+			isa = PBXGroup;
+			children = (
+				81F2EDC42143C4F300D5D47D /* ProblemSetting1View.xib */,
+				81F2EDC82143C56900D5D47D /* ProblemSetting1View.swift */,
+				81F2EDC62143C53B00D5D47D /* ProblemSetting2View.xib */,
+				81F2EDCA2143C58000D5D47D /* ProblemSetting2View.swift */,
+			);
+			path = ProblemSettingViews;
+			sourceTree = "<group>";
+		};
+		81F2EDD2214BC1B800D5D47D /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				81F2EDCD214BC1A600D5D47D /* CardCollectionViewCell.swift */,
+				81F2EDCE214BC1A600D5D47D /* CardCollectionViewCell.xib */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		81F7E3A1213EDF5800C9D654 = {
 			isa = PBXGroup;
 			children = (
@@ -111,17 +158,19 @@
 				81F7E3AF213EDF5800C9D654 /* ViewController.swift */,
 				81F7E3C1213EE67200C9D654 /* LevelChoiceViewController.swift */,
 				81F7E3BF213EE66500C9D654 /* ProblemChoiceViewController.swift */,
-				81F5821D21414C65006556BF /* SyllabaryChoiceViewController.swift */,
+				81F2EDCC2143C58600D5D47D /* ProblemSettingViews */,
 				81F7E3C3213EE67F00C9D654 /* GameViewController.swift */,
 				81F7E3DD2140448F00C9D654 /* SearchingViewController.swift */,
 				81F7E3DF214044CB00C9D654 /* SortingViewController.swift */,
 				81F7E3E12140452800C9D654 /* SyllabaryViewController.swift */,
 				81F7E3C5213EE68D00C9D654 /* SideMenuViewController.swift */,
+				81F2EDC32142FBB400D5D47D /* CompletionView */,
 				81F7E3C9213EE77700C9D654 /* ResultViewController.swift */,
 				81F7E3CB213EE7BD00C9D654 /* SettingViewController.swift */,
 				81F7E3E32140534600C9D654 /* SwitchControlViewController.swift */,
 				81F7E3E52140535300C9D654 /* SingleSwitchViewController.swift */,
 				81F7E3E72140536300C9D654 /* MultipleSwitchViewController.swift */,
+				81F2EDD2214BC1B800D5D47D /* CollectionView */,
 				81F7E3CD213EE7C800C9D654 /* CardViewController.swift */,
 				81F7E3CF213EE7D300C9D654 /* AddCardViewController.swift */,
 				81F7E3D1213EE7FF00C9D654 /* EditCardViewController.swift */,
@@ -131,6 +180,8 @@
 				81F7E3D9213EEC3B00C9D654 /* ExportViewController.swift */,
 				81F7E3B1213EDF5800C9D654 /* Main.storyboard */,
 				81F5821F21415A87006556BF /* GameSystem.swift */,
+				81C6A4EC215A88570088312B /* Layout.swift */,
+				81EC35572152B72C00D8411D /* SwitchControlSystem.swift */,
 				81F7E3E9214079A300C9D654 /* Card.swift */,
 				81F5821B2141053A006556BF /* File.swift */,
 				81F7E3B4213EDF5B00C9D654 /* Assets.xcassets */,
@@ -217,8 +268,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81F2EDC52143C4F300D5D47D /* ProblemSetting1View.xib in Resources */,
+				81F2EDC22142FBA100D5D47D /* CompletionView.xib in Resources */,
 				81F7E3B8213EDF5B00C9D654 /* LaunchScreen.storyboard in Resources */,
 				81F7E3B5213EDF5B00C9D654 /* Assets.xcassets in Resources */,
+				81F2EDC72143C53B00D5D47D /* ProblemSetting2View.xib in Resources */,
+				81F2EDD0214BC1A700D5D47D /* CardCollectionViewCell.xib in Resources */,
 				81F7E3B3213EDF5800C9D654 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,6 +290,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character--frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/Gecco/Gecco.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -247,6 +303,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gecco.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -285,24 +342,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81F2EDCB2143C58000D5D47D /* ProblemSetting2View.swift in Sources */,
 				81F7E3C4213EE67F00C9D654 /* GameViewController.swift in Sources */,
 				81F7E3E42140534600C9D654 /* SwitchControlViewController.swift in Sources */,
 				81F7E3C2213EE67200C9D654 /* LevelChoiceViewController.swift in Sources */,
+				81F2EDCF214BC1A700D5D47D /* CardCollectionViewCell.swift in Sources */,
 				81F7E3B0213EDF5800C9D654 /* ViewController.swift in Sources */,
 				81F7E3CA213EE77700C9D654 /* ResultViewController.swift in Sources */,
 				81F7E3E82140536300C9D654 /* MultipleSwitchViewController.swift in Sources */,
+				81EC35582152B72C00D8411D /* SwitchControlSystem.swift in Sources */,
+				81F2EDC02142FB8000D5D47D /* CompletionView.swift in Sources */,
 				81F5821C2141053A006556BF /* File.swift in Sources */,
 				81F7E3E22140452800C9D654 /* SyllabaryViewController.swift in Sources */,
 				81F7E3CC213EE7BD00C9D654 /* SettingViewController.swift in Sources */,
 				81F7E3DA213EEC3B00C9D654 /* ExportViewController.swift in Sources */,
 				81F7E3D2213EE7FF00C9D654 /* EditCardViewController.swift in Sources */,
-				81F5821E21414C65006556BF /* SyllabaryChoiceViewController.swift in Sources */,
 				81F5822021415A87006556BF /* GameSystem.swift in Sources */,
 				81F7E3D0213EE7D300C9D654 /* AddCardViewController.swift in Sources */,
+				81C6A4ED215A88570088312B /* Layout.swift in Sources */,
 				81F7E3C0213EE66500C9D654 /* ProblemChoiceViewController.swift in Sources */,
 				81F7E3D4213EE82D00C9D654 /* EditDeckViewController.swift in Sources */,
 				81F7E3E62140535300C9D654 /* SingleSwitchViewController.swift in Sources */,
 				81F7E3E0214044CB00C9D654 /* SortingViewController.swift in Sources */,
+				81F2EDC92143C56900D5D47D /* ProblemSetting1View.swift in Sources */,
 				81F7E3C6213EE68D00C9D654 /* SideMenuViewController.swift in Sources */,
 				81F7E3DE2140448F00C9D654 /* SearchingViewController.swift in Sources */,
 				81F7E3D6213EEC0500C9D654 /* CommunicationViewController.swift in Sources */,
@@ -457,6 +519,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 64H8HU437K;
 				INFOPLIST_FILE = "HIRAGANALearning2-character-/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -476,6 +539,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 64H8HU437K;
 				INFOPLIST_FILE = "HIRAGANALearning2-character-/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

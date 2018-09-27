@@ -3,6 +3,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - CropViewController (2.3.6)
   - Firebase/Core (5.0.1):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.0)
@@ -27,27 +28,29 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Realm (3.5.0):
-    - Realm/Headers (= 3.5.0)
-  - Realm/Headers (3.5.0)
-  - RealmSwift (3.5.0):
-    - Realm (= 3.5.0)
+  - Realm (3.10.0):
+    - Realm/Headers (= 3.10.0)
+  - Realm/Headers (3.10.0)
+  - RealmSwift (3.10.0):
+    - Realm (= 3.10.0)
   - SlideMenuControllerSwift (4.0.0)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - BWWalkthrough
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - CropViewController
   - Firebase/Core
   - Gecco
   - Google-Mobile-Ads-SDK
-  - RealmSwift (= 3.5.0)
+  - RealmSwift (= 3.10.0)
   - SlideMenuControllerSwift
   - SVProgressHUD (= 2.2.5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BWWalkthrough
+    - CropViewController
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -73,6 +76,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   BWWalkthrough: 6b18dc688ff6b7168383fee07fe199ccaad7e9f7
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
   Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
@@ -81,11 +85,11 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
-  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
+  RealmSwift: 69121c8b86d0ae005fb779efdb10e606732e1c74
   SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 62b5bddd9a5e882e2b95d29aebd2402d0ae504ec
+PODFILE CHECKSUM: 7cee4c371e2233f6445fc945fef47aef575b642b
 
 COCOAPODS: 1.5.3

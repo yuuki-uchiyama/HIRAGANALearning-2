@@ -12,24 +12,61 @@ import UIKit
 class LevelChoiceViewController: UIViewController {
     
     @IBOutlet weak var levelChoiceSC: UISegmentedControl!
+    var gameLevel = 0
+    
+    @IBOutlet weak var characterHintButton: UIButton!
+    var characterShowUpBool = false
     
     @IBOutlet weak var level1: UIImageView!
     @IBOutlet weak var level2: UIImageView!
     @IBOutlet weak var level3: UIImageView!
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
+    
+    
+    var imageViewArray:[UIImageView] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        
+        gameLevel = UserDefaults.standard.integer(forKey: Constants.gameLevelKey)
+        levelChoiceSC.selectedSegmentIndex = gameLevel
+        imageViewArray = [level1,level2,level3]
+        imageViewArray[gameLevel].alpha = 1.0
+        for image in imageViewArray{
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTaped(_:)))
+            image.addGestureRecognizer(tapGesture)
+            image.isUserInteractionEnabled = true
+        }
+        
+        characterHintButton.setImage(UIImage(named: "CheckOn"), for: .selected)
+        characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShouUpKey)
+        characterHintButton.isSelected = characterShowUpBool
+        
         // Do any additional setup after loading the view.
     }
     
     func layoutSetting(){
-        VisualSetting().colorAdjust(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        characterHintButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
+        nextButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
+        cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        
+        characterHintButton.layer.cornerRadius = VS.cornerRadiusAdjust(characterHintButton.frame.size, type: .normal)
+        nextButton.layer.cornerRadius = VS.cornerRadiusAdjust(characterHintButton.frame.size, type: .normal)
+        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        
+        levelChoiceSC.frame.size.height = cancelButton.frame.height
     }
     
     @IBAction func levelChanged(_ sender: UISegmentedControl) {
-        let imageViewArray:[UIImageView] = [level1, level2, level3]
+        gameLevel = sender.selectedSegmentIndex
         for i in 0 ..< imageViewArray.count{
             if i == sender.selectedSegmentIndex{
                 imageViewArray[i].alpha = 1.0
@@ -39,37 +76,32 @@ class LevelChoiceViewController: UIViewController {
         }
     }
     
+    @objc func imageTaped(_ sender:UITapGestureRecognizer){
+        let tapImage = sender.view as! UIImageView
+        levelChoiceSC.selectedSegmentIndex = tapImage.tag
+        levelChanged(levelChoiceSC)
+    }
+    
+    
+    @IBAction func changeCharacterHint(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        characterShowUpBool = sender.isSelected
+    }
+    
     @IBAction func nextButton(_ sender: Any) {
-        if levelChoiceSC.selectedSegmentIndex == 2{
-            self.performSegue(withIdentifier: "syllabaryChoice", sender: nil)
-            
-        }else{
-            self.performSegue(withIdentifier: "problemChoice", sender: nil)
-        }
+        UserDefaults.standard.set(gameLevel, forKey: Constants.gameLevelKey)
+        UserDefaults.standard.set(characterShowUpBool, forKey: Constants.characterShouUpKey)
+        self.performSegue(withIdentifier: "problemChoice", sender: nil)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "problemChoice"{
-            let problemChoiceVC = segue.destination as! ProblemChoiceViewController
-            if levelChoiceSC.selectedSegmentIndex == 0{
-                problemChoiceVC.toSearchBool = true
-            }else{
-                problemChoiceVC.toSearchBool = false
-
-            }
-        }else{
-            let syllabaryChoiceVC = segue.destination as! SyllabaryChoiceViewController
-
-        }
-    }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToLevelChoice(segue:UIStoryboardSegue){
+        
+    }
 
     /*
     // MARK: - Navigation

@@ -8,14 +8,35 @@
 
 import UIKit
 
+protocol SideMenuDelegete {
+    func changeProblem()
+}
+
 // ゲームの設定画面
 class SideMenuViewController: UIViewController {
-
+    
+    var delegete:SideMenuDelegete?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func tapSound(_ sender: UIButton) {
+    }
+    
+    @IBAction func correctButton(_ sender: UIButton) {
+    }
+    
+    @IBAction func incorrectButton(_ sender: UIButton) {
+    }
+    
+    @IBAction func changeProblem(_ sender: Any) {
+        self.delegete?.changeProblem()
+        closeRight()
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

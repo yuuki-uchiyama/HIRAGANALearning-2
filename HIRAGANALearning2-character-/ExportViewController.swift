@@ -7,34 +7,140 @@
 //
 
 import UIKit
+import RealmSwift
+import AVFoundation
+import MultipeerConnectivity
+import SVProgressHUD
 
-class ExportViewController: UIViewController {
+class ExportViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, MCNearbyServiceBrowserDelegate {
 
+    var imageArray: [NSData] = []
+    var wordArray: [String] = []
+    var imageDataArray: [Data] = []
+    var wordDataArray: [Data] = []
+    
+    let realm = try! Realm()
+    var collectionCard: CollectionCardData!
+    var cardArray: [Card] = []
+    
+    var myPeerID : MCPeerID!
+    var youPeerID : MCPeerID!
+    var session : MCSession!
+    var browser: MCNearbyServiceBrowser!
+    
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var cardCollectionView: UICollectionView!
+    @IBOutlet weak var noCardLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cardCollectionView.delegate = self
+        cardCollectionView.dataSource = self
+        
+        let nib = UINib(nibName: "CardCollectionViewCell", bundle: nil)
+        cardCollectionView.register(nib, forCellWithReuseIdentifier: "Cell")
+        
+        myPeerID = MCPeerID(displayName: UIDevice.current.name)
+        session = MCSession(peer : myPeerID)
+        
+        browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: Communication.serviceType)
+        browser.delegate = self
+        
+        SVProgressHUD.setMinimumDismissTimeInterval(0)
+        
         
         layoutSetting()
         // Do any additional setup after loading the view.
     }
     
-    func layoutSetting(){
-        VisualSetting().colorAdjust(self)
+    override func viewDidAppear(_ animated: Bool) {
+        browser.startBrowsingForPeers()
+        SVProgressHUD.show(withStatus: "接続中")
     }
-
+    
+    func layoutSetting(){
+        VisualSetting().backgraundView(self)
+        cardCollectionView.layer.borderColor = UIColor.white.cgColor
+        cardCollectionView.layer.borderWidth = 5.0
+        cardCollectionView.layer.cornerRadius = 10.0
+        cardCollectionView.layer.masksToBounds = true
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        browser.invitePeer(peerID, to: session, withContext: nil, timeout: 0)
+        SVProgressHUD.dismiss()
+        SVProgressHUD.showSuccess(withStatus: "接続完了")
+        cancelButton.setTitle("送信終了", for: .normal)
+        let results = realm.objects(Card.self).sorted(byKeyPath: "id", ascending: true)
+        collectionCard = CollectionCardData.init(results)
+        noCardLabel.text = "送信できるカードがありません。\nオリジナルのカードを作成してください。"
+        cardCollectionView.reloadData()
+        youPeerID = peerID
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        browser.stopBrowsingForPeers()
+        SVProgressHUD.showError(withStatus: "受信相手との接続が切れました")
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
+        SVProgressHUD.showError(withStatus: "通信を開始できませんでした")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionCard == nil{
+            self.view.bringSubview(toFront: noCardLabel)
+            return 0
+        }else{
+            self.view.sendSubview(toBack: noCardLabel)
+            return collectionCard.totalCardDataArray.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CardCollectionViewCell
+        cell.createCard(collectionCard.totalCardDataArray[indexPath.row])
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(export(_:)))
+        cell.addGestureRecognizer(tapGesture)
+        return cell
+    }
+    
+    @objc func export(_ sender:UITapGestureRecognizer){
+        let cell = sender.view as! CardCollectionViewCell
+        let cardData = cell.cardData
+        if youPeerID != nil{
+            let cardImage = cardData!.card.image!
+            let imageData = cardImage as Data
+            let cardWord = cardData!.card.word
+            let wordData = cardWord.data(using: String.Encoding.utf8)!
+            print(youPeerID)
+            do{
+                try session.send(imageData, toPeers: [youPeerID], with: MCSessionSendDataMode.reliable)
+                try session.send(wordData, toPeers: [youPeerID], with: MCSessionSendDataMode.reliable)
+                    SVProgressHUD.showSuccess(withStatus: "送信完了！")
+                cell.alpha = 0.5
+            }catch{
+                SVProgressHUD.showError(withStatus: "データを送信できませんでした")
+            }
+        }else{
+            SVProgressHUD.showError(withStatus: "送信相手が見つかりません")
+        }
+    }
+    
+    
+    @IBAction func cancelButton(_ sender: Any) {
+        SVProgressHUD.dismiss()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
