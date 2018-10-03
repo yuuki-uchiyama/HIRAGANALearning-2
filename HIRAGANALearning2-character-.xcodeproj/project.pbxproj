@@ -10,6 +10,8 @@
 		45CA8E69B95270BCB1CDD1D8 /* Pods_HIRAGANALearning2_character_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */; };
 		81C6A4ED215A88570088312B /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C6A4EC215A88570088312B /* Layout.swift */; };
 		81EC35582152B72C00D8411D /* SwitchControlSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC35572152B72C00D8411D /* SwitchControlSystem.swift */; };
+		81F12A7F2161497000E94DC5 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F12A7E2161497000E94DC5 /* SoundEffect.swift */; };
+		81F12A81216281A800E94DC5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F12A80216281A800E94DC5 /* AVFoundation.framework */; };
 		81F2EDC02142FB8000D5D47D /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDBF2142FB8000D5D47D /* CompletionView.swift */; };
 		81F2EDC22142FBA100D5D47D /* CompletionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDC12142FBA100D5D47D /* CompletionView.xib */; };
 		81F2EDC52143C4F300D5D47D /* ProblemSetting1View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDC42143C4F300D5D47D /* ProblemSetting1View.xib */; };
@@ -51,6 +53,8 @@
 		325666A7E21B598C320B76C1 /* Pods-HIRAGANALearning2-character-.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HIRAGANALearning2-character-.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HIRAGANALearning2-character-/Pods-HIRAGANALearning2-character-.debug.xcconfig"; sourceTree = "<group>"; };
 		81C6A4EC215A88570088312B /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		81EC35572152B72C00D8411D /* SwitchControlSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchControlSystem.swift; sourceTree = "<group>"; };
+		81F12A7E2161497000E94DC5 /* SoundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		81F12A80216281A800E94DC5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		81F2EDBF2142FB8000D5D47D /* CompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionView.swift; sourceTree = "<group>"; };
 		81F2EDC12142FBA100D5D47D /* CompletionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletionView.xib; sourceTree = "<group>"; };
 		81F2EDC42143C4F300D5D47D /* ProblemSetting1View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProblemSetting1View.xib; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81F12A81216281A800E94DC5 /* AVFoundation.framework in Frameworks */,
 				45CA8E69B95270BCB1CDD1D8 /* Pods_HIRAGANALearning2_character_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,6 +189,7 @@
 				81EC35572152B72C00D8411D /* SwitchControlSystem.swift */,
 				81F7E3E9214079A300C9D654 /* Card.swift */,
 				81F5821B2141053A006556BF /* File.swift */,
+				81F12A7E2161497000E94DC5 /* SoundEffect.swift */,
 				81F7E3B4213EDF5B00C9D654 /* Assets.xcassets */,
 				81F7E3B6213EDF5B00C9D654 /* LaunchScreen.storyboard */,
 				81F7E3B9213EDF5B00C9D654 /* Info.plist */,
@@ -203,6 +209,7 @@
 		E88545C44517C70E99BC71AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				81F12A80216281A800E94DC5 /* AVFoundation.framework */,
 				D2DFE694149E6C53A3CBF4A1 /* Pods_HIRAGANALearning2_character_.framework */,
 			);
 			name = Frameworks;
@@ -344,6 +351,7 @@
 			files = (
 				81F2EDCB2143C58000D5D47D /* ProblemSetting2View.swift in Sources */,
 				81F7E3C4213EE67F00C9D654 /* GameViewController.swift in Sources */,
+				81F12A7F2161497000E94DC5 /* SoundEffect.swift in Sources */,
 				81F7E3E42140534600C9D654 /* SwitchControlViewController.swift in Sources */,
 				81F7E3C2213EE67200C9D654 /* LevelChoiceViewController.swift in Sources */,
 				81F2EDCF214BC1A700D5D47D /* CardCollectionViewCell.swift in Sources */,

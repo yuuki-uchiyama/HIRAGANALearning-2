@@ -9,16 +9,47 @@
 import UIKit
 
 class CommunicationViewController: UIViewController {
-
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var toHomeButton: UIButton!
+    @IBOutlet weak var exportButton: UIButton!
+    @IBOutlet weak var importButton: UIButton!
+    
+    var SE: SoundEffect!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         // Do any additional setup after loading the view.
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        exportButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        importButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        exportButton.titleLabel?.numberOfLines = 0
+        importButton.titleLabel?.numberOfLines = 0
+        exportButton.titleLabel?.textAlignment = NSTextAlignment.center
+        importButton.titleLabel?.textAlignment = NSTextAlignment.center
+        
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        exportButton.layer.cornerRadius = VS.cornerRadiusAdjust(exportButton.frame.size, type: .normal)
+        importButton.layer.cornerRadius = VS.cornerRadiusAdjust(importButton.frame.size, type: .normal)
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,7 +57,7 @@ class CommunicationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction func toHome(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     

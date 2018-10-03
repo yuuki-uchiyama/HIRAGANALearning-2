@@ -15,7 +15,6 @@ protocol SwitchControlDelegate {
     func toNextKeyPushed()
     func toPreviousKeyPushed()
     func decisionKeyPushed(_ cursorNumber:Int)
-//    func keyInputAlert()
 }
 
 extension SwitchControlDelegate{

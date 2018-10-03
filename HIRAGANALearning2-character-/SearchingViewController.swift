@@ -30,7 +30,8 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     var choicesArray: [String]!
     var positionOfChoices: [CGRect]!
     
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShouUpKey)
+    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
+    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
     let useSimilarBool = UserDefaults.standard.bool(forKey:Constants.useSimilarKey)
     let useDakuonBool = UserDefaults.standard.bool(forKey:Constants.useDakuonKey)
     let useYouonBool = UserDefaults.standard.bool(forKey:Constants.useYouonKey)
@@ -51,21 +52,15 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     let switchKey = UserDefaults.standard.integer(forKey: Constants.SwitchKey)
     var switchControl: SwitchControlSystem!
     
-    var alertBool = false
     
     var VS: VisualSetting!
+    var SE: SoundEffect!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
-        
-        
-        if cardDataArray.count < 10{
-            alertBool = true
-        }else{
-            alertBool = false
-        }
+        SE = SoundEffect.sharedSoundEffect
         
         // Do any additional setup after loading the view.
     }
@@ -73,46 +68,27 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if alertBool{
-            popUp()
-        }else{
-            currentCDArray = cardDataArray
-            print(currentCDArray.count)
-            problemSetting()
-            answerSetting()
-            problemNumberLabel.text = "あと\(problemNumber)問"
-            if switchKey > 0 && switchControl == nil{
-                switchControl = SwitchControlSystem(switchKey, positionOfChoices, self.view, choicesView)
-                switchControl.delegate = self
-            }
+        currentCDArray = cardDataArray
+        print(currentCDArray.count)
+        problemSetting()
+        answerSetting()
+        problemNumberLabel.text = "あと\(problemNumber)問"
+        if switchKey > 0 && switchControl == nil{
+            switchControl = SwitchControlSystem(switchKey, positionOfChoices, self.view, choicesView)
+            switchControl.delegate = self
         }
     }
     
     func layoutSetting(){
         VS = VisualSetting()
         VS.backgraundView(self)
-        problemNumberLabel.font = VS.fontAdjust(viewSize: .normal)
+        openMenuButton.backgroundColor = UIColor.clear
+        problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
         answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)
         choicesView.layer.cornerRadius = VS.cornerRadiusAdjust(choicesView.frame.size, type: .circle)
-    }
-    
-    func popUp(){
-        print("popup")
-        let alertController: UIAlertController = UIAlertController(title: "カードの枚数が足りません", message: "カードが10枚以上必要です", preferredStyle: .alert)
-        let card = UIAlertAction(title: "カード編集へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "toCard", sender: nil)
-            }
-        })
-        let level = UIAlertAction(title: "難易度設定へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "unwindToLevelChoice", sender: nil)
-            }
-        })
-        alertController.addAction(card)
-        alertController.addAction(level)
-        present(alertController, animated: true, completion: nil)
-        alertBool = false
+        
+        openMenuButton.imageFit()
+
     }
     
 //    正解単語のセッティング
@@ -122,8 +98,10 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         answerImage = answerCD.image
         positionOfAnswerCharacters = gameSystem.calculateRectForAnswer(answerCD.characterInWord, answerView.frame)
         answerImageView.image = answerImage
-        positionOfChoices = gameSystem.calculateRectForChoices(amountOfChoices + 1, choicesView.frame)
+        answerImageView.contentMode = UIViewContentMode.scaleAspectFit
 
+        positionOfChoices = gameSystem.calculateRectForChoices(amountOfChoices + 1, choicesView.frame)
+        
     }
     
 //    正解の一文字のセッティング・選択肢のセッティング
@@ -135,7 +113,11 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         for i in 0 ..< choicesArray.count{
             let button = UIButton(frame: positionOfChoices[i])
             button.tag = i
-            button.setTitle(choicesArray[i], for: .normal)
+            let title = choicesArray[i].katakanaToHiragana(HiraganaKatakanaBool)
+            if title.count == 2{
+                button.frame.size.width = button.frame.size.width * 1.3
+            }
+            button.setTitle(title, for: .normal)
             button.titleLabel?.font = VS.fontAdjust(viewSize: .important)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             if useColorHintBool{
@@ -149,8 +131,12 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         }
         
         let label = UILabel(frame: positionOfAnswerCharacters[0])
-        label.text = answerCharacter!
-        label.font = VS.fontAdjust(viewSize: .important)
+        let title = answerCharacter.katakanaToHiragana(HiraganaKatakanaBool)
+        label.text = title
+        if title.count == 2{
+            label.frame.size.width = label.frame.size.width * 1.4
+        }
+        label.font = VS.fontAdjust(viewSize: .veryImportant)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = NSTextAlignment.center
         if useColorHintBool{
@@ -170,6 +156,9 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         
         if !characterShowUpBool{
             hintView = UIView(frame: positionOfAnswerCharacters[0])
+            if title.count == 2{
+                hintView.frame.size.width = hintView.frame.width * 1.3
+            }
             hintView.backgroundColor = answerView.backgroundColor
             answerView.addSubview(hintView)
         }
@@ -200,7 +189,8 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             for subview in choicesSubviews{
                 subview.removeFromSuperview()
             }
-            if answerCharacterArray.isEmpty{
+            if answerCharacterArray.isEmpty{ //単語完成した場合
+                SE.play(.fanfare)
                 if newProblemBool{
                     totalCharacterCount += answerCD.characterInWord.count
                     perfectAnswerCount += currentPerfectCount
@@ -214,9 +204,11 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
                 }
                 
                 completionView = CompletionView(frame: CGRect(x: 0.0, y: 0.0, width: 350, height: 250))
+                completionView.frame.size = VS.completionViewSetting(self)
                 completionView.center = self.view.center
                 completionView.image.image = answerImage
-                completionView.label.text = answerCD.word
+                completionView.image.contentMode = UIViewContentMode.scaleAspectFit
+                completionView.label.text = answerCD.word.katakanaToHiragana(HiraganaKatakanaBool)
                 if problemNumber == 0{
                     completionView.nextProblemButton.setTitle("おしまい！", for: .normal)
                 }
@@ -229,19 +221,21 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
                     cgRectArray.append(completionView.nextProblemButton.frame)
                     switchControl.resetCursor(cgRectArray, completionView)
                 }
-                
-            }else{
+            }else{ //まだ文字が残ってる場合
+                SE.play(.correct)
                 answerSetting()
             }
-        }else{
+        }else{ //間違えた場合
+            SE.play(.incorrect)
             perfectAnswerBool = false
             if !characterShowUpBool && hintView.frame.height >= 1.0{
-                hintView.frame.size.height -= positionOfAnswerCharacters[0].height / 3
+                hintView.frame.size.height -= positionOfAnswerCharacters[0].height / 4
             }
         }
     }
     
     @objc func sameProblem(){
+        SE.play(.same)
         newProblemBool = false
         answerCharacterArray = answerCD.characterInWord
         answerImage = answerCD.image
@@ -254,6 +248,7 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     }
     
     @objc func nextProblem(){
+        SE.play(.next)
         completionView.removeFromSuperview()
         if problemNumber == 0{
             performSegue(withIdentifier: "toResult", sender: nil)

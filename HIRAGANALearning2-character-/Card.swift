@@ -204,6 +204,9 @@ class EditCard:Equatable{
     func newCard(){
         let cardResults = realm.objects(Card.self)
         id = cardResults.max(ofProperty: "id")! + 1
+        if id < 100{
+            id = 100
+        }
         word = ""
         image = nil
         originalDeck1 = false

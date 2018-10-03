@@ -91,6 +91,10 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         youonLabel.font = VS.fontAdjust(viewSize: .small)
         choicesLabel.font = VS.fontAdjust(viewSize: .normal)
         
+        useSimilarButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        useDakuonButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        useYouonButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
         useSimilarButton.layer.cornerRadius = VS.cornerRadiusAdjust(useSimilarButton.frame.size, type: .small)
         useDakuonButton.layer.cornerRadius = VS.cornerRadiusAdjust(useDakuonButton.frame.size, type: .small)
         useYouonButton.layer.cornerRadius = VS.cornerRadiusAdjust(useYouonButton.frame.size, type: .small)
@@ -112,7 +116,7 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: pickerView.frame.size.height / 2))
         label.textAlignment = .center
         label.text = choicesPVArray[row]
-        label.font = VS.fontAdjust(viewSize: .normal)
+        label.font = VS.fontAdjust(viewSize: .verySmall)
         label.adjustsFontSizeToFitWidth = true
         return label
     }

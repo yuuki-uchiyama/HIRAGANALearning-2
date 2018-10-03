@@ -19,6 +19,34 @@ extension Array where Element: Equatable {
     }
 }
 
+extension UIButton{
+    func imageFit(){
+        self.imageView?.contentMode = .scaleAspectFit
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
+    }
+    
+    func setBackgroundColor(_ color: UIColor, for state: UIControlState) {
+            let image = color.image
+            setBackgroundImage(image, for: state)
+    }
+}
+
+extension UIColor {
+    var image: UIImage? {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        context.setFillColor(self.cgColor)
+        context.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
 extension String{
     var isTone: Bool {
         let range = "^[ぁぃぅぇぉゃゅょ]+$"
@@ -246,7 +274,8 @@ class GameSystem{
          
          "わ":["え","お","か","が","つ","す","ね","め","や","ゆ","ら","る","れ","ろ"],
          "を":["そ","ぞ","ち","ぢ","と","ど","ろ"],
-         "ん":["え","し","じ","れ"]]
+         "ん":["え","し","じ","れ"],
+         "ー":[]]
     
     //        清音
     let lineWArray = ["わ","を","ん","っ","ー"]
@@ -672,7 +701,11 @@ class GameSystem{
                 let x = width * CGFloat(10 - lineInt)
                 let y = height * CGFloat(i)
                 let button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
-                button.setTitle(syllabaryLineArray[i], for: .normal)
+                button.backgroundColor = UIColor.groupTableViewBackground
+                button.setBackgroundColor(UIColor.flatGray, for: .highlighted)
+                let bool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
+                let title = syllabaryLineArray[i].katakanaToHiragana(bool)
+                button.setTitle(title, for: .normal)
                 if useColorHintBool{
                     button.setTitleColor(colorChange(syllabaryLineArray[i]), for: .normal)
                 }else{
@@ -682,10 +715,6 @@ class GameSystem{
             }
         }
         return buttonArray
-    }
-    
-    @objc func syllabaryTaped(_ sender:UITapGestureRecognizer){
-        print("OK")
     }
 }
 

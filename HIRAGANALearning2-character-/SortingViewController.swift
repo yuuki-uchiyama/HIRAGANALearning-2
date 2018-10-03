@@ -35,7 +35,8 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     var choicesLabelArray: [UILabel] = []
     var answerCount = 0
     
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShouUpKey)
+    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
+    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
     let useSimilarBool = UserDefaults.standard.bool(forKey:Constants.useSimilarKey)
     let useDakuonBool = UserDefaults.standard.bool(forKey:Constants.useDakuonKey)
     let useYouonBool = UserDefaults.standard.bool(forKey:Constants.useYouonKey)
@@ -60,60 +61,41 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     var selectLabel: UILabel!
     var selectLabelIndex = 100
     
-    var alertBool = false
+    
+    var VS:VisualSetting!
+    var SE:SoundEffect!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
-        if cardDataArray.count < 10{
-            alertBool = true
-        }else{
-            alertBool = false
-        }
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if alertBool{
-            popUp()
-        }else{
-            currentCDArray = cardDataArray
-            problemSetting()
-            answerSetting()
-            problemNumberLabel.text = "あと\(problemNumber)問"
-            if switchKey > 0 && switchControl == nil{
-                switchControl = SwitchControlSystem(switchKey, choicesCursorArray, self.view, choicesView)
-                switchControl.delegate = self
-            }
+        currentCDArray = cardDataArray
+        problemSetting()
+        answerSetting()
+        problemNumberLabel.text = "あと\(problemNumber)問"
+        if switchKey > 0 && switchControl == nil{
+            switchControl = SwitchControlSystem(switchKey, choicesCursorArray, self.view, choicesView)
+            switchControl.delegate = self
         }
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
-        openMenuButton.imageView?.sizeToFit()
-    }
-    
-    func popUp(){
-        print("popup")
-        let alertController: UIAlertController = UIAlertController(title: "カードの枚数が足りません", message: "カードが10枚以上必要です", preferredStyle: .alert)
-        let card = UIAlertAction(title: "カード編集へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "toCard", sender: nil)
-            }
-        })
-        let level = UIAlertAction(title: "難易度設定へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "unwindToLevelChoice", sender: nil)
-            }
-        })
-        alertController.addAction(card)
-        alertController.addAction(level)
-        present(alertController, animated: true, completion: nil)
-        alertBool = false
+        VS = VisualSetting()
+        VS.backgraundView(self)
+        openMenuButton.backgroundColor = UIColor.clear
+        problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)
+        choicesView.layer.cornerRadius = VS.cornerRadiusAdjust(choicesView.frame.size, type: .circle)
+        
+        openMenuButton.imageFit()
     }
     
     //    正解単語のセッティング
@@ -123,6 +105,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         answerImage = answerCD.image
         positionOfAnswerCharacters = gameSystem.calculateRectForAnswer(answerCD.characterInWord, answerView.frame)
         answerImageView.image = answerImage
+        answerImageView.contentMode = UIViewContentMode.scaleAspectFit
         perfectAnswerBool = true
         answerCount = 0
         answerCursorArray = positionOfAnswerCharacters
@@ -137,8 +120,10 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         choicesCursorArray = positionOfChoices
         for i in 0 ..< choicesArray.count{
             let label = UILabel(frame: positionOfChoices[i])
-            label.text = choicesArray[i]
-            label.font = gameSystem.StringSize(self.view)
+            let title = choicesArray[i].katakanaToHiragana(HiraganaKatakanaBool)
+            label.text = title
+            label.font = VS.fontAdjust(viewSize: .important)
+            label.adjustsFontSizeToFitWidth = true
             label.textAlignment = NSTextAlignment.center
             if useColorHintBool{
                 label.textColor = gameSystem.colorChange(choicesArray[i])
@@ -160,9 +145,14 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         
         for i in 0 ..< answerCharacterArray.count{
             let label = UILabel(frame: positionOfAnswerCharacters[i])
-            label.text = answerCharacterArray[i]
-            label.font = gameSystem.StringSize(self.view)
+            let title = answerCharacterArray[i].katakanaToHiragana(HiraganaKatakanaBool)
+            if title.count == 2{
+                label.frame.size.width = label.frame.size.width * 1.2
+            }
+            label.text = title
+            label.font = VS.fontAdjust(viewSize: .veryImportant)
             label.textAlignment = NSTextAlignment.center
+            label.adjustsFontSizeToFitWidth = true
             if useColorHintBool{
                 label.textColor = gameSystem.colorChange(answerCharacterArray[i])
             }
@@ -195,6 +185,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         let label = sender.view as! UILabel
         
         if sender.state == .began{
+            SE.play(.dragBegan)
             selectViewRect = label.frame
             selectLabelIndex = choicesLabelArray.index(of: label)!
         }
@@ -222,6 +213,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
                 break
             }
         }
+        SE.play(.dragEnded)
     }
     
     func judgment(_ number:Int){
@@ -238,7 +230,8 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
                 hintViewArray.remove(at: number)
             }
             answerCount += 1
-            if answerCount == answerCharacterArray.count{
+            if answerCount == answerCharacterArray.count{// 単語完成
+                SE.play(.fanfare)
                 if newProblemBool{
                     totalCharacterCount += 1
                     if perfectAnswerBool{perfectAnswerCount += 1}
@@ -256,9 +249,11 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
                 }
                 
                 completionView = CompletionView(frame: CGRect(x: 0.0, y: 0.0, width: 350, height: 250))
+                completionView.frame.size = VS.completionViewSetting(self)
                 completionView.center = self.view.center
                 completionView.image.image = answerImage
-                completionView.label.text = answerCD.word
+                completionView.image.contentMode = UIViewContentMode.scaleAspectFit
+                completionView.label.text = answerCD.word.katakanaToHiragana(HiraganaKatakanaBool)
                 if problemNumber == 0{
                     completionView.nextProblemButton.setTitle("おしまい！", for: .normal)
                 }
@@ -271,8 +266,11 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
                     cgRectArray.append(completionView.nextProblemButton.frame)
                     switchControl.resetCursor(cgRectArray, completionView)
                 }
+            }else{ //文字がまだ残ってる場合
+                SE.play(.correct)
             }
-        }else{
+        }else{//間違えた場合
+            SE.play(.incorrect)
             perfectAnswerBool = false
             if !characterShowUpBool && hintViewArray[number].frame.height >= 1.0{
                 hintViewArray[number].frame.size.height -= positionOfAnswerCharacters[0].height / 3
@@ -285,6 +283,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     }
     
     @objc func sameProblem(){
+        SE.play(.same)
         newProblemBool = false
         answerCount = 0
         answerSetting()
@@ -292,6 +291,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     }
     
     @objc func nextProblem(){
+        SE.play(.next)
         completionView.removeFromSuperview()
         if problemNumber == 0{
             performSegue(withIdentifier: "toResult", sender: nil)

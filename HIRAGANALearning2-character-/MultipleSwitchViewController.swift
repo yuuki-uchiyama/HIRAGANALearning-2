@@ -11,11 +11,14 @@ import SVProgressHUD
 
 class MultipleSwitchViewController: UIViewController {
     
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var toHomeButton: UIButton!
     @IBOutlet weak var toNextButton: UIButton!
     @IBOutlet weak var toPreviousButton: UIButton!
-    @IBOutlet weak var decisionButton: UIButton!
+    @IBOutlet weak var decisionSwitchButton: UIButton!
     @IBOutlet weak var useSwitchButton: UIButton!
     @IBOutlet weak var toNextLabel: UILabel!
     var toNextKey = ""
@@ -24,15 +27,23 @@ class MultipleSwitchViewController: UIViewController {
     @IBOutlet weak var decisionSwitchLabel: UILabel!
     var decisionSwitchKey = ""
     
+    
+    
+    @IBOutlet weak var SETTEILabel: UILabel!
+    @IBOutlet weak var decisionButton: UIButton!
+    
     let userDefaults = UserDefaults.standard
     
     var alertController: UIAlertController!
+    
+    var SE: SoundEffect!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setMinimumDismissTimeInterval(0)
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         if userDefaults.integer(forKey: Constants.SwitchKey) == 3{
             useSwitchButton.isSelected = true
@@ -55,9 +66,32 @@ class MultipleSwitchViewController: UIViewController {
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        decisionButton.backgroundColor = VS.importantOutletColor
+        useSwitchButton.backgroundColor = UIColor.clear
         
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        toNextLabel.font = VS.fontAdjust(viewSize: .important)
+        toPreviousLabel.font = VS.fontAdjust(viewSize: .important)
+        decisionSwitchLabel.font = VS.fontAdjust(viewSize: .important)
+        cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        toNextButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        toPreviousButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        decisionSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        decisionButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
+        useSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .verySmall)
         useSwitchButton.setImage(UIImage(named: "Check"), for: .selected)
+        SETTEILabel.font = VS.fontAdjust(viewSize: .verySmall)
+        
+        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        decisionButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .normal)
+        
+        toNextButton.layer.cornerRadius = VS.cornerRadiusAdjust(toNextButton.frame.size, type: .small)
+        toPreviousButton.layer.cornerRadius = VS.cornerRadiusAdjust(toPreviousButton.frame.size, type: .small)
+        decisionSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(decisionSwitchButton.frame.size, type: .small)
     }
     
     @IBAction func toNextSwitchSet(_ sender: Any) {
@@ -152,10 +186,20 @@ class MultipleSwitchViewController: UIViewController {
         }
         userDefaults.set(switchInt, forKey: Constants.SwitchKey)
         SVProgressHUD.showSuccess(withStatus: "\(switchInt)つのボタン操作を登録しました")
+        soundPlay(decisionButton)
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
     }
     
     override func didReceiveMemoryWarning() {

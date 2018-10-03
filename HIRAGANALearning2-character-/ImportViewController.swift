@@ -13,6 +13,8 @@ import RealmSwift
 import AVFoundation
 
 class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cardCollectionView: UICollectionView!
     @IBOutlet weak var endButton: UIButton!
     
@@ -28,12 +30,16 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
     var advertiser : MCNearbyServiceAdvertiser!
     var count = 0
     
+    var SE: SoundEffect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let cardResults = realm.objects(Card.self)
         id = cardResults.max(ofProperty: "id")!
+        if id < 100{
+            id = 100
+        }
         
         cardCollectionView.delegate = self
         cardCollectionView.dataSource = self
@@ -49,7 +55,9 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
         advertiser.delegate = self
         
         SVProgressHUD.setMinimumDismissTimeInterval(0)
-
+        
+        layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         // Do any additional setup after loading the view.
     }
     
@@ -59,9 +67,17 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        endButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        
+        endButton.layer.cornerRadius = VS.cornerRadiusAdjust(endButton.frame.size, type: .small)
+        
         cardCollectionView.layer.borderColor = UIColor.white.cgColor
         cardCollectionView.layer.borderWidth = 5.0
+        cardCollectionView.layer.borderColor = UIColor.flatGray.cgColor
         cardCollectionView.layer.cornerRadius = 10.0
         cardCollectionView.layer.masksToBounds = true
     }
@@ -93,6 +109,7 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
             DispatchQueue.main.async{
                 self.cardCollectionView.reloadData()
             }
+            SE.play(.card)
             SVProgressHUD.showSuccess(withStatus: "受信完了！")
         }
     }
@@ -119,6 +136,14 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(deleteCard(_:)))
         cell.addGestureRecognizer(tapGesture)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if UIScreen.main.bounds.size.width < 900.0{
+            return CGSize(width: 70, height: 100)
+        }else{
+            return CGSize(width: 105, height: 150)
+        }
     }
     
     @objc func deleteCard(_ sender:UITapGestureRecognizer){
@@ -156,7 +181,14 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

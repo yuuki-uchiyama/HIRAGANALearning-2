@@ -19,6 +19,20 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var correctView: UIView!
     @IBOutlet weak var incorrectView: UIView!
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var volumuTitleLabel: UILabel!
+    @IBOutlet weak var SETitleLabel: UILabel!
+    @IBOutlet weak var tapTextLabel: UILabel!
+    @IBOutlet weak var correctTextLabel: UILabel!
+    @IBOutlet weak var incorrectTextLabel: UILabel!
+    
+    @IBOutlet weak var toHomeButton: UIButton!
+    @IBOutlet weak var defaultButton: UIButton!
+    @IBOutlet weak var tapButton: UIButton!
+    @IBOutlet weak var correctButton: UIButton!
+    @IBOutlet weak var incorrectButton: UIButton!
+    
+    
     var volume:Float = 0.0
     var tapSoundBool = true
     var correctSoundBool = true
@@ -26,11 +40,14 @@ class SettingViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     
+    var SE:SoundEffect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
+
         
         volume = userDefaults.float(forKey: Constants.volumeKey)
         tapSoundBool = userDefaults.bool(forKey: Constants.tapSoundKey)
@@ -44,7 +61,28 @@ class SettingViewController: UIViewController {
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        defaultButton.backgroundColor = VS.importantOutletColor
+        tapButton.backgroundColor = UIColor.clear
+        correctButton.backgroundColor = UIColor.clear
+        incorrectButton.backgroundColor = UIColor.clear
+
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        volumuTitleLabel.font = VS.fontAdjust(viewSize: .normal)
+        SETitleLabel.font = VS.fontAdjust(viewSize: .normal)
+        tapTextLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        correctTextLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        incorrectTextLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        defaultButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
+        
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        defaultButton.layer.cornerRadius = VS.cornerRadiusAdjust(defaultButton.frame.size, type: .circle)
+
+        tapButton.imageFit()
+        correctButton.imageFit()
+        incorrectButton.imageFit()
     }
     
     @IBAction func volumeChange(_ sender: UISlider) {
@@ -87,6 +125,8 @@ class SettingViewController: UIViewController {
         userDefaults.set(tapSoundBool, forKey: Constants.tapSoundKey)
         userDefaults.set(correctSoundBool, forKey: Constants.correctSoundKey)
         userDefaults.set(incorrectSoundBool, forKey: Constants.incorrectSoundKey)
+        SE.boolChange(.all)
+        SE.play(.cancel)
         self.dismiss(animated: true, completion: nil)
     }
     

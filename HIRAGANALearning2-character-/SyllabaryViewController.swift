@@ -47,9 +47,10 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     var specialButtonArray:[UIButton] = []
     var specialSyllableBool:[Bool] = [false,false,false,false]
     var answerCount = 0
-
+    
+    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
     let useColorHintBool = UserDefaults.standard.bool(forKey:Constants.useColorHintKey)
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShouUpKey)
+    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
     
     var completionView: CompletionView!
     
@@ -67,75 +68,63 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     var cursorLinesArray:[CGRect] = []
     var selectLineInt = 100
     
-    var alertBool = false
+    
+    var VS:VisualSetting!
+    var SE:SoundEffect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
-        
-        if cardDataArray.count < 10{
-            alertBool = true
-        }else{
-            alertBool = false
-        }
-        
-
+        SE = SoundEffect.sharedSoundEffect
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if alertBool{
-            popUp()
+        currentCDArray = cardDataArray
+        problemSetting()
+        answerSetting()
+        syllabarySetting()
+        problemNumberLabel.text = "あと\(problemNumber)問"
+        if switchKey > 0 && switchControl == nil{
+            switchControl = SwitchControlSystem(switchKey, cursorLinesArray, self.view, self.view)
+            switchControl.delegate = self
         }else{
-            currentCDArray = cardDataArray
-            problemSetting()
-            answerSetting()
-            syllabarySetting()
-            problemNumberLabel.text = "あと\(problemNumber)問"
-            if switchKey > 0 && switchControl == nil{
-                switchControl = SwitchControlSystem(switchKey, cursorLinesArray, self.view, self.view)
-                switchControl.delegate = self
-            }else{
-                backButton.isHidden = true
-            }
+            backButton.isHidden = true
         }
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        VS = VisualSetting()
+        VS.backgraundView(self)
+        openMenuButton.backgroundColor = UIColor.clear
+        problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)
         specialButtonArray = [seionButton,dakuonButton,handakuonButton,youonButton,specialYouonButton]
         for button in specialButtonArray{
+            button.titleLabel?.font = VS.fontAdjust(viewSize: .verySmall)
             button.titleLabel?.numberOfLines = 2
             button.titleLabel?.textAlignment = NSTextAlignment.center
+            button.layer.borderWidth = 1.0
+            button.layer.borderColor = VS.normalOutletColor.cgColor
+            button.setBackgroundColor(UIColor.flatWhite, for: .normal)
+            button.setTitleColor(VS.normalOutletColor, for: .normal)
+            button.setBackgroundColor(VS.normalOutletColor, for: .selected)
+            button.setTitleColor(UIColor.flatWhite, for: .selected)
         }
+        backButton.titleLabel?.font = VS.fontAdjust(viewSize: .verySmall)
+        
+        openMenuButton.imageFit()
     }
-    
-    func popUp(){
-        print("popup")
-        let alertController: UIAlertController = UIAlertController(title: "カードの枚数が足りません", message: "カードが10枚以上必要です", preferredStyle: .alert)
-        let card = UIAlertAction(title: "カード編集へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "toCard", sender: nil)
-            }
-        })
-        let level = UIAlertAction(title: "難易度設定へ", style: .default, handler:{(action: UIAlertAction!) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.performSegue(withIdentifier: "unwindToLevelChoice", sender: nil)
-            }
-        })
-        alertController.addAction(card)
-        alertController.addAction(level)
-        present(alertController, animated: true, completion: nil)
-        alertBool = false
-    }
-    
+        
     func problemSetting(){
         answerCD = gameSystem.selectTarget(currentCDArray)
         answerCharacterArray = answerCD.characterInWord
         answerImage = answerCD.image
         positionOfAnswerCharacters = gameSystem.calculateRectForAnswer(answerCD.characterInWord, answerView.frame)
         answerImageView.image = answerImage
+        answerImageView.contentMode = UIViewContentMode.scaleAspectFit
         perfectAnswerBool = true
         answerCount = 0
     }
@@ -144,9 +133,11 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
         answerCharacter = answerCharacterArray[0]
         
         let label = UILabel(frame: positionOfAnswerCharacters[0])
-        label.text = answerCharacter!
-        label.font = gameSystem.StringSize(self.view)
+        let title = answerCharacter.katakanaToHiragana(HiraganaKatakanaBool)
+        label.text = title
+        label.font = VS.fontAdjust(viewSize: .veryImportant)
         label.textAlignment = NSTextAlignment.center
+        label.adjustsFontSizeToFitWidth = true
         if useColorHintBool{
             label.textColor = gameSystem.colorChange(answerCharacter!)
         }else{
@@ -173,10 +164,18 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
         if useLineArray.isEmpty{
             useLineArray = gameSystem.extractSyllabaryLines(answerCharacterArray)
             specialSyllableBool = [false,false,false,false]
+            for button in specialButtonArray{
+                if button == seionButton{
+                    button.isSelected = true
+                }else{
+                    button.isSelected = false
+                }
+            }
         }
         
         syllabaryArray = gameSystem.syllabaryMake(syllabaryView, useColorHintBool, useLineArray, specialSyllableBool)
         for button in syllabaryArray{
+            button.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
             button.addTarget(self, action: #selector(buttonTaped(_:)), for: .touchUpInside)
             syllabaryView.addSubview(button)
             if button.titleLabel?.text == ""{
@@ -204,18 +203,6 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
         problemSetting()
         useLineArray.removeAll()
         answerSetting()
-    }
-    
-    @IBAction func defaultButton(_ sender: UIButton){
-        for i in 0 ..< specialButtonArray.count - 1{
-            let button = specialButtonArray[i]
-            button.isSelected = false
-            specialSyllableBool[i] = false
-        }
-        let syllabarySubviews = syllabaryView.subviews
-        for subview in syllabarySubviews{
-            subview.removeFromSuperview()
-        }
         syllabarySetting()
     }
     
@@ -226,7 +213,9 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
                 button.isSelected = false
                 specialSyllableBool[i] = false
             }
+            sender.isSelected = true
         }else{
+            seionButton.isSelected = false
             switch sender.tag {
             case 0:
                 handakuonButton.isSelected = false
@@ -253,6 +242,9 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
             
             sender.isSelected = !sender.isSelected
             specialSyllableBool[sender.tag] = sender.isSelected
+            if specialSyllableBool == [false,false,false,false]{
+                seionButton.isSelected = true
+            }
         }
         let syllabarySubviews = syllabaryView.subviews
         for subview in syllabarySubviews{
@@ -265,7 +257,8 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
         judge((sender.titleLabel?.text)!)
     }
     func judge(_ selectChara:String){
-        if gameSystem.judge(answerCharacter, selectChara){
+        let answer = answerCharacter.katakanaToHiragana(HiraganaKatakanaBool)
+        if gameSystem.judge(answer, selectChara){
             if perfectAnswerBool && newProblemBool{
                 currentPerfectCount += 1
             }
@@ -278,7 +271,8 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
             answerCharacterArray.remove(at: 0)
             positionOfAnswerCharacters.remove(at: 0)
             
-            if answerCharacterArray.isEmpty{
+            if answerCharacterArray.isEmpty{//単語完成
+                SE.play(.fanfare)
                 if newProblemBool{
                     totalCharacterCount += answerCD.characterInWord.count
                     perfectAnswerCount += currentPerfectCount
@@ -297,9 +291,11 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
                 }
                 
                 completionView = CompletionView(frame: CGRect(x: 0.0, y: 0.0, width: 350, height: 250))
+                completionView.frame.size = VS.completionViewSetting(self)
                 completionView.center = self.view.center
                 completionView.image.image = answerImage
-                completionView.label.text = answerCD.word
+                completionView.image.contentMode = UIViewContentMode.scaleAspectFit
+                completionView.label.text = answerCD.word.katakanaToHiragana(HiraganaKatakanaBool)
                 if problemNumber == 0{
                     completionView.nextProblemButton.setTitle("おしまい！", for: .normal)
                 }
@@ -312,13 +308,15 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
                     cgRectArray.append(completionView.nextProblemButton.frame)
                     switchControl.resetCursor(cgRectArray, completionView)
                 }
-            }else{
+            }else{//まだ文字が残ってる場合
+                SE.play(.correct)
                 answerSetting()
                 if switchControl != nil{
                     lineCursorMake()
                 }
             }
-        }else{
+        }else{ //間違えた場合
+            SE.play(.incorrect)
             perfectAnswerBool = false
             if !characterShowUpBool && hintView.frame.height >= 1.0{
                 hintView.frame.size.height -= positionOfAnswerCharacters[0].height / 3
@@ -330,6 +328,7 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     }
     
     @objc func sameProblem(){
+        SE.play(.same)
         newProblemBool = false
         answerCharacterArray = answerCD.characterInWord
         answerImage = answerCD.image
@@ -342,6 +341,7 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     }
     
     @objc func nextProblem(){
+        SE.play(.next)
         completionView.removeFromSuperview()
         useLineArray.removeAll()
         if problemNumber == 0{

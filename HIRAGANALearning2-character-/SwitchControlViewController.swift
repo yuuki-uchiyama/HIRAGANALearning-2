@@ -10,11 +10,21 @@ import UIKit
 import SVProgressHUD
 
 class SwitchControlViewController: UIViewController {
-
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var toHomeButton: UIButton!
+    @IBOutlet weak var singleSwitchButton: UIButton!
+    @IBOutlet weak var multipleSwitchButton: UIButton!
+    @IBOutlet weak var noSwitchButton: UIButton!
+    
+    var SE: SoundEffect!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         SVProgressHUD.setMinimumDismissTimeInterval(0)
 
@@ -22,7 +32,23 @@ class SwitchControlViewController: UIViewController {
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        noSwitchButton.backgroundColor = VS.importantOutletColor
+        
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        singleSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        multipleSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        noSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        
+        noSwitchButton.titleLabel?.numberOfLines = 0
+        noSwitchButton.titleLabel?.textAlignment = NSTextAlignment.center
+        
+        singleSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(singleSwitchButton.frame.size, type: .circle)
+        multipleSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(multipleSwitchButton.frame.size, type: .circle)
+        noSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(noSwitchButton.frame.size, type: .normal)
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
 
     }
     
@@ -38,12 +64,22 @@ class SwitchControlViewController: UIViewController {
             userDefaults.removeObject(forKey: Constants.toPreviousKey)
             userDefaults.removeObject(forKey: Constants.multiDecisionKey)
             SVProgressHUD.showSuccess(withStatus: "ボタン操作を解除しました")
+            self.soundPlay(self.noSwitchButton)
         })
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         
         alertController.addAction(OK)
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
     }
     
     override func didReceiveMemoryWarning() {

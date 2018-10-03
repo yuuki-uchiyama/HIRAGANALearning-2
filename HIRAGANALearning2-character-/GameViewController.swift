@@ -21,9 +21,12 @@ class GameViewController: SlideMenuController, SlideMenuControllerDelegate {
 
     
     override func awakeFromNib() {
+
         sideMenuVC = storyboard?.instantiateViewController(withIdentifier: "sideMenu") as! SideMenuViewController
         
-        SlideMenuOptions.rightViewWidth = 142.0
+        
+        SlideMenuOptions.rightViewWidth = self.view.frame.width / 4
+        print(SlideMenuOptions.rightViewWidth)
         rightViewController = sideMenuVC
         SlideMenuOptions.panGesturesEnabled = false
         SlideMenuOptions.contentViewDrag = false
@@ -48,10 +51,8 @@ class GameViewController: SlideMenuController, SlideMenuControllerDelegate {
             sideMenuVC.delegete = syllabaryVC
         default:break
         }
-        
-        
         super.awakeFromNib()
-        
+
     }
     
     

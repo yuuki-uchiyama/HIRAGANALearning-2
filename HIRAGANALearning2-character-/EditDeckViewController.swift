@@ -10,13 +10,20 @@ import UIKit
 import RealmSwift
 
 // デッキ編集
-class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var deckNoLabel: UILabel!
+    @IBOutlet weak var inDeckLabel: UILabel!
+    @IBOutlet weak var outOfDeckLabel: UILabel!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var SCView: UIView!
+    
     @IBOutlet weak var inDeckCV: UICollectionView!
     @IBOutlet weak var outOfDeckCV: UICollectionView!
+    
+    @IBOutlet weak var editEndButton: UIButton!
     
     let realm = try! Realm()
     
@@ -24,10 +31,13 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var deckInt = 0
     
+    var SE: SoundEffect!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         
         let nib = UINib(nibName: "CardCollectionViewCell", bundle: nil)
@@ -53,7 +63,19 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        
+        segmentedControl.frame = SCView.frame
+        
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        deckNoLabel.font = VS.fontAdjust(viewSize: .small)
+        inDeckLabel.font = VS.fontAdjust(viewSize: .small)
+        outOfDeckLabel.font = VS.fontAdjust(viewSize: .small)
+        editEndButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        VS.fontAdjustOfSegmentedControl(segmentedControl, .normal)
+        
+        editEndButton.layer.cornerRadius = VS.cornerRadiusAdjust(editEndButton.frame.size, type: .small)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -85,8 +107,16 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
             let selectCD = collectionCard.restCardDataArray[indexPath.row]
             collectionCard.putInDeck(selectCD, selectDeck)
         }
+        SE.play(.card)
         inDeckCV.reloadData()
         outOfDeckCV.reloadData()
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if UIScreen.main.bounds.size.width < 900.0{
+            return CGSize(width: 70, height: 100)
+        }else{
+            return CGSize(width: 105, height: 150)
+        }
     }
     
     @IBAction func deckChange(_ sender: UISegmentedControl) {
@@ -102,7 +132,14 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
         self.dismiss(animated: true, completion: nil)
     }
     
-    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

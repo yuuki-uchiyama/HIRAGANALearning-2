@@ -11,6 +11,7 @@ import UIKit
 class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
 
     
+    @IBOutlet weak var SCView: UIView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var image1: UIImageView!
     @IBOutlet weak var image2: UIImageView!
@@ -20,6 +21,8 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
     var syllabaryLevel = 0
     var syllabaryLines = 0
     var imageArray:[UIImageView] = []
+    
+    var VS: VisualSetting!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -36,6 +39,8 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         view.frame = self.bounds
         self.addSubview(view)
         
+        layoutSetting()
+        
         linesPickerView.dataSource = self
         linesPickerView.delegate = self
         
@@ -43,6 +48,8 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         segmentControl.selectedSegmentIndex = syllabaryLevel
         syllabaryLines = UserDefaults.standard.integer(forKey: Constants.syllabaryLinesKey)
         linesPickerView.selectRow(syllabaryLines, inComponent: 0, animated: false)
+        
+        imageSetting()
         imageArray = [image1,image2,image3]
         imageArray[syllabaryLevel].alpha = 1.0
         if syllabaryLevel != 1{
@@ -55,8 +62,12 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
             image.addGestureRecognizer(tapGesture)
             image.isUserInteractionEnabled = true
         }
-        
-
+    }
+    
+    func layoutSetting(){
+        VS = VisualSetting()
+        segmentControl.frame = SCView.frame
+        VS.fontAdjustOfSegmentedControl(segmentControl, .verySmall)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -66,11 +77,20 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 5
     }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let stringArray = ["＋１行","＋２行","＋３行","＋４行","＋５行"]
-        return stringArray[row]
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return pickerView.frame.height / 3
     }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let stringArray = ["＋１行","＋２行","＋３行","＋４行","＋５行"]
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: pickerView.frame.size.height / 2))
+        label.textAlignment = .center
+        label.text = stringArray[row]
+        label.font = VS.fontAdjust(viewSize: .small)
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         syllabaryLines = row
     }
@@ -90,6 +110,27 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         }else{
             linesPickerView.isUserInteractionEnabled = false
             linesPickerView.alpha = 0.5
+        }
+    }
+    
+    func imageSetting(){
+        var imageArray:[UIImage] = []
+        let modeBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
+        let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
+        if modeBool{
+            imageArray = [UIImage(named: "1H")!,UIImage(named: "2H")!,UIImage(named: "3H")!,UIImage(named: "1")!,UIImage(named: "2")!,UIImage(named: "3")!]
+        }else{
+            imageArray = [UIImage(named: "1KH")!,UIImage(named: "2KH")!,UIImage(named: "3KH")!,UIImage(named: "1K")!,UIImage(named: "2K")!,UIImage(named: "3K")!]
+        }
+        
+        if characterShowUpBool{
+            image1.image = imageArray[0]
+            image2.image = imageArray[1]
+            image3.image = imageArray[2]
+        }else{
+            image1.image = imageArray[3]
+            image2.image = imageArray[4]
+            image3.image = imageArray[5]
         }
     }
     

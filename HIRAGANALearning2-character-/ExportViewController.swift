@@ -28,10 +28,13 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
     var session : MCSession!
     var browser: MCNearbyServiceBrowser!
     
-    @IBOutlet weak var cancelButton: UIButton!
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cardCollectionView: UICollectionView!
     @IBOutlet weak var noCardLabel: UILabel!
+    @IBOutlet weak var endButton: UIButton!
     
+    var SE: SoundEffect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,7 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         // Do any additional setup after loading the view.
     }
     
@@ -61,9 +65,18 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        endButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        noCardLabel.font = VS.fontAdjust(viewSize: .important)
+        
+        endButton.layer.cornerRadius = VS.cornerRadiusAdjust(endButton.frame.size, type: .small)
+        
         cardCollectionView.layer.borderColor = UIColor.white.cgColor
         cardCollectionView.layer.borderWidth = 5.0
+        cardCollectionView.layer.borderColor = UIColor.flatGray.cgColor
         cardCollectionView.layer.cornerRadius = 10.0
         cardCollectionView.layer.masksToBounds = true
     }
@@ -72,8 +85,8 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 0)
         SVProgressHUD.dismiss()
         SVProgressHUD.showSuccess(withStatus: "接続完了")
-        cancelButton.setTitle("送信終了", for: .normal)
-        let results = realm.objects(Card.self).sorted(byKeyPath: "id", ascending: true)
+        endButton.setTitle("送信終了", for: .normal)
+        let results = realm.objects(Card.self).filter("id >= 100").sorted(byKeyPath: "id", ascending: true)
         collectionCard = CollectionCardData.init(results)
         noCardLabel.text = "送信できるカードがありません。\nオリジナルのカードを作成してください。"
         cardCollectionView.reloadData()
@@ -108,6 +121,14 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if UIScreen.main.bounds.size.width < 900.0{
+            return CGSize(width: 70, height: 100)
+        }else{
+            return CGSize(width: 105, height: 150)
+        }
+    }
+    
     @objc func export(_ sender:UITapGestureRecognizer){
         let cell = sender.view as! CardCollectionViewCell
         let cardData = cell.cardData
@@ -120,7 +141,8 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
             do{
                 try session.send(imageData, toPeers: [youPeerID], with: MCSessionSendDataMode.reliable)
                 try session.send(wordData, toPeers: [youPeerID], with: MCSessionSendDataMode.reliable)
-                    SVProgressHUD.showSuccess(withStatus: "送信完了！")
+                SE.play(.card)
+                SVProgressHUD.showSuccess(withStatus: "送信完了！")
                 cell.alpha = 0.5
             }catch{
                 SVProgressHUD.showError(withStatus: "データを送信できませんでした")
@@ -136,6 +158,14 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

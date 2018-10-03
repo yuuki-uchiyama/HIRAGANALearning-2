@@ -15,6 +15,7 @@ class CardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     
+    let hiraganaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,21 +24,30 @@ class CardCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = UIColor.flatBrown.cgColor
         self.layer.borderWidth = 2.0
         self.backgroundColor = UIColor.flatSand
+        
+        if UIScreen.main.bounds.width < 900.0{
+            label.font = UIFont(name: "Hiragino Maru Gothic ProN", size: 15)
+        }else{
+            label.font = UIFont(name: "Hiragino Maru Gothic ProN", size: 21)
+        }
     }
     
     func createCard(_ cd:CardData){
         cardData = cd
         let image = cardData.image
-        let text = cardData.word
+        let text = cardData.word.katakanaToHiragana(hiraganaBool)
+
         imageView.image = image
+        imageView.contentMode = UIViewContentMode.scaleAspectFit
         label.text = text
     }
     
     func importCard(_ ec:EditCard){
         editCard = ec
         let image = UIImage(data: editCard.image! as Data)
-        let word = editCard.word
+        let word = editCard.word.katakanaToHiragana(hiraganaBool)
         imageView.image = image
+        imageView.contentMode = UIViewContentMode.scaleAspectFit
         label.text = word
     }
     

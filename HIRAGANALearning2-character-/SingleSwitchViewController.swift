@@ -11,6 +11,12 @@ import SVProgressHUD
 
 class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var cursorSpeedTitleLabel: UILabel!
+    @IBOutlet weak var decisionLabel: UILabel!
+    @IBOutlet weak var SETTEILabel: UILabel!
+    @IBOutlet weak var secondLabel: UILabel!
+    
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var toHomeButton: UIButton!
@@ -26,11 +32,14 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
     var cursorSpeedArray:[Float] = [0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
     
     let userDefaults = UserDefaults.standard
+    
+    var SE: SoundEffect!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         SVProgressHUD.setMinimumDismissTimeInterval(0)
         
@@ -57,8 +66,30 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
-        lineView.layer.cornerRadius = 10.0
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        decisionButton.backgroundColor = VS.importantOutletColor
+        decisionSwitchOutlet.backgroundColor = UIColor.white
+        
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        cursorSpeedTitleLabel.font = VS.fontAdjust(viewSize: .important)
+        decisionLabel.font = VS.fontAdjust(viewSize: .important)
+        SETTEILabel.font = VS.fontAdjust(viewSize: .small)
+        secondLabel.font = VS.fontAdjust(viewSize: .normal)
+        cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        decisionButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
+        
+        cursorSpeedTextField.font = VS.fontAdjust(viewSize: .important)
+        decisionSwitchOutlet.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        
+        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        decisionButton.layer.cornerRadius = VS.cornerRadiusAdjust(decisionButton.frame.size, type: .normal)
+        cursorSpeedTextField.layer.cornerRadius = VS.cornerRadiusAdjust(cursorSpeedTextField.frame.size, type: .small)
+        decisionSwitchOutlet.layer.cornerRadius = VS.cornerRadiusAdjust(decisionSwitchOutlet.frame.size, type: .small)
+
+        lineView.layer.cornerRadius = lineView.frame.width / 5
         lineView.layer.borderWidth = 4.0
         lineView.layer.borderColor = UIColor.flatLime.cgColor
 
@@ -121,12 +152,22 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
             userDefaults.set(cursorSpeed, forKey: Constants.cursorSpeedKey)
             userDefaults.set(singleDecision!, forKey: Constants.singleDecisionKey)
             SVProgressHUD.showSuccess(withStatus: "1ボタン操作を登録しました")
+            soundPlay(decisionButton)
             self.dismiss(animated: true, completion: nil)
         }
     }
     
     @IBAction func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
+        }
     }
     
     override func didReceiveMemoryWarning() {

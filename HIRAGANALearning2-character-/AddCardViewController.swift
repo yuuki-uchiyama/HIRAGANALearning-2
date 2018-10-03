@@ -22,6 +22,10 @@ extension UIImagePickerController{
 // カード追加
 class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TOCropViewControllerDelegate {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var addTitleLabel: UILabel!
+    @IBOutlet weak var attentionLabel: UILabel!
+    
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var toHomeButton: UIButton!
     
@@ -43,15 +47,17 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureWordLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var TFView: UIView!
     
     @IBOutlet weak var cardView: UIView!
     var beforeOriginY:CGFloat = 0.0
     var scrollBool = false
     
-    
     var newCardBool = true
     var card: Card!
     var editcard = EditCard()
+    
+    var SE: SoundEffect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,14 +66,11 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         textField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        layoutSetting()
-        
         buttonArray = [deck1Button,deck2Button,deck3Button,deck4Button,deck5Button,deck6Button,deck7Button,deck8Button,deck9Button,deck10Button]
         boolArray = [editcard.originalDeck1,editcard.originalDeck2,editcard.originalDeck3,editcard.originalDeck4,editcard.originalDeck5,editcard.originalDeck6,editcard.originalDeck7,editcard.originalDeck8,editcard.originalDeck9,editcard.originalDeck10]
         
-        for button in buttonArray{
-            button.setImage(UIImage(named: "Check"), for: .selected)
-        }
+        layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         if newCardBool{
             editcard.newCard()
@@ -93,7 +96,34 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     func layoutSetting(){
-        VisualSetting().backgraundView(self)
+        let VS = VisualSetting()
+        VS.backgraundView(self)
+        addButton.backgroundColor = VS.importantOutletColor
+        titleLabel.font = VS.fontAdjust(viewSize: .important)
+        addTitleLabel.font = VS.fontAdjust(viewSize: .important)
+        pictureWordLabel.font = VS.fontAdjust(viewSize: .verySmall)
+        attentionLabel.font = VS.fontAdjust(viewSize: .sentence)
+        toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        let deckButtonArray:[UIButton] = [deck1Button,deck2Button,deck3Button,deck4Button,deck5Button,deck6Button,deck7Button,deck8Button,deck9Button,deck10Button]
+        for button in deckButtonArray{
+            button.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        }
+        deleteButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        addButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        
+        textField.font = VS.fontAdjust(viewSize: .normal)
+        textField.frame = TFView.frame
+        
+        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        deleteButton.layer.cornerRadius = VS.cornerRadiusAdjust(deleteButton.frame.size, type: .normal)
+        addButton.layer.cornerRadius = VS.cornerRadiusAdjust(addButton.frame.size, type: .normal)
+        
+        for button in buttonArray{
+            button.setImage(UIImage(named: "Check"), for: .selected)
+            button.backgroundColor = UIColor.clear
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -180,6 +210,7 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
                 button.isSelected = false
             }
             pictureWordLabel.isHidden = false
+            soundPlay(deleteButton)
         }else{
             let alertController: UIAlertController = UIAlertController(title: "「\(card.word)」を削除しますか？", message: "カードリストからデータが削除され、使用できなくなります", preferredStyle: .alert)
             let yes = UIAlertAction(title: "はい", style: .default, handler: {
@@ -187,6 +218,7 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
                 self.editcard.deleteCard(self.card)
                 SVProgressHUD.setMinimumDismissTimeInterval(0)
                 SVProgressHUD.showSuccess(withStatus: "カードを削除しました")
+                self.soundPlay(self.deleteButton)
                 self.dismiss(animated: true, completion: nil)
             })
             let no = UIAlertAction(title: "いいえ", style: .cancel)
@@ -209,7 +241,7 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             editcard.word = string!
             editcard.image = UIImagePNGRepresentation(imageView.image!)! as NSData
             editcard.saveCard()
-            
+            soundPlay(addButton)
             if newCardBool{
                 SVProgressHUD.showSuccess(withStatus: "カードを追加しました")
                 editcard.newCard()
@@ -250,6 +282,15 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         if scrollBool{
             self.cardView.frame.origin.y = self.beforeOriginY
             scrollBool = false
+        }
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 1:SE.play(.tap)
+        case 2:SE.play(.cancel)
+        case 3:SE.play(.important)
+        default:break
         }
     }
     

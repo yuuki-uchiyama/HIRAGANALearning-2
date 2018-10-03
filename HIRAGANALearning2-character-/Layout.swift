@@ -13,9 +13,12 @@ import ChameleonFramework
 class VisualSetting{
     
     enum size{
+        case veryImportant
         case important
         case normal
         case small
+        case verySmall
+        case sentence
     }
     
     enum cornerType{
@@ -24,10 +27,15 @@ class VisualSetting{
         case circle
     }
     
+    var baseColor: UIColor!
+    var borderColor: CGColor!
+    var normalOutletColor: UIColor!
+    var importantOutletColor: UIColor!
+    
     var viewScale = 0
     
     init() {
-        switch UIScreen.main.bounds.size.width{
+        switch UIScreen.main.bounds.width{
 //            SE
         case 0.0 ..< 570.0: viewScale = 10
 //            6,6S,7,8
@@ -39,57 +47,97 @@ class VisualSetting{
 //            iPad
         default:viewScale = 50
         }
+        colorSetting()
+    }
+
+    func colorSetting(){
+        if UserDefaults.standard.bool(forKey: Constants.HiraganaKey){
+            baseColor = UIColor.flatSandDark
+            borderColor = UIColor.flatOrange.cgColor
+            let outletColors = ColorSchemeOf(.triadic, color: baseColor, isFlatScheme: true)
+            normalOutletColor = outletColors[1]
+            importantOutletColor = UIColor.flatWatermelonDark
+        }else{
+            baseColor = UIColor.flatPowderBlueDark
+            borderColor = UIColor.flatBlue.cgColor
+            let outletColors = ColorSchemeOf(.triadic, color: baseColor, isFlatScheme: true)
+            normalOutletColor = outletColors[4]
+            importantOutletColor = UIColor.flatWatermelon
+        }
     }
     
     func backgraundView(_ VC:UIViewController){
-        VC.view.backgroundColor = UIColor.flatSandDark
-        VC.view.layer.cornerRadius = 5.0
-        VC.view.layer.borderWidth = VC.view.frame.height / 50
-        VC.view.layer.borderColor = UIColor.flatOrange.cgColor
+        let aspectRate = UIScreen.main.bounds.width / UIScreen.main.bounds.height
+        if aspectRate > 2.0{
+            VC.view.layer.cornerRadius = 40.0
+        }else{
+            VC.view.layer.cornerRadius = 2.0
+        }
+        VC.view.layer.borderWidth = VC.view.frame.height / 40
+        VC.view.backgroundColor = baseColor
+        VC.view.layer.borderColor = borderColor
+    }
+    
+    func sizeCalculate(_ size:size) -> Int{
+        var sizeInt = viewScale
+        switch size {
+        case .sentence:sizeInt += 0
+        case .verySmall:sizeInt += 1
+        case .small:sizeInt += 2
+        case .normal:sizeInt += 3
+        case .important:sizeInt += 4
+        case .veryImportant:sizeInt += 5
+        }
+        return sizeInt
     }
     
     func fontAdjust(viewSize:size) -> UIFont{
-        var sizeInt = viewScale
-        switch viewSize {
-        case .small:sizeInt += 1
-        case .normal:sizeInt += 2
-        case .important:sizeInt += 3
-        }
+        let sizeInt = sizeCalculate(viewSize)
         
         switch sizeInt {
-        case 11:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
-        case 12:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 23)!
-        case 13:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 32)!
-        case 21:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 20)!
-        case 22:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 30)!
-        case 23:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 38)!
-        case 31:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 25)!
-        case 32:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 35)!
-        case 33:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 45)!
-        case 41:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 26)!
-        case 42:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 38)!
-        case 43:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 50)!
-        case 51:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 33)!
-        case 52:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 45)!
-        case 53:
-            return UIFont(name: "Hiragino Maru Gothic ProN", size: 60)!
-            
+        case 10:return UIFont(name: "Hiragino Maru Gothic ProN", size: 10)!
+        case 11:return UIFont(name: "Hiragino Maru Gothic ProN", size: 13)!
+        case 12:return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
+        case 13:return UIFont(name: "Hiragino Maru Gothic ProN", size: 23)!
+        case 14:return UIFont(name: "Hiragino Maru Gothic ProN", size: 32)!
+        case 15:return UIFont(name: "Hiragino Maru Gothic ProN", size: 35)!
+        case 20:return UIFont(name: "Hiragino Maru Gothic ProN", size: 11)!
+        case 21:return UIFont(name: "Hiragino Maru Gothic ProN", size: 16)!
+        case 22:return UIFont(name: "Hiragino Maru Gothic ProN", size: 18)!
+        case 23:return UIFont(name: "Hiragino Maru Gothic ProN", size: 27)!
+        case 24:return UIFont(name: "Hiragino Maru Gothic ProN", size: 33)!
+        case 25:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
+        case 30:return UIFont(name: "Hiragino Maru Gothic ProN", size: 12)!
+        case 31:return UIFont(name: "Hiragino Maru Gothic ProN", size: 17)!
+        case 32:return UIFont(name: "Hiragino Maru Gothic ProN", size: 20)!
+        case 33:return UIFont(name: "Hiragino Maru Gothic ProN", size: 27)!
+        case 34:return UIFont(name: "Hiragino Maru Gothic ProN", size: 35)!
+        case 35:return UIFont(name: "Hiragino Maru Gothic ProN", size: 50)!
+        case 40:return UIFont(name: "Hiragino Maru Gothic ProN", size: 14)!
+        case 41:return UIFont(name: "Hiragino Maru Gothic ProN", size: 20)!
+        case 42:return UIFont(name: "Hiragino Maru Gothic ProN", size: 22)!
+        case 43:return UIFont(name: "Hiragino Maru Gothic ProN", size: 31)!
+        case 44:return UIFont(name: "Hiragino Maru Gothic ProN", size: 33)!
+        case 45:return UIFont(name: "Hiragino Maru Gothic ProN", size: 40)!
+        case 50:return UIFont(name: "Hiragino Maru Gothic ProN", size: 18)!
+        case 51:return UIFont(name: "Hiragino Maru Gothic ProN", size: 26)!
+        case 52:return UIFont(name: "Hiragino Maru Gothic ProN", size: 30)!
+        case 53:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
+        case 54:return UIFont(name: "Hiragino Maru Gothic ProN", size: 55)!
+        case 55:return UIFont(name: "Hiragino Maru Gothic ProN", size: 70)!
         default:return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
         }
+    }
+    
+    func fontAdjustOfSegmentedControl(_ SC:UISegmentedControl,_ viewSize:size){
+        let font = fontAdjust(viewSize: viewSize)
+        
+        let stringAttributes: [NSAttributedStringKey : UIFont] = [.font:font]
+        
+        SC.setTitleTextAttributes(stringAttributes, for: .normal)
+        SC.layer.cornerRadius = 5
+        SC.clipsToBounds = true
+        SC.tintColor = normalOutletColor
     }
     
     func cornerRadiusAdjust(_ size:CGSize,type:cornerType) -> CGFloat{
@@ -103,4 +151,17 @@ class VisualSetting{
         }
     }
     
+    func completionViewSetting(_ VC:UIViewController) -> CGSize{
+        let aspectRate:CGFloat = 350 / 250
+        var height = VC.view.frame.height * 2/3
+        let deviceAspect = UIScreen.main.bounds.width / UIScreen.main.bounds.height
+        if deviceAspect > 2.0{
+            height = VC.view.frame.height * 4/5
+        }
+        
+        let width = height * aspectRate
+        
+        return CGSize(width: width, height: height)
+        
+    }
 }

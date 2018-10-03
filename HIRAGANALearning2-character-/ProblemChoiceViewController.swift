@@ -27,20 +27,25 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var toHomeButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
+    
+    @IBOutlet weak var choicesSettingLabel: UILabel!
     @IBOutlet weak var cardsLabel: UILabel!
     @IBOutlet weak var hintLabel: UILabel!
     @IBOutlet weak var segmentedControlView: UIView!
-    var VS: VisualSetting!
     
     let realm = try! Realm()
     
     var cardDataArray: [CardData] = []
+    
+    var VS: VisualSetting!
+    var SE: SoundEffect!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layoutSetting()
+        SE = SoundEffect.sharedSoundEffect
         
         selectCardsPV.dataSource = self
         selectCardsPV.delegate = self
@@ -72,17 +77,20 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
         VS = VisualSetting()
         VS.backgraundView(self)
         cardsLabel.backgroundColor = self.view.backgroundColor
+        startButton.backgroundColor = VS.importantOutletColor
         startButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
         cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        choicesSettingLabel.font = VS.fontAdjust(viewSize: .small)
         cardsLabel.font = VS.fontAdjust(viewSize: .small)
         hintLabel.font = VS.fontAdjust(viewSize: .small)
         colorHintLabel.font = VS.fontAdjust(viewSize: .important)
+        VS.fontAdjustOfSegmentedControl(selectHintSC, .small)
         
         selectHintSC.frame = segmentedControlView.frame
         startButton.layer.cornerRadius = VS.cornerRadiusAdjust(startButton.frame.size, type: .normal)
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .normal)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .normal)
+        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -138,6 +146,7 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
             UserDefaults.standard.set(amountOfChoices, forKey: Constants.amountOfChoicesKey)
         }
         let results = realm.objects(Card.self)
+        cardDataArray = []
         for card in results{
             let cardData = CardData.init(card)
             if selectedDeck == -1{
@@ -148,7 +157,35 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
                 }
             }
         }
-        performSegue(withIdentifier: "toGame", sender: nil)
+        if cardDataArray.count < 10{
+            popUp()
+        }else{
+            soundPlay(startButton)
+            performSegue(withIdentifier: "toGame", sender: nil)
+        }
+    }
+    
+    func popUp(){
+        print("popup")
+        let alertController: UIAlertController = UIAlertController(title: "デッキのカードが足りません", message: "カードが10枚以上必要です", preferredStyle: .alert)
+        let card = UIAlertAction(title: "カード編集へ", style: .default, handler:{(action: UIAlertAction!) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.performSegue(withIdentifier: "toCard", sender: nil)
+            }
+        })
+        let cancel = UIAlertAction(title: "デッキを変える", style: .cancel)
+
+        alertController.addAction(card)
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func soundPlay(_ sender: UIButton) {
+        switch sender.tag{
+        case 2:SE.play(.cancel)
+        case 4:SE.play(.start)
+        default:break
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
