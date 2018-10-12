@@ -97,7 +97,7 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         addButton.backgroundColor = VS.importantOutletColor
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         addTitleLabel.font = VS.fontAdjust(viewSize: .important)
@@ -115,13 +115,13 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         textField.font = VS.fontAdjust(viewSize: .normal)
         textField.frame = TFView.frame
         
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-        deleteButton.layer.cornerRadius = VS.cornerRadiusAdjust(deleteButton.frame.size, type: .normal)
-        addButton.layer.cornerRadius = VS.cornerRadiusAdjust(addButton.frame.size, type: .normal)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        deleteButton.buttonTapActionSetting(.circle)
+        addButton.buttonTapActionSetting(.circle)
         
         for button in buttonArray{
-            button.setImage(UIImage(named: "Check"), for: .selected)
+            button.setImage(UIImage(named: "CheckOn"), for: .selected)
             button.backgroundColor = UIColor.clear
         }
     }

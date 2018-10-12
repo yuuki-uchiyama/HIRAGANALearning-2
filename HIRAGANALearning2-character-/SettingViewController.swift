@@ -15,6 +15,8 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var tapBanImage: UIImageView!
     @IBOutlet weak var correctBanImage: UIImageView!
     @IBOutlet weak var incorrectBanImage: UIImageView!
+    
+    @IBOutlet weak var SEView: UIView!
     @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var correctView: UIView!
     @IBOutlet weak var incorrectView: UIView!
@@ -57,12 +59,12 @@ class SettingViewController: UIViewController {
         tapBanImage.isHidden = tapSoundBool
         correctBanImage.isHidden = correctSoundBool
         incorrectBanImage.isHidden = incorrectSoundBool
-        
+        allButtonAlphaChange()
     }
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         defaultButton.backgroundColor = VS.importantOutletColor
         tapButton.backgroundColor = UIColor.clear
         correctButton.backgroundColor = UIColor.clear
@@ -77,18 +79,88 @@ class SettingViewController: UIViewController {
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         defaultButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-        defaultButton.layer.cornerRadius = VS.cornerRadiusAdjust(defaultButton.frame.size, type: .circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        defaultButton.buttonTapActionSetting(.circle)
 
         tapButton.imageFit()
         correctButton.imageFit()
         incorrectButton.imageFit()
+        let viewArray:[UIView] = [tapView, correctView, incorrectView]
+        for view in viewArray{
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(viewTap(_:)))
+            longPress.minimumPressDuration = 0
+            view.addGestureRecognizer(longPress)
+            view.shadowSetting()
+            view.cornerLayout(.verySmall)
+        }
     }
     
     @IBAction func volumeChange(_ sender: UISlider) {
         volume = sender.value
     }
     
+    func buttonAlphaChange(_ bool:Bool,_ view:UIView){
+        if bool{
+            view.alpha = 1.0
+            let shadowSize = view.layer.shadowOffset.height
+            if shadowSize < UIScreen.main.bounds.height / 100{
+                viewUnSelect(view)
+            }
+        }else{
+            view.alpha = 0.2
+            viewSelect(view)
+        }
+    }
+    
+    @objc func viewTap(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            print("tapBegan")
+            viewSelect(sender.view! as UIView)
+        }
+        if  sender.state == .ended {
+            print("tapEnded")
+            viewUnSelect(sender.view! as UIView)
+            if (sender.view?.frame.contains(sender.location(in: SEView)))!{
+                var bool:Bool!
+                switch sender.view{
+                case tapView:
+                    tapSoundBool = !tapSoundBool
+                    tapBanImage.isHidden = tapSoundBool
+                    bool = tapSoundBool
+                case correctView:
+                    correctSoundBool = !correctSoundBool
+                    correctBanImage.isHidden = correctSoundBool
+                    bool = correctSoundBool
+                case incorrectView:
+                    incorrectSoundBool = !incorrectSoundBool
+                    incorrectBanImage.isHidden = incorrectSoundBool
+                    bool = incorrectSoundBool
+                default:break
+                }
+                buttonAlphaChange(bool, sender.view!)
+            }
+        }
+    }
+    
+    func viewSelect(_ view:UIView){
+        let shadowSize = view.layer.shadowOffset.height
+        view.frame.origin.x += shadowSize / 2
+        view.frame.origin.y += shadowSize / 2
+        view.layer.shadowOffset = CGSize(width:shadowSize / 4, height: shadowSize / 4)
+    }
+    
+    func viewUnSelect(_ view:UIView){
+        let shadowSize = view.layer.shadowOffset.height
+        view.frame.origin.x -= shadowSize * 2
+        view.frame.origin.y -= shadowSize * 2
+        view.layer.shadowOffset = CGSize(width: shadowSize * 4, height: shadowSize * 4)
+    }
+    
+    func allButtonAlphaChange(){
+        buttonAlphaChange(tapSoundBool,tapView)
+        buttonAlphaChange(incorrectSoundBool, incorrectView)
+        buttonAlphaChange(correctSoundBool, correctView)
+    }
     
     @IBAction func tapSoundChange(_ sender: UIButton) {
         tapSoundBool = !tapSoundBool
@@ -114,9 +186,7 @@ class SettingViewController: UIViewController {
         correctSoundBool = false
         incorrectSoundBool = false
         volumeSlider.value = volume
-        tapBanImage.isHidden = tapSoundBool
-        correctBanImage.isHidden = correctSoundBool
-        incorrectBanImage.isHidden = incorrectSoundBool
+        allButtonAlphaChange()
     }
     
     

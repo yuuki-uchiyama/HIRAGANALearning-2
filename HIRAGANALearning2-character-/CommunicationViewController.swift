@@ -28,7 +28,7 @@ class CommunicationViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         exportButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
@@ -38,9 +38,9 @@ class CommunicationViewController: UIViewController {
         exportButton.titleLabel?.textAlignment = NSTextAlignment.center
         importButton.titleLabel?.textAlignment = NSTextAlignment.center
         
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-        exportButton.layer.cornerRadius = VS.cornerRadiusAdjust(exportButton.frame.size, type: .normal)
-        importButton.layer.cornerRadius = VS.cornerRadiusAdjust(importButton.frame.size, type: .normal)
+        toHomeButton.buttonTapActionSetting(.circle)
+        exportButton.buttonTapActionSetting(.circle)
+        importButton.buttonTapActionSetting(.circle)
     }
     
     @IBAction func soundPlay(_ sender: UIButton) {

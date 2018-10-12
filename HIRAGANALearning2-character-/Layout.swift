@@ -28,7 +28,7 @@ class VisualSetting{
     }
     
     var baseColor: UIColor!
-    var borderColor: CGColor!
+    var borderColor: UIColor!
     var normalOutletColor: UIColor!
     var importantOutletColor: UIColor!
     
@@ -45,7 +45,8 @@ class VisualSetting{
 //            X,XS,XR
         case 740.0 ..< 900.0:viewScale = 40
 //            iPad
-        default:viewScale = 50
+        case 900.0 ..< 1200.0:viewScale = 50
+        default:viewScale = 60
         }
         colorSetting()
     }
@@ -53,29 +54,29 @@ class VisualSetting{
     func colorSetting(){
         if UserDefaults.standard.bool(forKey: Constants.HiraganaKey){
             baseColor = UIColor.flatSandDark
-            borderColor = UIColor.flatOrange.cgColor
+            borderColor = UIColor.flatOrange
             let outletColors = ColorSchemeOf(.triadic, color: baseColor, isFlatScheme: true)
             normalOutletColor = outletColors[1]
             importantOutletColor = UIColor.flatWatermelonDark
         }else{
             baseColor = UIColor.flatPowderBlueDark
-            borderColor = UIColor.flatBlue.cgColor
+            borderColor = UIColor.flatBlue
             let outletColors = ColorSchemeOf(.triadic, color: baseColor, isFlatScheme: true)
             normalOutletColor = outletColors[4]
             importantOutletColor = UIColor.flatWatermelon
         }
     }
     
-    func backgraundView(_ VC:UIViewController){
+    func backgraundView(_ view:UIView){
         let aspectRate = UIScreen.main.bounds.width / UIScreen.main.bounds.height
         if aspectRate > 2.0{
-            VC.view.layer.cornerRadius = 40.0
+            view.layer.cornerRadius = 40.0
         }else{
-            VC.view.layer.cornerRadius = 2.0
+            view.layer.cornerRadius = 2.0
         }
-        VC.view.layer.borderWidth = VC.view.frame.height / 40
-        VC.view.backgroundColor = baseColor
-        VC.view.layer.borderColor = borderColor
+        view.layer.borderWidth = view.frame.height / 40
+        view.backgroundColor = baseColor
+        view.layer.borderColor = borderColor.cgColor
     }
     
     func sizeCalculate(_ size:size) -> Int{
@@ -99,7 +100,7 @@ class VisualSetting{
         case 11:return UIFont(name: "Hiragino Maru Gothic ProN", size: 13)!
         case 12:return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
         case 13:return UIFont(name: "Hiragino Maru Gothic ProN", size: 23)!
-        case 14:return UIFont(name: "Hiragino Maru Gothic ProN", size: 32)!
+        case 14:return UIFont(name: "Hiragino Maru Gothic ProN", size: 28)!
         case 15:return UIFont(name: "Hiragino Maru Gothic ProN", size: 35)!
         case 20:return UIFont(name: "Hiragino Maru Gothic ProN", size: 11)!
         case 21:return UIFont(name: "Hiragino Maru Gothic ProN", size: 16)!
@@ -120,11 +121,17 @@ class VisualSetting{
         case 44:return UIFont(name: "Hiragino Maru Gothic ProN", size: 33)!
         case 45:return UIFont(name: "Hiragino Maru Gothic ProN", size: 40)!
         case 50:return UIFont(name: "Hiragino Maru Gothic ProN", size: 18)!
-        case 51:return UIFont(name: "Hiragino Maru Gothic ProN", size: 26)!
+        case 51:return UIFont(name: "Hiragino Maru Gothic ProN", size: 24)!
         case 52:return UIFont(name: "Hiragino Maru Gothic ProN", size: 30)!
         case 53:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
-        case 54:return UIFont(name: "Hiragino Maru Gothic ProN", size: 55)!
+        case 54:return UIFont(name: "Hiragino Maru Gothic ProN", size: 56)!
         case 55:return UIFont(name: "Hiragino Maru Gothic ProN", size: 70)!
+        case 60:return UIFont(name: "Hiragino Maru Gothic ProN", size: 18)!
+        case 61:return UIFont(name: "Hiragino Maru Gothic ProN", size: 30)!
+        case 62:return UIFont(name: "Hiragino Maru Gothic ProN", size: 34)!
+        case 63:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
+        case 64:return UIFont(name: "Hiragino Maru Gothic ProN", size: 65)!
+        case 65:return UIFont(name: "Hiragino Maru Gothic ProN", size: 70)!
         default:return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
         }
     }
@@ -149,6 +156,11 @@ class VisualSetting{
         case .circle:
             return size.height / 2.0
         }
+    }
+    
+    func borderMake(view:UIView,side:CGFloat,color:UIColor){
+        view.layer.borderWidth = side / 100
+        view.layer.borderColor = color.cgColor
     }
     
     func completionViewSetting(_ VC:UIViewController) -> CGSize{

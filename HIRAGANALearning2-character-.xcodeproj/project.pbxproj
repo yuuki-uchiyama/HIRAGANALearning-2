@@ -20,6 +20,7 @@
 		81F2EDCB2143C58000D5D47D /* ProblemSetting2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDCA2143C58000D5D47D /* ProblemSetting2View.swift */; };
 		81F2EDCF214BC1A700D5D47D /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2EDCD214BC1A600D5D47D /* CardCollectionViewCell.swift */; };
 		81F2EDD0214BC1A700D5D47D /* CardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81F2EDCE214BC1A600D5D47D /* CardCollectionViewCell.xib */; };
+		81F42F68216F53010002A760 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F42F67216F53010002A760 /* Extension.swift */; };
 		81F5821C2141053A006556BF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821B2141053A006556BF /* File.swift */; };
 		81F5822021415A87006556BF /* GameSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F5821F21415A87006556BF /* GameSystem.swift */; };
 		81F7E3AE213EDF5800C9D654 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7E3AD213EDF5800C9D654 /* AppDelegate.swift */; };
@@ -63,6 +64,7 @@
 		81F2EDCA2143C58000D5D47D /* ProblemSetting2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemSetting2View.swift; sourceTree = "<group>"; };
 		81F2EDCD214BC1A600D5D47D /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardCollectionViewCell.swift; path = "HIRAGANALearning2-character-/CollectionView/CardCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		81F2EDCE214BC1A600D5D47D /* CardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CardCollectionViewCell.xib; path = "HIRAGANALearning2-character-/CollectionView/CardCollectionViewCell.xib"; sourceTree = SOURCE_ROOT; };
+		81F42F67216F53010002A760 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		81F5821B2141053A006556BF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		81F5821F21415A87006556BF /* GameSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSystem.swift; sourceTree = "<group>"; };
 		81F7E3AA213EDF5800C9D654 /* HIRAGANALearning2-character-.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HIRAGANALearning2-character-.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +186,7 @@
 				81F7E3D7213EEC2500C9D654 /* ImportViewController.swift */,
 				81F7E3D9213EEC3B00C9D654 /* ExportViewController.swift */,
 				81F7E3B1213EDF5800C9D654 /* Main.storyboard */,
+				81F42F67216F53010002A760 /* Extension.swift */,
 				81F5821F21415A87006556BF /* GameSystem.swift */,
 				81C6A4EC215A88570088312B /* Layout.swift */,
 				81EC35572152B72C00D8411D /* SwitchControlSystem.swift */,
@@ -356,6 +359,7 @@
 				81F7E3C2213EE67200C9D654 /* LevelChoiceViewController.swift in Sources */,
 				81F2EDCF214BC1A700D5D47D /* CardCollectionViewCell.swift in Sources */,
 				81F7E3B0213EDF5800C9D654 /* ViewController.swift in Sources */,
+				81F42F68216F53010002A760 /* Extension.swift in Sources */,
 				81F7E3CA213EE77700C9D654 /* ResultViewController.swift in Sources */,
 				81F7E3E82140536300C9D654 /* MultipleSwitchViewController.swift in Sources */,
 				81EC35582152B72C00D8411D /* SwitchControlSystem.swift in Sources */,
@@ -535,7 +539,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.STAPP.HIRAGANALearning2-character-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -555,7 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.STAPP.HIRAGANALearning2-character-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

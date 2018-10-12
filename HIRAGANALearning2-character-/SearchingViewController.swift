@@ -26,17 +26,22 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     var positionOfAnswerCharacters: [CGRect]!
     var hintView: UIView!
     var answerImage: UIImage!
+    
+    
     var optionsArray: [String]!
     var choicesArray: [String]!
+    var amountOfChoices:Int!
     var positionOfChoices: [CGRect]!
     
-    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
-    let useSimilarBool = UserDefaults.standard.bool(forKey:Constants.useSimilarKey)
-    let useDakuonBool = UserDefaults.standard.bool(forKey:Constants.useDakuonKey)
-    let useYouonBool = UserDefaults.standard.bool(forKey:Constants.useYouonKey)
-    let useColorHintBool = UserDefaults.standard.bool(forKey:Constants.useColorHintKey)
-    let amountOfChoices = UserDefaults.standard.integer(forKey: Constants.amountOfChoicesKey)
+    var userDefaults = UserDefaults.standard
+    var HiraganaKatakanaBool:Bool!
+    var characterShowUpBool:Bool!
+    var useSimilarBool:Bool!
+    var useDakuonBool:Bool!
+    var useYouonBool:Bool!
+    var useColorHintBool:Bool!
+    var amountLevel:Int!
+    var gameLevel:Int!
     
     var completionView: CompletionView!
     
@@ -48,7 +53,7 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     var perfectAnswerBool = true
     var newProblemBool = true
     
-    let gameSystem = GameSystem().self
+    var gameSystem:GameSystem!
     let switchKey = UserDefaults.standard.integer(forKey: Constants.SwitchKey)
     var switchControl: SwitchControlSystem!
     
@@ -62,6 +67,18 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         layoutSetting()
         SE = SoundEffect.sharedSoundEffect
         
+        HiraganaKatakanaBool = userDefaults.bool(forKey: Constants.HiraganaKey)
+        characterShowUpBool = userDefaults.bool(forKey: Constants.characterShowUpKey)
+        useSimilarBool = userDefaults.bool(forKey: Constants.useSimilarKey)
+        useDakuonBool = userDefaults.bool(forKey: Constants.useDakuonKey)
+        useYouonBool = userDefaults.bool(forKey: Constants.useYouonKey)
+        useColorHintBool = userDefaults.bool(forKey: Constants.useColorHintKey)
+        amountLevel = userDefaults.integer(forKey: Constants.amountLevelKey)
+        gameLevel = userDefaults.integer(forKey: Constants.gameLevelKey)
+        
+        gameSystem = GameSystem()
+        amountOfChoices = gameSystem.amountCalcurate(amountLevel,gameLevel)
+        
         // Do any additional setup after loading the view.
     }
     
@@ -69,7 +86,6 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         super.viewWillAppear(animated)
         
         currentCDArray = cardDataArray
-        print(currentCDArray.count)
         problemSetting()
         answerSetting()
         problemNumberLabel.text = "あと\(problemNumber)問"
@@ -81,7 +97,9 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     
     func layoutSetting(){
         VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
+        VS.borderMake(view: choicesView, side: choicesView.frame.height, color:UIColor.red)
+        choicesView.layer.borderColor = VS.borderColor.cgColor
         openMenuButton.backgroundColor = UIColor.clear
         problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
         answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)
@@ -125,9 +143,21 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             }else{
                 button.setTitleColor(UIColor.flatBlack, for: .normal)
             }
-            button.backgroundColor = UIColor.clear
+
             button.addTarget(self, action: #selector(buttonTaped(_:)), for: .touchUpInside)
             choicesView.addSubview(button)
+            
+            button.backgroundColor = UIColor.clear
+            button.frame.origin = CGPoint(x: self.view.center.x, y: self.view.frame.height)
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                button.frame.origin = self.positionOfChoices[i].origin
+            }, completion: {(finished:Bool) in
+                button.backgroundColor = UIColor.groupTableViewBackground
+                button.buttonTapActionSetting(.circle)
+            })
+            
+
+            
         }
         
         let label = UILabel(frame: positionOfAnswerCharacters[0])
@@ -185,10 +215,6 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             answerCharacterArray.remove(at: 0)
             positionOfAnswerCharacters.remove(at: 0)
             
-            let choicesSubviews = choicesView.subviews
-            for subview in choicesSubviews{
-                subview.removeFromSuperview()
-            }
             if answerCharacterArray.isEmpty{ //単語完成した場合
                 SE.play(.fanfare)
                 if newProblemBool{
@@ -200,6 +226,10 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
                 print("問題文字数：\(totalCharacterCount)　正解文字数：\(perfectAnswerCount)")
                 let answerSubviews = answerView.subviews
                 for subview in answerSubviews{
+                    subview.removeFromSuperview()
+                }
+                let choicesSubviews = self.choicesView.subviews
+                for subview in choicesSubviews{
                     subview.removeFromSuperview()
                 }
                 
@@ -223,7 +253,15 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
                 }
             }else{ //まだ文字が残ってる場合
                 SE.play(.correct)
-                answerSetting()
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    let choicesSubviews = self.choicesView.subviews
+                    for subview in choicesSubviews{
+                        subview.alpha = 0.0
+                    }
+                }, completion: {(finished:Bool) in
+                    self.deleteChoices()
+                    self.answerSetting()
+                })
             }
         }else{ //間違えた場合
             SE.play(.incorrect)
@@ -231,6 +269,13 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             if !characterShowUpBool && hintView.frame.height >= 1.0{
                 hintView.frame.size.height -= positionOfAnswerCharacters[0].height / 4
             }
+        }
+    }
+    
+    func deleteChoices(){
+        let choicesSubviews = self.choicesView.subviews
+        for subview in choicesSubviews{
+            subview.removeFromSuperview()
         }
     }
     

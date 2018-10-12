@@ -21,12 +21,13 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var toHomeButton: UIButton!
     @IBOutlet weak var decisionButton: UIButton!
-    @IBOutlet weak var cursorSpeedTextField: UITextField!
+    @IBOutlet weak var cursorSpeedButton: UIButton!
     var cursorSpeed:Float = 0.0
     var selectedRow =  0
     @IBOutlet weak var decisionSwitchOutlet: UIButton!
     var decisionSwitch = ""
     
+    var cursorAlert: UIAlertController!
     var alertController: UIAlertController!
     var cursorSpeedPickerView: UIPickerView = UIPickerView()
     var cursorSpeedArray:[Float] = [0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
@@ -46,19 +47,9 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
         cursorSpeedPickerView.dataSource = self
         cursorSpeedPickerView.delegate = self
         
-        let toolbar = UIToolbar(frame: CGRect(x:0, y:0, width:0, height:35))
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
-        toolbar.setItems([cancelItem, doneItem], animated: true)
-        self.cursorSpeedTextField.inputView = cursorSpeedPickerView
-        self.cursorSpeedTextField.inputAccessoryView = toolbar
-        
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(done))
-        self.view.addGestureRecognizer(tapGesture)
-        
         if userDefaults.integer(forKey: Constants.SwitchKey) == 1{
             cursorSpeed = userDefaults.float(forKey: Constants.cursorSpeedKey)
-            cursorSpeedTextField.text = String(cursorSpeed)
+            cursorSpeedButton.setTitle(String(cursorSpeed), for: .normal)
             decisionSwitch = userDefaults.string(forKey: Constants.singleDecisionKey)!
             decisionSwitchOutlet.setTitle(decisionSwitch, for: .normal)
         }
@@ -67,9 +58,8 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         decisionButton.backgroundColor = VS.importantOutletColor
-        decisionSwitchOutlet.backgroundColor = UIColor.white
         
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         cursorSpeedTitleLabel.font = VS.fontAdjust(viewSize: .important)
@@ -80,14 +70,14 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         decisionButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         
-        cursorSpeedTextField.font = VS.fontAdjust(viewSize: .important)
+        cursorSpeedButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
         decisionSwitchOutlet.titleLabel?.font = VS.fontAdjust(viewSize: .important)
         
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-        decisionButton.layer.cornerRadius = VS.cornerRadiusAdjust(decisionButton.frame.size, type: .normal)
-        cursorSpeedTextField.layer.cornerRadius = VS.cornerRadiusAdjust(cursorSpeedTextField.frame.size, type: .small)
-        decisionSwitchOutlet.layer.cornerRadius = VS.cornerRadiusAdjust(decisionSwitchOutlet.frame.size, type: .small)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        decisionButton.buttonTapActionSetting(.circle)
+        cursorSpeedButton.buttonTapActionSetting(.circle)
+        decisionSwitchOutlet.buttonTapActionSetting(.circle)
 
         lineView.layer.cornerRadius = lineView.frame.width / 5
         lineView.layer.borderWidth = 4.0
@@ -103,21 +93,60 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
         return cursorSpeedArray.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return String(cursorSpeedArray[row])
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var text = ""
+        if row > 0{
+            text = String(cursorSpeedArray[row])
+        }
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: pickerView.frame.size.height / 3))
+        label.textAlignment = .center
+        label.text = text
+        label.font = UIFont(name: "Hiragino Maru Gothic ProN", size: 25)!
+        label.adjustsFontSizeToFitWidth = true
+        return label
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedRow = row
+        cursorSpeed = cursorSpeedArray[row]
+        if row == 0{
+            cursorSpeedButton.setTitle("", for: .normal)
+        }else{
+            cursorSpeedButton.setTitle(String(cursorSpeed), for: .normal)
+        }
+    }
+    
+    @IBAction func cursorSpeed(_ sender: Any) {
+        cursorAlert = UIAlertController(title: "カーソル移動のスピード設定", message: "下記の中から選んでください\n\n\n\n\n", preferredStyle: .alert)
+        let  cancel = UIAlertAction(title: "キャンセル", style: .default, handler:{
+            (action: UIAlertAction!) -> Void in
+            self.cancel()
+        })
+        let ok = UIAlertAction(title: "OK", style: .destructive, handler:{
+            (action: UIAlertAction!) -> Void in
+            self.cursorSpeedAdded()
+        })
+        
+        
+        cursorAlert.addAction(cancel)
+        cursorAlert.addAction(ok)
+        present(cursorAlert, animated: true, completion: { () -> Void in
+            let frame = CGRect(x: 0, y: 50, width: self.cursorAlert.view.frame.width * 0.5, height: 90)
+            self.cursorSpeedPickerView = UIPickerView(frame: frame)
+            self.cursorSpeedPickerView.dataSource = self
+            self.cursorSpeedPickerView.delegate = self
+            self.cursorSpeedPickerView.center.x = self.cursorAlert.view.frame.width / 2
+            self.cursorAlert.view.addSubview(self.cursorSpeedPickerView)
+        })
+        
+    }
+    @objc func cursorSpeedAdded(){
+        cursorAlert.dismiss(animated: true, completion: nil)
     }
     
     @objc func cancel(){
-        cursorSpeedTextField.endEditing(true)
-    }
-    @objc func done(){
-        cursorSpeed = cursorSpeedArray[selectedRow]
-        cursorSpeedTextField.text = String(cursorSpeed)
-        cursorSpeedTextField.endEditing(true)
+        cursorSpeed = 0
+        cursorSpeedButton.setTitle("", for: .normal)
+        cursorAlert.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func decisionSwitch(_ sender: Any) {

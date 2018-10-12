@@ -31,8 +31,8 @@ class CardViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        
+        VS.backgraundView(self.view)
+
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
@@ -46,11 +46,11 @@ class CardViewController: UIViewController {
         editButton.titleLabel?.textAlignment = NSTextAlignment.center
         deckButton.titleLabel?.textAlignment = NSTextAlignment.center
 
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-        addButton.layer.cornerRadius = VS.cornerRadiusAdjust(addButton.frame.size, type: .small)
-        editButton.layer.cornerRadius = VS.cornerRadiusAdjust(editButton.frame.size, type: .small)
-        deckButton.layer.cornerRadius = VS.cornerRadiusAdjust(deckButton.frame.size, type: .small)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        addButton.buttonTapActionSetting(.circle)
+        editButton.buttonTapActionSetting(.circle)
+        deckButton.buttonTapActionSetting(.circle)
     }
     
     @IBAction func cancel(_ sender: Any) {

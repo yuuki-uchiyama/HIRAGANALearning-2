@@ -66,6 +66,7 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
     
     func layoutSetting(){
         VS = VisualSetting()
+        VS.borderMake(view: self, side: self.frame.height, color: VS.borderColor)
         segmentControl.frame = SCView.frame
         VS.fontAdjustOfSegmentedControl(segmentControl, .verySmall)
     }

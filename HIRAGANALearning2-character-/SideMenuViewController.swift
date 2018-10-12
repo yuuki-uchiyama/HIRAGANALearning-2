@@ -37,7 +37,7 @@ class SideMenuViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         toLevelChoiceButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         tapSoundButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
@@ -47,7 +47,7 @@ class SideMenuViewController: UIViewController {
         
         let buttonArray:[UIButton] = [toHomeButton,toLevelChoiceButton,tapSoundButton,correctSoundButton,incorrectSoundButton,changeProblemButton]
         for button in buttonArray{
-            button.layer.cornerRadius = VS.cornerRadiusAdjust(button.frame.size, type: .small)
+            button.buttonTapActionSetting(.circle)
         }
         
         if !UserDefaults.standard.bool(forKey: Constants.tapSoundKey){

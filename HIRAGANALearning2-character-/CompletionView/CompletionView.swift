@@ -15,6 +15,7 @@ class CompletionView: UIView {
     @IBOutlet weak var sameProblemButton: UIButton!
     @IBOutlet weak var nextProblemButton: UIButton!
     
+    @IBOutlet weak var SEIKAILabel: UILabel!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -30,6 +31,26 @@ class CompletionView: UIView {
         let view = Bundle.main.loadNibNamed("CompletionView", owner: self, options: nil)?.first as! UIView
         view.frame = self.bounds
         self.addSubview(view)
+        
+        layoutSetting()
+    }
+    
+    func layoutSetting(){
+        let VS = VisualSetting()
+        VS.borderMake(view: self, side: self.frame.height, color: VS.borderColor)
+        self.cornerLayout(.small)
+        self.clipsToBounds = true
+        nextProblemButton.backgroundColor = VS.importantOutletColor
+        
+        label.font = VS.fontAdjust(viewSize: .normal)
+        label.adjustsFontSizeToFitWidth = true
+        SEIKAILabel.font = VS.fontAdjust(viewSize: .normal)
+        sameProblemButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        nextProblemButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
+        
+        sameProblemButton.buttonTapActionSetting(.circle)
+        nextProblemButton.buttonTapActionSetting(.circle)
+        
     }
 
     /*

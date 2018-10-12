@@ -32,6 +32,7 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
     @IBOutlet weak var cardsLabel: UILabel!
     @IBOutlet weak var hintLabel: UILabel!
     @IBOutlet weak var segmentedControlView: UIView!
+    @IBOutlet weak var colorHintView: UIView!
     
     let realm = try! Realm()
     
@@ -75,8 +76,17 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
     
     func layoutSetting(){
         VS = VisualSetting()
-        VS.backgraundView(self)
-        cardsLabel.backgroundColor = self.view.backgroundColor
+        VS.backgraundView(self.view)
+        choicesSettingLabel.backgroundColor = VS.borderColor
+        cardsLabel.backgroundColor = VS.borderColor
+        hintLabel.backgroundColor = VS.borderColor
+        choicesSettingLabel.cornerLayout(.normal)
+        cardsLabel.cornerLayout(.normal)
+        hintLabel.cornerLayout(.normal)
+        choicesSettingLabel.clipsToBounds = true
+        cardsLabel.clipsToBounds = true
+        hintLabel.clipsToBounds = true
+
         startButton.backgroundColor = VS.importantOutletColor
         startButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
         cancelButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
@@ -84,13 +94,16 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
         choicesSettingLabel.font = VS.fontAdjust(viewSize: .small)
         cardsLabel.font = VS.fontAdjust(viewSize: .small)
         hintLabel.font = VS.fontAdjust(viewSize: .small)
-        colorHintLabel.font = VS.fontAdjust(viewSize: .important)
+        colorHintLabel.font = VS.fontAdjust(viewSize: .veryImportant)
         VS.fontAdjustOfSegmentedControl(selectHintSC, .small)
         
         selectHintSC.frame = segmentedControlView.frame
-        startButton.layer.cornerRadius = VS.cornerRadiusAdjust(startButton.frame.size, type: .normal)
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        startButton.buttonTapActionSetting(.circle)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        
+        VS.borderMake(view: colorHintView, side: colorHintView.frame.height, color: VS.borderColor)
+        colorHintView.cornerLayout(.verySmall)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -139,11 +152,11 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
             let SBool = problemSetting1View.useSimilarBool
             let DBool = problemSetting1View.useDakuonBool
             let YBool = problemSetting1View.useYouonBool
-            let amountOfChoices = problemSetting1View.amountOfChoices
+            let amountLevel = problemSetting1View.amountLevel
             UserDefaults.standard.set(SBool, forKey: Constants.useSimilarKey)
             UserDefaults.standard.set(DBool, forKey: Constants.useDakuonKey)
             UserDefaults.standard.set(YBool, forKey: Constants.useYouonKey)
-            UserDefaults.standard.set(amountOfChoices, forKey: Constants.amountOfChoicesKey)
+            UserDefaults.standard.set(amountLevel, forKey: Constants.amountLevelKey)
         }
         let results = realm.objects(Card.self)
         cardDataArray = []

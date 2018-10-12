@@ -55,8 +55,10 @@ class LevelChoiceViewController: UIViewController {
         characterHintButton.setImage(UIImage(named: "CheckOn"), for: .selected)
         characterHintButton.isSelected = characterShowUpBool
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(modeChange))
-        modeView.addGestureRecognizer(tapGesture)
+        let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(viewTap(_:)))
+        pressGesture.minimumPressDuration = 0
+        modeView.addGestureRecognizer(pressGesture)
+        modeView.isUserInteractionEnabled = true
         
         modeLabelChange()
         // Do any additional setup after loading the view.
@@ -64,7 +66,7 @@ class LevelChoiceViewController: UIViewController {
     
     func layoutSetting(){
         VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         characterHintButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         nextButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
@@ -72,9 +74,9 @@ class LevelChoiceViewController: UIViewController {
         HiraganaModeLabel.font = VS.fontAdjust(viewSize: .verySmall)
         KatakanaModeLabel.font = VS.fontAdjust(viewSize: .verySmall)
         
-        characterHintButton.layer.cornerRadius = VS.cornerRadiusAdjust(characterHintButton.frame.size, type: .normal)
-        nextButton.layer.cornerRadius = VS.cornerRadiusAdjust(characterHintButton.frame.size, type: .normal)
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
+        characterHintButton.buttonTapActionSetting(.circle)
+        nextButton.buttonTapActionSetting(.circle)
+        cancelButton.buttonTapActionSetting(.circle)
         HiraganaModeLabel.layer.cornerRadius = VS.cornerRadiusAdjust(HiraganaModeLabel.frame.size, type: .small)
         KatakanaModeLabel.layer.cornerRadius = VS.cornerRadiusAdjust(KatakanaModeLabel.frame.size, type: .small)
 
@@ -94,6 +96,7 @@ class LevelChoiceViewController: UIViewController {
         }else{
             modeView.bringSubview(toFront: KatakanaModeLabel)
         }
+        modeView.shadowSetting()
         
         VS.fontAdjustOfSegmentedControl(levelChoiceSC, .small)
     }
@@ -101,15 +104,48 @@ class LevelChoiceViewController: UIViewController {
     @objc func modeChange(){
         modeBool = !modeBool
         UserDefaults.standard.set(modeBool, forKey: Constants.HiraganaKey)
+        setThemeUsingPrimaryColor(VS.normalOutletColor, with: .contrast)
+        self.loadView()
+        
+        var label:UILabel!
+        if modeBool{
+            label = HiraganaModeLabel
+        }else{
+            label = KatakanaModeLabel
+        }
+        label.alpha = 0.0
+        level1.alpha = 0.0
+        level2.alpha = 0.0
+        level3.alpha = 0.0
         modeLabelChange()
         VS.colorSetting()
-        setThemeUsingPrimaryColor(VS.normalOutletColor, with: .contrast)
 
-        self.loadView()
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
             self.viewDidLoad()
+            label.alpha = 1.0
+            self.level1.alpha = 1.0
+            self.level2.alpha = 1.0
+            self.level3.alpha = 1.0
         })
         SE.play(.modeChange)
+    }
+    
+    @objc func viewTap(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let shadowSize = sender.view!.layer.shadowOffset.height
+            sender.view!.frame.origin.x += shadowSize / 2
+            sender.view!.frame.origin.y += shadowSize / 2
+            sender.view!.layer.shadowOffset = CGSize(width:shadowSize / 4, height: shadowSize / 4)
+        }
+        if  sender.state == .ended {
+            let shadowSize = sender.view!.layer.shadowOffset.height
+            sender.view!.frame.origin.x -= shadowSize * 2
+            sender.view!.frame.origin.y -= shadowSize * 2
+            sender.view!.layer.shadowOffset = CGSize(width: shadowSize * 4, height: shadowSize * 4)
+            if (sender.view?.frame.contains(sender.location(in: self.view)))!{
+                modeChange()
+            }
+        }
     }
     
     func modeLabelChange(){

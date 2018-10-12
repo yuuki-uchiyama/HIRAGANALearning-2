@@ -64,8 +64,8 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        
+        VS.backgraundView(self.view)
+
         segmentedControl.frame = SCView.frame
         
         titleLabel.font = VS.fontAdjust(viewSize: .important)
@@ -75,7 +75,7 @@ class EditDeckViewController: UIViewController, UICollectionViewDataSource, UICo
         editEndButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         VS.fontAdjustOfSegmentedControl(segmentedControl, .normal)
         
-        editEndButton.layer.cornerRadius = VS.cornerRadiusAdjust(editEndButton.frame.size, type: .small)
+        editEndButton.buttonTapActionSetting(.circle)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

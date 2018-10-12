@@ -11,176 +11,6 @@ import Foundation
 import UIKit
 import RealmSwift
 
-extension Array where Element: Equatable {
-    mutating func remove(value: Element) {
-        if let i = self.index(of: value) {
-            self.remove(at: i)
-        }
-    }
-}
-
-extension UIButton{
-    func imageFit(){
-        self.imageView?.contentMode = .scaleAspectFit
-        self.contentHorizontalAlignment = .fill
-        self.contentVerticalAlignment = .fill
-    }
-    
-    func setBackgroundColor(_ color: UIColor, for state: UIControlState) {
-            let image = color.image
-            setBackgroundImage(image, for: state)
-    }
-}
-
-extension UIColor {
-    var image: UIImage? {
-        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-        UIGraphicsBeginImageContext(rect.size)
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        context.setFillColor(self.cgColor)
-        context.fill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
-}
-
-extension String{
-    var isTone: Bool {
-        let range = "^[ぁぃぅぇぉゃゅょ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isDakuten: Bool{
-        let range = "^[ゔがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    
-    var isHiragana: Bool {
-        let range = "^[ぁ-ゞ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    
-    var isKatakana: Bool {
-        let range = "^[ァ-ヾ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    
-    var isLineA: Bool {
-        let range = "^[あいうえおぁぃぅぇぉゔ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineK: Bool {
-        let range = "^[か-ご]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineS: Bool {
-        let range = "^[さ-ぞ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineT: Bool {
-        let range = "^[たちつてとだぢづでど]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineN: Bool {
-        let range = "^[な-の]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineH: Bool {
-        let range = "^[は-ぽ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineM: Bool {
-        let range = "^[ま-も]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineY: Bool {
-        let range = "^[ゃ-よ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineR: Bool {
-        let range = "^[ら-ろ]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    var isLineW: Bool {
-        let range = "^[ゎわをんっー]+$"
-        return NSPredicate(format: "SELF MATCHES %@", range).evaluate(with: self)
-    }
-    
-    func makeYouon() -> [String]{
-        var stringArray: [String] = []
-        for i in 0 ..< self.count{
-            let string = String(self[self.index(self.startIndex, offsetBy: i) ..< self.index(self.startIndex, offsetBy: i+1)])
-            var s = ""
-            
-            if !string.isTone{
-                if i == self.count - 1{
-                    s = string
-                }else{
-                    let nextString = String(self[self.index(self.startIndex, offsetBy: i+1) ..< self.index(self.startIndex, offsetBy: i+2)])
-                    if nextString.isTone{
-                        s = string + nextString
-                    }else{
-                        s = string
-                    }
-                }
-                stringArray.append(s)
-            }
-        }
-        return stringArray
-    }
-    
-//    カード編集・追加用
-    var isUsableString: Bool {
-        let usableStringArray = ["あ","い","う","え","お","か","き","く","け","こ","さ","し","す","せ","そ","た","ち","つ","て","と","な","に","ぬ","ね","の","は","ひ","ふ","へ","ほ","ま","み","む","め","も","や","ゆ","よ","ら","り","る","れ","ろ","わ","を","ん","ゔ","が","ぎ","ぐ","げ","ご","ざ","じ","ず","ぜ","ぞ","だ","ぢ","づ","で","ど","ば","び","ぶ","べ","ぼ","ぱ","ぴ","ぷ","ぺ","ぽ","ふぁ","ゔぁ","すぃ","ずぃ","てぃ","でぃ","ふぃ","うぃ","ゔぃ","とぅ","どぅ","しぇ","じぇ","ちぇ","ぢぇ","ふぇ","うぇ","ゔぇ","ふぉ","うぉ","ゔぉ","きゃ","ぎゃ","しゃ","じゃ","ちゃ","ぢゃ","にゃ","ひゃ","びゃ","ぴゃ","みゃ","りゃ","きゅ","ぎゅ","しゅ","じゅ","ちゅ","ぢゅ","にゅ","ひゅ","びゅ","ぴゅ","みゅ","りゅ","きょ","ぎょ","しょ","じょ","ちょ","ぢょ","にょ","ひょ","びょ","ぴょ","みょ","りょ","っ","ー"]
-        
-        if self == ""{
-            return false
-        }
-        let characterArray = self.makeYouon()
-        for chara in characterArray{
-            if !usableStringArray.contains(chara){
-                return false
-            }
-        }
-        return true
-    }
-    
-    var isCountOver: Bool {
-        if self.count > 10{
-            return true
-        }else{
-            return false
-        }
-    }
-    
-    func removeSpaceAndTyouon() -> String{
-        let string = self.replacingOccurrences(of: " ", with: "")
-        return string.replacingOccurrences(of: "-", with: "ー")
-    }
-    
-    func katakanaToHiragana(_ bool:Bool) -> String {
-        return self.transform(transform: .hiraganaToKatakana, reverse: bool)
-    }
-    
-    private func transform(transform: StringTransform, reverse: Bool) -> String {
-        if let string = self.applyingTransform(transform, reverse: reverse) {
-            return string
-        } else {
-            return ""
-        }
-    }
-    
-    func containsString(_ str:String) -> Bool {
-        return NSPredicate(format: "SELF CONTAINS %@", str).evaluate(with: self)
-    }
-
-}
-
-
-
-
 class GameSystem{
 //    清音一覧
     var simpleCharacters:[String] = ["あ","い","う","え","お","か","き","く","け","こ","さ","し","す","せ","そ","た","ち","つ","て","と","な","に","ぬ","ね","の","は","ひ","ふ","へ","ほ","ま","み","む","め","も","や","ゆ","よ","ら","り","る","れ","ろ","わ","を","ん"]
@@ -193,39 +23,39 @@ class GameSystem{
     
 //    似た文字のDic
     var similarCharactersDic:[String:[String]] =
-        ["あ":["お", "ぬ", "の", "め"],
-         "い":["け","げ","こ","ぎ","し","じ","に", "り"],
-         "う":["ゔ","ち","ぢ","つ","づ","ふ","ぶ","ぷ", "ら", "る", "ろ"],
-         "ゔ":["う","ち","ぢ","つ","づ","ふ","ぶ","ぷ", "ら", "る", "ろ"],
+        ["あ":["あ","お", "ぬ", "の", "め"],
+         "い":["い","け","げ","こ","ぎ","し","じ","に", "り"],
+         "う":["う","ゔ","ち","ぢ","つ","づ","ふ","ぶ","ぷ", "ら", "る", "ろ"],
+         "ゔ":["ゔ","う","ち","ぢ","つ","づ","ふ","ぶ","ぷ", "ら", "る", "ろ"],
 
-         "え":["ひ","び","ぴ", "る", "れ", "ろ", "わ", "ん"],
-         "お":["あ", "す","ず", "ち","ぢ", "ぬ", "ね", "の", "ま", "み", "む", "め", "わ"],
+         "え":["え","ひ","び","ぴ", "る", "れ", "ろ", "わ", "ん"],
+         "お":["お","あ", "す","ず", "ち","ぢ", "ぬ", "ね", "の", "ま", "み", "む", "め", "わ"],
          
-         "か":["が","な", "ふ","ぶ","ぷ", "や", "ゆ", "ら", "り", "わ"],
-         "き":["ぎ","さ","ざ", "ま", "も"],
-         "く":["ぐ","し","じ", "つ","づ", "て","で", "と","ど", "へ","べ","ぺ"],
-         "け":["げ","い", "さ","ざ", "た","だ", "に", "は","ば","ぱ", "ほ","ぼ","ぽ", "り"],
-         "こ":["ご","い","つ","づ","て","で","に","り"],
-         "が":["か","な", "ふ","ぶ","ぷ", "や", "ゆ", "ら", "り", "わ"],
-         "ぎ":["き","さ","ざ", "ま", "も"],
-         "ぐ":["く","し","じ", "つ","づ", "て","で", "と","ど", "へ","べ","ぺ"],
-         "げ":["け","い", "さ","ざ", "た","だ", "に", "は","ば","ぱ", "ほ","ぼ","ぽ", "り"],
-         "ご":["こ","い","つ","づ","て","で","に","り"],
+         "か":["か","が","な", "ふ","ぶ","ぷ", "や", "ゆ", "ら", "り", "わ"],
+         "き":["き","ぎ","さ","ざ", "ま", "も"],
+         "く":["く","ぐ","し","じ", "つ","づ", "て","で", "と","ど", "へ","べ","ぺ"],
+         "け":["け","げ","い", "さ","ざ", "た","だ", "に", "は","ば","ぱ", "ほ","ぼ","ぽ", "り"],
+         "こ":["こ","ご","い","つ","づ","て","で","に","り"],
+         "が":["が","か","な", "ふ","ぶ","ぷ", "や", "ゆ", "ら", "り", "わ"],
+         "ぎ":["ぎ","き","さ","ざ", "ま", "も"],
+         "ぐ":["ぐ","く","し","じ", "つ","づ", "て","で", "と","ど", "へ","べ","ぺ"],
+         "げ":["げ","け","い", "さ","ざ", "た","だ", "に", "は","ば","ぱ", "ほ","ぼ","ぽ", "り"],
+         "ご":["ご","こ","い","つ","づ","て","で","に","り"],
          
-         "さ":["ざ","き","ぎ","け","げ","ち","ぢ"],
-         "し":["じ","い","く","ぐ","つ","づ","と","ど","ひ","び","ぴ","も","ん"],
-         "す":["ず","お","ま"],
-         "せ":["ぜ","む"],
-         "そ":["ぞ","て","で","る","ろ","を"],
-         "ざ":["さ","き","ぎ","け","げ","ち","ぢ"],
-         "じ":["し","い","く","ぐ","つ","づ","と","ど","ひ","び","ぴ","も","ん"],
-         "ず":["す","お","ま"],
-         "ぜ":["せ","む"],
-         "ぞ":["そ","て","で","る","ろ","を"],
+         "さ":["さ","ざ","き","ぎ","け","げ","ち","ぢ"],
+         "し":["し","じ","い","く","ぐ","つ","づ","と","ど","ひ","び","ぴ","も","ん"],
+         "す":["す","ず","お","ま"],
+         "せ":["せ","ぜ","む"],
+         "そ":["そ","ぞ","て","で","る","ろ","を"],
+         "ざ":["ざ","さ","き","ぎ","け","げ","ち","ぢ"],
+         "じ":["じ","し","い","く","ぐ","つ","づ","と","ど","ひ","び","ぴ","も","ん"],
+         "ず":["ず","す","お","ま"],
+         "ぜ":["ぜ","せ","む"],
+         "ぞ":["ぞ","そ","て","で","る","ろ","を"],
          
          "た":["だ","け","げ","な","に"],
          "ち":["ぢ","う","ゔ","お","さ","ざ","つ","づ","ろ","を"],
-         "つ":["づ","う","ゔ","く","ぐ","こ","ご","し","じ","ち","ぢ","の","ら","ろ","わ"],
+         "つ":["つ","づ","う","ゔ","く","ぐ","こ","ご","し","じ","ち","ぢ","の","ら","ろ","わ"],
          "て":["で","く","ぐ","こ","ご","そ","ぞ","ひ","び","ぴ","へ","べ","ぺ"],
          "と":["ど","く","ぐ","し","じ","を"],
          "だ":["た","け","げ","な","に"],
@@ -262,9 +92,9 @@ class GameSystem{
          "め":["あ","お","ぬ","の","ゆ","わ"],
          "も":["き","ぎ","し","じ","ま"],
          
-         "や":["か","が","わ"],
-         "ゆ":["か","が","め","わ"],
-         "よ":["ま"],
+         "や":["や","か","が","わ"],
+         "ゆ":["ゆ","か","が","め","わ"],
+         "よ":["よ","ま"],
          
          "ら":["う","ゔ","か","が","つ","づ","ろ","わ"],
          "り":["い","か","が","け","げ","こ","ご"],
@@ -382,7 +212,7 @@ class GameSystem{
         var strArray:[String] = []
         if str.count > 1{
             let s1 = String(str[str.index(str.startIndex, offsetBy: 0) ..< str.index(str.startIndex, offsetBy: 1)])
-            let s2 = String(str[str.index(str.startIndex, offsetBy: 0) ..< str.index(str.startIndex, offsetBy: 1)])
+            let s2 = String(str[str.index(str.startIndex, offsetBy: 1) ..< str.index(str.startIndex, offsetBy: 2)]).toneToSingle()
             
             strArray = similarCharactersDic[s1]!
             let s2Array = similarCharactersDic[s2]!
@@ -390,9 +220,8 @@ class GameSystem{
                 strArray.append(str)
             }
         }else{
-            strArray = similarCharactersDic[str]!
-        }
-        
+            strArray = similarCharactersDic[str.toneToSingle()]!
+        }        
         return strArray
     }
 //    選択肢候補を投げると、使用できる拗音が帰ってくる
@@ -478,12 +307,22 @@ class GameSystem{
         return returnArray
     }
     
+    func amountCalcurate(_ amountLevel:Int,_ gameLevel:Int) -> Int{
+        var amountOfChoices = amountLevel * 2
+        if gameLevel == 0{
+            amountOfChoices += 2
+        }
+        return amountOfChoices
+    }
+    
 //    選択肢の抽出メソッド
     func extractCharacter(_ choicesArray:[String],_ answer:[String],_ amountOfChoices:Int) -> [String]{
         var returnArray:[String] = []
         var array: [String] = answer
         
         var strArray = choicesArray
+        
+
         
         for _ in 0 ..< amountOfChoices{
             let i = Int(arc4random_uniform(UInt32(strArray.count)))
@@ -524,12 +363,15 @@ class GameSystem{
                 let width = space.height * 1/2
                 let height = space.height * 1/2
                 var x:CGFloat = 0.0
+                if choices%2 != 0{
+                    x = width/3
+                }
                 var y:CGFloat = 0.0
                 if i < lines{
-                    x = interval - (width / 2) - (interval / 4) + interval * CGFloat(i)
+                    x += interval - (width / 2) - (interval / 4) + interval * CGFloat(i)
                     y = 0.0
                 }else{
-                    x = interval - (width / 2) + (interval / 4) + interval * CGFloat(i - lines)
+                    x += interval - (width / 2) + (interval / 4) + interval * CGFloat(i - lines)
                     y = space.height * 1/2
                 }
                 let rect = CGRect(x: x, y: y, width: width, height: height)

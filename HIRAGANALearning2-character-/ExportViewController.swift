@@ -66,13 +66,13 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        
+        VS.backgraundView(self.view)
+
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         endButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         noCardLabel.font = VS.fontAdjust(viewSize: .important)
         
-        endButton.layer.cornerRadius = VS.cornerRadiusAdjust(endButton.frame.size, type: .small)
+        endButton.buttonTapActionSetting(.circle)
         
         cardCollectionView.layer.borderColor = UIColor.white.cgColor
         cardCollectionView.layer.borderWidth = 5.0

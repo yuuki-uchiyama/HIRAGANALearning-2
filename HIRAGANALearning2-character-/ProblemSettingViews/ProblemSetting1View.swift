@@ -8,9 +8,8 @@
 
 import UIKit
 
-class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
+class ProblemSetting1View: UIView{
     
-
     @IBOutlet weak var displayView: UIView!
     @IBOutlet weak var useSimilarButton: UIButton!
     @IBOutlet weak var useDakuonButton: UIButton!
@@ -26,14 +25,13 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
     @IBOutlet weak var youonLabel: UILabel!
     @IBOutlet weak var choicesLabel: UILabel!
     
-    
-    @IBOutlet weak var choicesPickerView: UIPickerView!
-    let choicesPVArray = ["答えの数と同じ","+1","+2","+3","+4","+5"]
+    @IBOutlet weak var SCView: UIView!
+    @IBOutlet weak var amountLevelSC: UISegmentedControl!
     
     var useSimilarBool = false
     var useDakuonBool = false
     var useYouonBool = false
-    var amountOfChoices = 0
+    var amountLevel = 0
     
     var VS: VisualSetting!
     
@@ -54,9 +52,6 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         
         layoutSetting()
         
-        choicesPickerView.dataSource = self
-        choicesPickerView.delegate = self
-        
         let buttonArray:[UIButton] = [useSimilarButton, useDakuonButton, useYouonButton]
         for button in buttonArray{
             button.setImage(UIImage(named: "CheckOn"), for: .selected)
@@ -74,14 +69,15 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         youonBanImageView.isHidden = useYouonBool
         useYouonButton.isSelected = useYouonBool
         
-        amountOfChoices = UserDefaults.standard.integer(forKey: Constants.amountOfChoicesKey)
-        choicesPickerView.selectRow(amountOfChoices, inComponent: 0, animated: false)
-        
+        amountLevel = UserDefaults.standard.integer(forKey: Constants.amountLevelKey)
+        amountLevelSC.selectedSegmentIndex = amountLevel
         
     }
     
     func layoutSetting(){
         VS = VisualSetting()
+        VS.borderMake(view: self, side: self.frame.height, color: VS.borderColor)
+        self.cornerLayout(.collectionView)
         useSimilarButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         useDakuonButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         useYouonButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
@@ -89,40 +85,20 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         similarLabel.font = VS.fontAdjust(viewSize: .normal)
         dakuonLabel.font = VS.fontAdjust(viewSize: .normal)
         youonLabel.font = VS.fontAdjust(viewSize: .small)
-        choicesLabel.font = VS.fontAdjust(viewSize: .normal)
+        choicesLabel.font = VS.fontAdjust(viewSize: .small)
         
         useSimilarButton.titleLabel?.adjustsFontSizeToFitWidth = true
         useDakuonButton.titleLabel?.adjustsFontSizeToFitWidth = true
         useYouonButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        useSimilarButton.layer.cornerRadius = VS.cornerRadiusAdjust(useSimilarButton.frame.size, type: .small)
-        useDakuonButton.layer.cornerRadius = VS.cornerRadiusAdjust(useDakuonButton.frame.size, type: .small)
-        useYouonButton.layer.cornerRadius = VS.cornerRadiusAdjust(useYouonButton.frame.size, type: .small)
+        useSimilarButton.buttonTapActionSetting(.circle)
+        useDakuonButton.buttonTapActionSetting(.circle)
+        useYouonButton.buttonTapActionSetting(.circle)
+        displayView.cornerLayout(.small)
+        SCView.cornerLayout(.verySmall)
         
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return choicesPVArray.count
-    }
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return pickerView.frame.height / 3
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: pickerView.frame.size.height / 2))
-        label.textAlignment = .center
-        label.text = choicesPVArray[row]
-        label.font = VS.fontAdjust(viewSize: .verySmall)
-        label.adjustsFontSizeToFitWidth = true
-        return label
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        amountOfChoices = row
+        amountLevelSC.frame = SCView.frame
+        VS.fontAdjustOfSegmentedControl(amountLevelSC, .verySmall)
     }
     
     @IBAction func useSimilar(_ sender: UIButton) {
@@ -142,6 +118,11 @@ class ProblemSetting1View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         useYouonBool = sender.isSelected
         youonBanImageView.isHidden = useYouonBool
     }
+    
+    @IBAction func amountLevelChange(_ sender: UISegmentedControl) {
+        amountLevel = sender.selectedSegmentIndex
+    }
+    
     
     /*
     // Only override draw() if you perform custom drawing.

@@ -15,6 +15,7 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
     
     
     @IBOutlet weak var percentLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var rewardImageView: UIImageView!
     var rewardImage:UIImage!
@@ -55,24 +56,25 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
         default:
             break
         }
+        percentLabel.isHidden = true
+        backgroundImageView.isHidden = true
         
         layoutSetting()
         SE = SoundEffect.sharedSoundEffect
-        
-
         
         // Do any additional setup after loading the view.
     }
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        percentLabel.font = VS.fontAdjust(viewSize: .important)
+        VS.backgraundView(self.view)
         oneMoreButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         
-        oneMoreButton.layer.cornerRadius = VS.cornerRadiusAdjust(oneMoreButton.frame.size, type: .normal)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .normal)
+        oneMoreButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        percentLabel.font = VS.fontAdjust(viewSize: .important)
+
     }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
@@ -94,7 +96,7 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         
-        SVProgressHUD.showError(withStatus: "広告を受信できませんでした")
+        SVProgressHUD.showError(withStatus: "広告を受信できませんでした\nインターネットに接続した状態で\nご使用くださると嬉しいです")
         if switchKey > 0{
             let cgRectArray:[CGRect] = [oneMoreButton.frame, toHomeButton.frame]
             switchControl = SwitchControlSystem(switchKey, cgRectArray, self.view, self.view)
@@ -103,17 +105,29 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
     }
     
     func rewardDisplay(){
-        percentLabel.text = "結果　：　\(accuracyRate)%　せいかい！"
+        percentLabel.isHidden = false
+        backgroundImageView.isHidden = false
+        percentLabel.text = "\(accuracyRate)%　せいかい！"
         rewardImageView.image = rewardImage
         
-        let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.duration = 0.3
-        animation.fromValue = 3.0
-        animation.toValue = 1.0
-        animation.autoreverses = false
-        animation.isRemovedOnCompletion = false
-        animation.fillMode = kCAFillModeForwards
-        rewardImageView.layer.add(animation, forKey: nil)
+        let animation1 = CABasicAnimation(keyPath: "transform.scale")
+        animation1.duration = 0.5
+        animation1.fromValue = 3.0
+        animation1.toValue = 1.0
+        animation1.autoreverses = false
+        animation1.isRemovedOnCompletion = false
+        animation1.fillMode = kCAFillModeForwards
+        rewardImageView.layer.add(animation1, forKey: nil)
+        
+        let animation2 = CABasicAnimation(keyPath: "transform.scale")
+        animation2.duration = 0.5
+        animation2.fromValue = 0.0
+        animation2.toValue = 1.0
+        animation2.autoreverses = false
+        animation2.isRemovedOnCompletion = false
+        animation2.fillMode = kCAFillModeForwards
+        percentLabel.layer.add(animation2, forKey: nil)
+        
         SE.play(.stamp)
     }
     

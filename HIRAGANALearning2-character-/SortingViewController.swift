@@ -24,8 +24,10 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     var positionOfAnswerCharacters: [CGRect]!
     var hintView: UIView!
     var answerImage: UIImage!
+    
     var optionsArray: [String]!
     var choicesArray: [String]!
+    var amountOfChoices:Int!
     var positionOfChoices: [CGRect]!
     var selectViewRect = CGRect()
     
@@ -35,13 +37,15 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     var choicesLabelArray: [UILabel] = []
     var answerCount = 0
     
-    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
-    let useSimilarBool = UserDefaults.standard.bool(forKey:Constants.useSimilarKey)
-    let useDakuonBool = UserDefaults.standard.bool(forKey:Constants.useDakuonKey)
-    let useYouonBool = UserDefaults.standard.bool(forKey:Constants.useYouonKey)
-    let useColorHintBool = UserDefaults.standard.bool(forKey:Constants.useColorHintKey)
-    let amountOfChoices = UserDefaults.standard.integer(forKey: Constants.amountOfChoicesKey)
+    var userDefaults = UserDefaults.standard
+    var HiraganaKatakanaBool:Bool!
+    var characterShowUpBool:Bool!
+    var useSimilarBool:Bool!
+    var useDakuonBool:Bool!
+    var useYouonBool:Bool!
+    var useColorHintBool:Bool!
+    var amountLevel:Int!
+    var gameLevel:Int!
     
     var completionView: CompletionView!
     
@@ -52,7 +56,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     var perfectAnswerBool = true
     var newProblemBool = true
     
-    let gameSystem = GameSystem().self
+    var gameSystem:GameSystem!
     let switchKey = UserDefaults.standard.integer(forKey: Constants.SwitchKey)
     var switchControl: SwitchControlSystem!
     var answerCursorArray:[CGRect] = []
@@ -71,6 +75,17 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         layoutSetting()
         SE = SoundEffect.sharedSoundEffect
         
+        HiraganaKatakanaBool = userDefaults.bool(forKey: Constants.HiraganaKey)
+        characterShowUpBool = userDefaults.bool(forKey: Constants.characterShowUpKey)
+        useSimilarBool = userDefaults.bool(forKey: Constants.useSimilarKey)
+        useDakuonBool = userDefaults.bool(forKey: Constants.useDakuonKey)
+        useYouonBool = userDefaults.bool(forKey: Constants.useYouonKey)
+        useColorHintBool = userDefaults.bool(forKey: Constants.useColorHintKey)
+        amountLevel = userDefaults.integer(forKey: Constants.amountLevelKey)
+        gameLevel = userDefaults.integer(forKey: Constants.gameLevelKey)
+        
+        gameSystem = GameSystem()
+        amountOfChoices = gameSystem.amountCalcurate(amountLevel, gameLevel)
         // Do any additional setup after loading the view.
     }
     
@@ -89,7 +104,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     
     func layoutSetting(){
         VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         openMenuButton.backgroundColor = UIColor.clear
         problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
         answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)
@@ -109,6 +124,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         perfectAnswerBool = true
         answerCount = 0
         answerCursorArray = positionOfAnswerCharacters
+        print(answerCD.word)
     }
     
     //    正解の一文字のセッティング・選択肢のセッティング
@@ -135,6 +151,18 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
             label.isExclusiveTouch = true
             choicesView.addSubview(label)
             choicesLabelArray.append(label)
+            
+            let animationGroup = CAAnimationGroup()
+            animationGroup.duration = 0.5
+            animationGroup.fillMode = kCAFillModeForwards
+            animationGroup.isRemovedOnCompletion = false
+            let animation1 = CABasicAnimation(keyPath: "transform.scale")
+            animation1.fromValue = 5.0
+            let animation2 = CABasicAnimation(keyPath: "position")
+            animation2.fromValue = CGPoint(x: self.view.center.x, y: self.view.frame.height)
+            
+            animationGroup.animations = [animation1,animation2]
+            label.layer.add(animationGroup, forKey: nil)
         }
         
         answerLabelArray.removeAll()
@@ -204,16 +232,20 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     }
     
     func dropPointVerification(_ endPoint:CGPoint){
+        var judgeBool = false
         for i in 0 ..< answerFrameArray.count{
             let rect = answerFrameArray[i].frame
             let frameOrigin = CGPoint(x: rect.origin.x + answerView.frame.origin.x, y: rect.origin.y + answerView.frame.origin.y)
             let frame = CGRect(origin: frameOrigin, size: rect.size)
             if frame.contains(endPoint){
                 judgment(i)
+                judgeBool = true
                 break
             }
         }
-        SE.play(.dragEnded)
+        if !judgeBool{
+            SE.play(.dragEnded)
+        }
     }
     
     func judgment(_ number:Int){

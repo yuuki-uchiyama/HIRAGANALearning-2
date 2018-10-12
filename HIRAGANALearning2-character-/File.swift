@@ -19,7 +19,7 @@ struct Constants {
     static let useSimilarKey = "similar"
     static let useDakuonKey = "dakuon"
     static let useYouonKey = "youon"
-    static let amountOfChoicesKey = "choices"
+    static let amountLevelKey = "amountLevel"
     static let syllabaryLevelKey = "SyllabaryLevel"
     static let syllabaryLinesKey = "SyllabaryLine"
     static let useColorHintKey = "colorHint"
@@ -39,22 +39,6 @@ struct Constants {
     static let toPreviousKey = "toPrevious"
     static let multiDecisionKey = "multiDecision"
     
-    
-    
-    
-    
-    
-    
-    static let choiceLebelTutorialKey = "CLTutorial"
-    static let recordTutorialKey = "RecTutorial"
-    static let resultTutorialKey = "ResTutorial"
-    
-    
-
-    
-    
-    
-
 }
 struct Communication{
     static let serviceType : String = "STAPP-HIRAGANA"

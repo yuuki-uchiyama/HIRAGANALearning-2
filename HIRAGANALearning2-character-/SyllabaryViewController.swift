@@ -48,9 +48,10 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     var specialSyllableBool:[Bool] = [false,false,false,false]
     var answerCount = 0
     
-    let HiraganaKatakanaBool = UserDefaults.standard.bool(forKey: Constants.HiraganaKey)
-    let useColorHintBool = UserDefaults.standard.bool(forKey:Constants.useColorHintKey)
-    let characterShowUpBool = UserDefaults.standard.bool(forKey: Constants.characterShowUpKey)
+    var userDefaults = UserDefaults.standard
+    var HiraganaKatakanaBool:Bool!
+    var characterShowUpBool:Bool!
+    var useColorHintBool:Bool!
     
     var completionView: CompletionView!
     
@@ -77,6 +78,10 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
         
         layoutSetting()
         SE = SoundEffect.sharedSoundEffect
+        
+        HiraganaKatakanaBool = userDefaults.bool(forKey: Constants.HiraganaKey)
+        characterShowUpBool = userDefaults.bool(forKey: Constants.characterShowUpKey)
+        useColorHintBool = userDefaults.bool(forKey: Constants.useColorHintKey)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,7 +102,7 @@ class SyllabaryViewController: UIViewController, SideMenuDelegete, SwitchControl
     
     func layoutSetting(){
         VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         openMenuButton.backgroundColor = UIColor.clear
         problemNumberLabel.font = VS.fontAdjust(viewSize: .verySmall)
         answerView.layer.cornerRadius = VS.cornerRadiusAdjust(answerView.frame.size, type: .circle)

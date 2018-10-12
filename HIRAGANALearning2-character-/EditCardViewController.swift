@@ -58,8 +58,8 @@ class EditCardViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        
+        VS.backgraundView(self.view)
+
         searchBar.frame = SBView.frame
         deckSegmentControl.frame = SCView.frame
         
@@ -69,8 +69,8 @@ class EditCardViewController: UIViewController, UICollectionViewDataSource, UICo
         toHomeButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         VS.fontAdjustOfSegmentedControl(deckSegmentControl, .small)
         
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
 
         
     }

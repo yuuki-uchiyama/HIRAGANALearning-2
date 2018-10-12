@@ -68,12 +68,12 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
-        
+        VS.backgraundView(self.view)
+
         titleLabel.font = VS.fontAdjust(viewSize: .important)
         endButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         
-        endButton.layer.cornerRadius = VS.cornerRadiusAdjust(endButton.frame.size, type: .small)
+        endButton.buttonTapActionSetting(.circle)
         
         cardCollectionView.layer.borderColor = UIColor.white.cgColor
         cardCollectionView.layer.borderWidth = 5.0

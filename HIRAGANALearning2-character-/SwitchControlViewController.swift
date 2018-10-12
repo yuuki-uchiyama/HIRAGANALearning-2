@@ -33,7 +33,7 @@ class SwitchControlViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         noSwitchButton.backgroundColor = VS.importantOutletColor
         
         titleLabel.font = VS.fontAdjust(viewSize: .important)
@@ -45,11 +45,10 @@ class SwitchControlViewController: UIViewController {
         noSwitchButton.titleLabel?.numberOfLines = 0
         noSwitchButton.titleLabel?.textAlignment = NSTextAlignment.center
         
-        singleSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(singleSwitchButton.frame.size, type: .circle)
-        multipleSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(multipleSwitchButton.frame.size, type: .circle)
-        noSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(noSwitchButton.frame.size, type: .normal)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(toHomeButton.frame.size, type: .small)
-
+        singleSwitchButton.buttonTapActionSetting(.circle)
+        multipleSwitchButton.buttonTapActionSetting(.circle)
+        noSwitchButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
     }
     
     @IBAction func removeSwitch(_ sender: Any) {

@@ -67,7 +67,7 @@ class MultipleSwitchViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         decisionButton.backgroundColor = VS.importantOutletColor
         useSwitchButton.backgroundColor = UIColor.clear
         
@@ -85,13 +85,12 @@ class MultipleSwitchViewController: UIViewController {
         useSwitchButton.setImage(UIImage(named: "Check"), for: .selected)
         SETTEILabel.font = VS.fontAdjust(viewSize: .verySmall)
         
-        cancelButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        toHomeButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .small)
-        decisionButton.layer.cornerRadius = VS.cornerRadiusAdjust(cancelButton.frame.size, type: .normal)
-        
-        toNextButton.layer.cornerRadius = VS.cornerRadiusAdjust(toNextButton.frame.size, type: .small)
-        toPreviousButton.layer.cornerRadius = VS.cornerRadiusAdjust(toPreviousButton.frame.size, type: .small)
-        decisionSwitchButton.layer.cornerRadius = VS.cornerRadiusAdjust(decisionSwitchButton.frame.size, type: .small)
+        cancelButton.buttonTapActionSetting(.circle)
+        toHomeButton.buttonTapActionSetting(.circle)
+        decisionButton.buttonTapActionSetting(.circle)
+        toNextButton.buttonTapActionSetting(.circle)
+        toPreviousButton.buttonTapActionSetting(.circle)
+        decisionSwitchButton.buttonTapActionSetting(.circle)
     }
     
     @IBAction func toNextSwitchSet(_ sender: Any) {

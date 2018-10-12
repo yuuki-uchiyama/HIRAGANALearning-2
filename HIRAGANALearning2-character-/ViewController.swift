@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             UserDefaults.standard.set(false, forKey: Constants.useSimilarKey)
             UserDefaults.standard.set(false, forKey: Constants.useDakuonKey)
             UserDefaults.standard.set(false, forKey: Constants.useYouonKey)
-            UserDefaults.standard.set(0, forKey: Constants.amountOfChoicesKey)
+            UserDefaults.standard.set(0, forKey: Constants.amountLevelKey)
             UserDefaults.standard.set(true, forKey: Constants.useColorHintKey)
             UserDefaults.standard.set(0, forKey: Constants.syllabaryLevelKey)
             UserDefaults.standard.set(1, forKey: Constants.syllabaryLinesKey)
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
     
     func layoutSetting(){
         let VS = VisualSetting()
-        VS.backgraundView(self)
+        VS.backgraundView(self.view)
         setThemeUsingPrimaryColor(VS.normalOutletColor, with: .contrast)
         startButton.backgroundColor = VS.importantOutletColor
         startButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
@@ -89,11 +89,11 @@ class ViewController: UIViewController {
         communicationButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         switchControlLabel.font = VS.fontAdjust(viewSize: .sentence)
         
-        startButton.layer.cornerRadius = VS.cornerRadiusAdjust(startButton.frame.size, type: .normal)
-        cardButton.layer.cornerRadius = VS.cornerRadiusAdjust(cardButton.frame.size, type: .normal)
-        settingButton.layer.cornerRadius = VS.cornerRadiusAdjust(settingButton.frame.size, type: .normal)
-        switchControlButton.layer.cornerRadius = VS.cornerRadiusAdjust(switchControlButton.frame.size, type: .normal)
-        communicationButton.layer.cornerRadius = VS.cornerRadiusAdjust(communicationButton.frame.size, type: .normal)
+        startButton.buttonTapActionSetting(.circle)
+        cardButton.buttonTapActionSetting(.circle)
+        settingButton.buttonTapActionSetting(.circle)
+        switchControlButton.buttonTapActionSetting(.circle)
+        communicationButton.buttonTapActionSetting(.circle)
     }
     
     @IBAction func soundPlay(_ sender: Any) {

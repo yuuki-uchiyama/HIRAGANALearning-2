@@ -257,25 +257,3 @@ class EditCard:Equatable{
         return l.word == r.word
     }
 }
-
-extension UIImage{
-    func resized(side:CGFloat) ->UIImage{
-        if self.size.width < side && self.size.height < side{
-            return self
-        }
-        var resizedSize: CGSize!
-        let aspectRate: CGFloat = self.size.height / self.size.width
-        if self.size.width >= self.size.height{
-            let height = side * aspectRate
-            resizedSize = CGSize(width: side, height: height)
-        }else{
-             let width = side / aspectRate
-            resizedSize = CGSize(width: width, height: side)
-        }
-        UIGraphicsBeginImageContext(resizedSize)
-        self.draw(in: CGRect(x: 0, y: 0, width: resizedSize.width, height: resizedSize.height))
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return resizedImage!
-    }
-}
