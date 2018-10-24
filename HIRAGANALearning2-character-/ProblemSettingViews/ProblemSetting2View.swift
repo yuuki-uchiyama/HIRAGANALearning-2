@@ -79,7 +79,8 @@ class ProblemSetting2View: UIView, UIPickerViewDataSource, UIPickerViewDelegate 
         return 5
     }
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return pickerView.frame.height / 3
+        return pickerView.frame.height / 2
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

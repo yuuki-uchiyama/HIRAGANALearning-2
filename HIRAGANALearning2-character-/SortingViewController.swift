@@ -9,6 +9,8 @@
 import UIKit
 
 class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDelegate  {
+
+    
     
     @IBOutlet weak var problemNumberLabel: UILabel!
     @IBOutlet weak var openMenuButton: UIButton!
@@ -18,6 +20,10 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     
     var cardDataArray: [CardData]!
     var currentCDArray: [CardData]!
+    
+    var startChoiceLabel:UILabel!
+    var startAnswerLabel:UILabel!
+    var startTapImageView:UIImageView!
     
     var answerCD: CardData!
     var answerCharacterArray: [String]!
@@ -68,6 +74,9 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     
     var VS:VisualSetting!
     var SE:SoundEffect!
+    
+    var coverView:UIView!
+    var helpImageView:UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,14 +101,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        currentCDArray = cardDataArray
-        problemSetting()
-        answerSetting()
-        problemNumberLabel.text = "あと\(problemNumber)問"
-        if switchKey > 0 && switchControl == nil{
-            switchControl = SwitchControlSystem(switchKey, choicesCursorArray, self.view, choicesView)
-            switchControl.delegate = self
-        }
+        startUp()
     }
     
     func layoutSetting(){
@@ -111,6 +113,121 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         choicesView.layer.cornerRadius = VS.cornerRadiusAdjust(choicesView.frame.size, type: .circle)
         
         openMenuButton.imageFit()
+    }
+    
+    func startUp(){
+        startChoiceLabel = UILabel()
+        startAnswerLabel = UILabel()
+        startTapImageView = UIImageView(image: UIImage(named: "TapImage"))
+        
+        let side = choicesView.frame.height * 0.6
+        
+        for label in [startChoiceLabel,startAnswerLabel]{
+            label!.frame.size = CGSize(width: side * 2.5, height: side)
+            label!.text = "スタート!"
+            label!.font = VS.fontAdjust(viewSize: .important)
+            label!.textAlignment = NSTextAlignment.center
+            label!.cornerLayout(.circle)
+            label!.clipsToBounds = true
+        }
+        startChoiceLabel.center = choicesView.center
+        startChoiceLabel.textColor = UIColor.flatWhite
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(startButtonMove(_:)))
+        startChoiceLabel.addGestureRecognizer(panGesture)
+        startChoiceLabel.isUserInteractionEnabled = true
+        startChoiceLabel.isExclusiveTouch = true
+        VS.borderMake(view: startChoiceLabel, side: startChoiceLabel.frame.height, color: UIColor.flatGray)
+        startChoiceLabel.backgroundColor = VS.importantOutletColor
+
+        self.view.addSubview(startChoiceLabel)
+        
+        startAnswerLabel.center = answerView.center
+        startAnswerLabel.textColor = VS.importantOutletColor
+        if !characterShowUpBool{
+            startAnswerLabel.textColor = UIColor.clear
+        }else if !useColorHintBool{
+            startAnswerLabel.textColor = UIColor.black
+        }
+        VS.borderMake(view: startAnswerLabel, side: startAnswerLabel.frame.height, color: UIColor.flatYellow)
+        startAnswerLabel.backgroundColor = UIColor.clear
+        self.view.addSubview(startAnswerLabel)
+        
+        startTapImageView.frame.size = CGSize(width: side/1.5, height: side/1.5)
+        startTapImageView.contentMode = UIViewContentMode.scaleAspectFit
+        startTapImageView.frame.origin = startChoiceLabel.center
+        self.view.addSubview(startTapImageView)
+        
+        UIView.animateKeyframes(withDuration: 3.0, delay: 0.0, options: .repeat, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.333, animations: {
+                self.startTapImageView.frame.origin = self.startAnswerLabel.center
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.333, relativeDuration: 0.333, animations: {
+                self.startTapImageView.alpha = 0.0
+            })
+            
+        }, completion: {(finished:Bool) in
+            self.startTapImageView.alpha = 1.0
+        })
+        
+        if switchKey > 0 && switchControl == nil{
+            switchControl = SwitchControlSystem(switchKey, [startChoiceLabel.frame], self.view, self.view)
+            switchControl.delegate = self
+        }
+    }
+    
+    
+    @objc func startButtonMove(_ sender:UIPanGestureRecognizer){
+        let label = sender.view as! UILabel
+        
+        if sender.state == .began{
+            startTapImageView.isHidden = true
+            SE.play(.dragBegan)
+            selectViewRect = label.frame
+        }
+        
+        let move:CGPoint = sender.translation(in: view)
+        label.center.x += move.x
+        label.center.y += move.y
+        
+        sender.setTranslation(CGPoint.zero, in: view)
+        
+        if sender.state == .ended{
+            let endPoint = sender.location(in: self.view)
+            if startAnswerLabel.frame.contains(endPoint){
+                gameStart()
+            }else{
+                label.frame = selectViewRect
+                SE.play(.dragEnded)
+                startTapImageView.isHidden = false
+            }
+        }
+    }
+    
+    @objc func gameStart(){
+        SE.play(.start)
+        currentCDArray = cardDataArray
+        problemSetting()
+        answerSetting()
+        problemNumberLabel.text = "あと\(problemNumber)問"
+        let startAnimation = CABasicAnimation(keyPath: "transform.scale")
+        startAnimation.duration = 0.5
+        startAnimation.fromValue = 1.2
+        startAnimation.toValue = 0.0
+        startAnimation.isRemovedOnCompletion = false
+        startAnimation.fillMode = kCAFillModeForwards
+        startChoiceLabel.layer.add(startAnimation, forKey: nil)
+        startAnswerLabel.layer.add(startAnimation, forKey: nil)
+        
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            self.startChoiceLabel.alpha = 0.0
+            self.startAnswerLabel.alpha = 0.0
+
+        }, completion: {(finished:Bool) in
+            self.startChoiceLabel.removeFromSuperview()
+            self.startAnswerLabel.removeFromSuperview()
+            self.startTapImageView.removeFromSuperview()
+        })
     }
     
     //    正解単語のセッティング
@@ -152,17 +269,14 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
             choicesView.addSubview(label)
             choicesLabelArray.append(label)
             
-            let animationGroup = CAAnimationGroup()
-            animationGroup.duration = 0.5
-            animationGroup.fillMode = kCAFillModeForwards
-            animationGroup.isRemovedOnCompletion = false
-            let animation1 = CABasicAnimation(keyPath: "transform.scale")
-            animation1.fromValue = 5.0
-            let animation2 = CABasicAnimation(keyPath: "position")
-            animation2.fromValue = CGPoint(x: self.view.center.x, y: self.view.frame.height)
-            
-            animationGroup.animations = [animation1,animation2]
-            label.layer.add(animationGroup, forKey: nil)
+            label.frame.origin = CGPoint(x: self.view.center.x, y: self.view.frame.height)
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                label.frame.origin = self.positionOfChoices[i].origin
+            }, completion: {(finished:Bool) in
+                if self.switchControl != nil{
+                    self.switchControl.resetCursor(self.positionOfChoices, self.choicesView)
+                }
+            })
         }
         
         answerLabelArray.removeAll()
@@ -197,12 +311,16 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
             answerView.insertSubview(frameView, belowSubview: label)
             answerFrameArray.append(frameView)
             
-            if !characterShowUpBool{
+            if characterShowUpBool{
+                label.alpha = 0.3
+                label.font = VS.fontAdjust(viewSize: .important)
+            }else{
                 hintView = UIView(frame: label.frame)
                 hintView.backgroundColor = answerView.backgroundColor
                 answerView.addSubview(hintView)
                 hintViewArray.append(hintView)
             }
+
         }
         if switchControl != nil{
             switchControl.resetCursor(positionOfChoices, choicesView)
@@ -250,6 +368,13 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     
     func judgment(_ number:Int){
         if gameSystem.judge(answerLabelArray[number].text!, choicesLabelArray[selectLabelIndex].text!){
+            if characterShowUpBool{
+                answerLabelArray[number].alpha = 1.0
+                answerLabelArray[number].font = VS.fontAdjust(viewSize: .veryImportant)
+            }else{
+                hintViewArray[number].removeFromSuperview()
+                hintViewArray.remove(at: number)
+            }
             choicesLabelArray[selectLabelIndex].removeFromSuperview()
             choicesLabelArray.remove(at: selectLabelIndex)
             choicesCursorArray.remove(at: selectLabelIndex)
@@ -257,10 +382,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
             answerLabelArray.remove(at: number)
             answerFrameArray.remove(at: number)
             answerCursorArray.remove(at: number)
-            if !characterShowUpBool{
-                hintViewArray[number].removeFromSuperview()
-                hintViewArray.remove(at: number)
-            }
+            
             answerCount += 1
             if answerCount == answerCharacterArray.count{// 単語完成
                 SE.play(.fanfare)
@@ -318,6 +440,7 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         SE.play(.same)
         newProblemBool = false
         answerCount = 0
+        answerCursorArray = positionOfAnswerCharacters
         answerSetting()
         completionView.removeFromSuperview()
     }
@@ -337,6 +460,10 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     }
     
     @IBAction func openMenu(_ sender: Any) {
+        coverView = UIView(frame: self.view.frame)
+        coverView.backgroundColor = UIColor.flatBlack
+        coverView.alpha = 0.4
+        self.view.addSubview(coverView)
         openRight()
     }
     
@@ -363,6 +490,30 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
         problemSetting()
         answerSetting()
     }
+    
+    func changeHelpView(_ bool: Bool) {
+        if bool{
+            helpImageView = UIImageView(image: UIImage(named: "Help7"))
+            helpImageView.frame.size.width = self.view.frame.width * 3/4
+            helpImageView.frame.size.height = self.view.frame.height * 3/4
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            helpImageView.center.y = self.view.center.y
+            helpImageView.frame.origin.x = self.view.frame.origin.x
+            self.view.addSubview(helpImageView)
+        }else{
+            helpImageView.removeFromSuperview()
+        }
+    }
+    
+    func toHome(){
+        closeRight()
+        performSegue(withIdentifier: "toHome", sender: nil)
+    }
+    
+    func toLevelChoice() {
+        closeRight()
+        performSegue(withIdentifier: "toLevelChoice", sender: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -375,7 +526,18 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
     //    switchControl設定
     
     func decisionKeyPushed(_ cursorNumber: Int) {
-        if answerCount == answerCharacterArray.count{
+        if answerCD == nil{
+            if switchControl.cursor.frame == startChoiceLabel.frame{
+                switchControl.resetCursor([startAnswerLabel.frame], self.view)
+            }else{
+                UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                    self.startChoiceLabel.center = self.startAnswerLabel.center
+                }, completion: {(finished:Bool) in
+                    self.gameStart()
+                    self.switchControl.resetTimer()
+                })
+            }
+        }else if answerCount == answerCharacterArray.count{
             if cursorNumber == 0{
                 sameProblem()
             }else{
@@ -387,9 +549,18 @@ class SortingViewController: UIViewController, SideMenuDelegete, SwitchControlDe
             selectLabelIndex = cursorNumber
             switchControl.resetCursor(answerCursorArray, answerView)
         }else{
-            judgment(cursorNumber)
+            let label = choicesLabelArray[selectLabelIndex]
+            let frame = label.frame
+            let x = (answerView.frame.origin.x + answerFrameArray[cursorNumber].center.x) - choicesView.frame.origin.x
+            let y = (answerView.frame.origin.y + answerFrameArray[cursorNumber].center.y) - choicesView.frame.origin.y
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                label.center = CGPoint(x: x, y: y)
+            }, completion: {(finished:Bool) in
+                self.judgment(cursorNumber)
+                label.frame = frame
+                self.switchControl.resetTimer()
+            })
         }
-        
     }
     
     

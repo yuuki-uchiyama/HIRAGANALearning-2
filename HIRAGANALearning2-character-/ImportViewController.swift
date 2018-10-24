@@ -32,6 +32,10 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
     
     var SE: SoundEffect!
     
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,6 +84,27 @@ class ImportViewController: UIViewController, MCNearbyServiceAdvertiserDelegate,
         cardCollectionView.layer.borderColor = UIColor.flatGray.cgColor
         cardCollectionView.layer.cornerRadius = 10.0
         cardCollectionView.layer.masksToBounds = true
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help20"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {

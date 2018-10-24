@@ -6,7 +6,6 @@
 //  Copyright © 2018年 yuuki uchiyama. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SVProgressHUD
 
@@ -81,6 +80,7 @@ class SwitchControlSystem{
         cursor.layer.cornerRadius = 3.0
         cursor.layer.borderWidth = 2.0
         cursor.layer.borderColor = UIColor.flatYellow.cgColor
+        cursor.isUserInteractionEnabled = false
         choicesView.addSubview(cursor)
     }
     
@@ -103,7 +103,13 @@ class SwitchControlSystem{
         }
     }
     
+    @objc func resetTimer(){
+        stopTimer()
+        startTimer()
+    }
+    
     @objc func keySetting(){
+        print(switchTextField.text!)
         let str = switchTextField.text!.lowercased()
         if str.isHiragana || str.isKatakana{ alert() }
         if str == decisionKey{ decision() }
@@ -120,6 +126,12 @@ class SwitchControlSystem{
         }
         cursor.frame = cursorRectArray[cursorNumber]
         delegate?.toNextKeyPushed()
+        if switchs != 1{
+            switchTextField.resignFirstResponder()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.switchTextField.becomeFirstResponder()
+            }
+        }
     }
     
     @objc func toPrevious(){
@@ -130,11 +142,21 @@ class SwitchControlSystem{
         }
         cursor.frame = cursorRectArray[cursorNumber]
         delegate?.toPreviousKeyPushed()
-        
+        switchTextField.resignFirstResponder()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.switchTextField.becomeFirstResponder()
+        }
     }
     
     @objc func decision(){
         delegate?.decisionKeyPushed(cursorNumber)
+        switchTextField.resignFirstResponder()
+        stopTimer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.switchTextField.becomeFirstResponder()
+            self
+                .startTimer()
+        }
     }
     
     @objc func alert(){

@@ -34,6 +34,10 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
     
     var interstitial: GADInterstitial!
     
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setMinimumDismissTimeInterval(0)
@@ -74,7 +78,27 @@ class ResultViewController: UIViewController, SwitchControlDelegate, GADIntersti
         oneMoreButton.buttonTapActionSetting(.circle)
         toHomeButton.buttonTapActionSetting(.circle)
         percentLabel.font = VS.fontAdjust(viewSize: .important)
-
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help9"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {

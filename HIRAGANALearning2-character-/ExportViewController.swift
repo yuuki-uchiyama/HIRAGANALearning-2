@@ -36,6 +36,10 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var SE: SoundEffect!
     
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +83,27 @@ class ExportViewController: UIViewController, UICollectionViewDataSource, UIColl
         cardCollectionView.layer.borderColor = UIColor.flatGray.cgColor
         cardCollectionView.layer.cornerRadius = 10.0
         cardCollectionView.layer.masksToBounds = true
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help19"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {

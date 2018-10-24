@@ -20,7 +20,11 @@ class CardViewController: UIViewController {
     @IBOutlet weak var deckButton: UIButton!
     
     var SE: SoundEffect!
-
+    
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +55,27 @@ class CardViewController: UIViewController {
         addButton.buttonTapActionSetting(.circle)
         editButton.buttonTapActionSetting(.circle)
         deckButton.buttonTapActionSetting(.circle)
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help10"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {

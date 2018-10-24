@@ -6,7 +6,6 @@
 //  Copyright © 2018年 yuuki uchiyama. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 struct Constants {

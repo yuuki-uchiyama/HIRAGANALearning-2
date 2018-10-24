@@ -47,9 +47,13 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureWordLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var TFView: UIView!
     
     @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var rightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftConstraint: NSLayoutConstraint!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
     var beforeOriginY:CGFloat = 0.0
     var scrollBool = false
     
@@ -58,6 +62,10 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     var editcard = EditCard()
     
     var SE: SoundEffect!
+    
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +104,13 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     func layoutSetting(){
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            topConstraint.isActive = false
+            bottomConstraint.isActive = false
+        }else{
+            rightConstraint.isActive = false
+            leftConstraint.isActive = false
+        }
         let VS = VisualSetting()
         VS.backgraundView(self.view)
         addButton.backgroundColor = VS.importantOutletColor
@@ -113,7 +128,6 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         addButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
         
         textField.font = VS.fontAdjust(viewSize: .normal)
-        textField.frame = TFView.frame
         
         cancelButton.buttonTapActionSetting(.circle)
         toHomeButton.buttonTapActionSetting(.circle)
@@ -123,6 +137,26 @@ class AddCardViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         for button in buttonArray{
             button.setImage(UIImage(named: "CheckOn"), for: .selected)
             button.backgroundColor = UIColor.clear
+        }
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help11"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
         }
     }
     

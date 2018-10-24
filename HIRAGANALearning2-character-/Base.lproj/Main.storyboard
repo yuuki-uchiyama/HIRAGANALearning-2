@@ -18,13 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ひらがなめっちゃわかるもん" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbL-PC-vOV">
-                                <rect key="frame" x="16" y="20" width="532" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRK-kO-Ivz">
                                 <rect key="frame" x="204" y="270" width="160" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -87,6 +80,18 @@
                                     <segue destination="xoA-0A-OTX" kind="show" id="Cpa-VX-McZ"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="Jdn-P5-rQI">
+                                <rect key="frame" x="15" y="15" width="538" height="85"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9x-3J-e4B">
+                                <rect key="frame" x="528" y="107" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Isz-44-nkX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -94,6 +99,7 @@
                     <connections>
                         <outlet property="cardButton" destination="5Qz-AK-Sne" id="TGE-Ug-MTT"/>
                         <outlet property="communicationButton" destination="BRK-kO-Ivz" id="WDJ-Y7-7YN"/>
+                        <outlet property="helpButton" destination="V9x-3J-e4B" id="hZk-c5-TVw"/>
                         <outlet property="settingButton" destination="RS6-OF-Vqx" id="qUg-yn-sB5"/>
                         <outlet property="startButton" destination="D43-b0-q9q" id="tdy-sP-KHN"/>
                         <outlet property="switchControlButton" destination="3em-NJ-nHr" id="qy6-pr-Uy6"/>
@@ -150,6 +156,14 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPV-EP-VBt">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="DuB-uz-E3V" eventType="touchUpInside" id="QL0-SF-V78"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ELn-4b-UT0"/>
@@ -157,6 +171,7 @@
                     <connections>
                         <outlet property="cardCollectionView" destination="M1w-am-Y7o" id="lpv-Gp-WRB"/>
                         <outlet property="endButton" destination="1Yg-yj-Q3e" id="b5r-ED-LxC"/>
+                        <outlet property="helpButton" destination="TPV-EP-VBt" id="dPg-1y-seu"/>
                         <outlet property="titleLabel" destination="rlY-Mw-6kT" id="lts-Ks-nkD"/>
                     </connections>
                 </viewController>
@@ -216,12 +231,21 @@
                                     <action selector="toHome:" destination="Jee-bG-Syk" eventType="touchUpInside" id="5R8-U1-kQQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cc6-hC-O2e">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="Jee-bG-Syk" eventType="touchUpInside" id="X6L-OI-x48"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="eL6-J3-Jgw"/>
                     </view>
                     <connections>
                         <outlet property="exportButton" destination="FAQ-Ha-kZS" id="Vw2-1c-X9y"/>
+                        <outlet property="helpButton" destination="cc6-hC-O2e" id="mNJ-JO-Sqf"/>
                         <outlet property="importButton" destination="ml6-OW-NeY" id="8ye-rY-k2q"/>
                         <outlet property="titleLabel" destination="Qxw-Wm-sDh" id="ygg-mF-htl"/>
                         <outlet property="toHomeButton" destination="YmK-BX-sfQ" id="Po7-Md-RHc"/>
@@ -284,6 +308,14 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXT-bJ-zzL">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="CLA-Kk-VAt" eventType="touchUpInside" id="3Uk-QQ-JT9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0ha-pA-hHq"/>
@@ -291,6 +323,7 @@
                     <connections>
                         <outlet property="cardCollectionView" destination="cS6-BZ-KKo" id="8zn-bE-dc5"/>
                         <outlet property="endButton" destination="W0T-UM-Xea" id="HMD-ve-bNA"/>
+                        <outlet property="helpButton" destination="ZXT-bJ-zzL" id="etV-no-hpR"/>
                         <outlet property="noCardLabel" destination="2NB-H0-fpM" id="qvP-gl-J5n"/>
                         <outlet property="titleLabel" destination="eDb-9f-x3Y" id="WKK-EN-uTb"/>
                     </connections>
@@ -455,6 +488,14 @@
                                     <action selector="toHome:" destination="KkO-Is-th1" eventType="touchUpInside" id="EmU-fq-fDL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OR0-2O-CiL">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="KkO-Is-th1" eventType="touchUpInside" id="7ry-CL-Ca7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="dPW-x2-5bb"/>
@@ -467,6 +508,7 @@
                         <outlet property="correctTextLabel" destination="SLv-Gp-0R8" id="yr8-tQ-8XY"/>
                         <outlet property="correctView" destination="OjD-2b-lKy" id="9bh-v5-FOE"/>
                         <outlet property="defaultButton" destination="ZiW-x8-EnA" id="atW-ch-LpL"/>
+                        <outlet property="helpButton" destination="OR0-2O-CiL" id="6Fd-2T-QWd"/>
                         <outlet property="incorrectBanImage" destination="eEJ-lq-EwE" id="0uu-Cu-e9c"/>
                         <outlet property="incorrectButton" destination="5qL-yu-rS8" id="aol-fB-KX7"/>
                         <outlet property="incorrectTextLabel" destination="Y5L-aM-gPY" id="AFY-jo-IAQ"/>
@@ -584,6 +626,14 @@
                                     <action selector="decisionButton:" destination="kPj-3r-ZFq" eventType="touchUpInside" id="EV7-RP-d77"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-O0-7lo">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="kPj-3r-ZFq" eventType="touchUpInside" id="AkC-Uh-enB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="y6w-Sa-5Vl"/>
@@ -596,6 +646,7 @@
                         <outlet property="decisionButton" destination="VVp-5n-zLm" id="EdG-Ct-9fN"/>
                         <outlet property="decisionLabel" destination="Ufz-fP-ldL" id="QKE-ma-zmh"/>
                         <outlet property="decisionSwitchOutlet" destination="v2l-sV-PTp" id="Ruf-WU-3yN"/>
+                        <outlet property="helpButton" destination="mC2-O0-7lo" id="91w-66-vJU"/>
                         <outlet property="lineView" destination="6TO-oA-lVO" id="AZl-bb-kbT"/>
                         <outlet property="secondLabel" destination="o4V-v1-3vD" id="NvP-H1-XXa"/>
                         <outlet property="titleLabel" destination="avl-FG-Hap" id="l4f-EC-CW9"/>
@@ -667,11 +718,20 @@
                                     <segue destination="D1J-qF-A7j" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="ziK-7z-cKY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POT-ye-l2w">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="er6-ho-LNc" eventType="touchUpInside" id="lhX-kM-3aw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="UTq-ed-9wP"/>
                     </view>
                     <connections>
+                        <outlet property="helpButton" destination="POT-ye-l2w" id="a0s-09-p6u"/>
                         <outlet property="multipleSwitchButton" destination="oqE-BF-Vv0" id="iqh-tP-0OH"/>
                         <outlet property="noSwitchButton" destination="MFo-NV-Klt" id="3nF-o9-vLd"/>
                         <outlet property="singleSwitchButton" destination="cNp-yL-8rZ" id="bP9-m6-goW"/>
@@ -700,7 +760,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykc-JH-eWS">
-                                <rect key="frame" x="25" y="20" width="90" height="30"/>
+                                <rect key="frame" x="25" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="キャンセル"/>
@@ -710,9 +770,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTG-bg-5fj">
-                                <rect key="frame" x="219" y="223" width="90" height="22"/>
+                                <rect key="frame" x="211" y="218" width="106" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="使用する" image="Box">
+                                <state key="normal" title="使用する" image="CheckOff">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
@@ -771,7 +831,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjz-j0-Lha">
-                                <rect key="frame" x="453" y="20" width="90" height="30"/>
+                                <rect key="frame" x="415" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="ホームへ"/>
@@ -796,6 +856,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aW6-5G-isf">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="bov-sW-TTO" eventType="touchUpInside" id="xs8-t9-e4k"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="MkB-ub-d39"/>
@@ -806,6 +874,7 @@
                         <outlet property="decisionButton" destination="hMr-dx-Ryo" id="ns4-ya-BHz"/>
                         <outlet property="decisionSwitchButton" destination="9NQ-1v-SSm" id="S2Q-T2-H4F"/>
                         <outlet property="decisionSwitchLabel" destination="plK-M5-cxW" id="AGH-2G-n1j"/>
+                        <outlet property="helpButton" destination="aW6-5G-isf" id="gW1-sz-BLk"/>
                         <outlet property="titleLabel" destination="cM6-gV-DXe" id="dIH-3p-tJP"/>
                         <outlet property="toHomeButton" destination="jjz-j0-Lha" id="e4i-nK-8kI"/>
                         <outlet property="toNextButton" destination="FBx-V4-Nbb" id="eUg-de-FvE"/>
@@ -829,7 +898,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X54-Gl-eKY">
-                                <rect key="frame" x="25" y="85" width="120" height="200"/>
+                                <rect key="frame" x="25" y="85" width="250" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal">
@@ -842,7 +911,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyA-IG-VMa">
-                                <rect key="frame" x="423" y="85" width="120" height="200"/>
+                                <rect key="frame" x="159" y="200" width="250" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal">
@@ -861,8 +930,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4KY-7O-3Ys">
+                                <rect key="frame" x="415" y="20" width="110" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <state key="normal" title="ホームへ"/>
+                                <connections>
+                                    <action selector="soundPlay:" destination="oAh-er-byn" eventType="touchUpInside" id="Lrl-Wm-R51"/>
+                                    <segue destination="R06-9W-DUf" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="9c4-Ya-aDb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kz2-QV-e4Z">
+                                <rect key="frame" x="25" y="20" width="110" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <state key="normal" title="キャンセル"/>
+                                <connections>
+                                    <action selector="cancel:" destination="oAh-er-byn" eventType="touchUpInside" id="IiC-HY-hIm"/>
+                                    <action selector="cancelButton:" destination="jda-Um-l20" eventType="touchUpInside" id="JJn-N1-8Xj"/>
+                                    <action selector="soundPlay:" destination="oAh-er-byn" eventType="touchUpInside" id="VLS-5U-bLh"/>
+                                    <action selector="soundPlay:" destination="jda-Um-l20" eventType="touchUpInside" id="Yzt-nc-GHN"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-4M-81w">
-                                <rect key="frame" x="224" y="85" width="120" height="200"/>
+                                <rect key="frame" x="298" y="85" width="250" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal">
@@ -874,26 +965,12 @@
                                     <segue destination="jda-Um-l20" kind="show" id="hA5-Lk-7Bs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4KY-7O-3Ys">
-                                <rect key="frame" x="453" y="20" width="90" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qma-XX-M4Q">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <state key="normal" title="ホームへ"/>
+                                <state key="normal" image="Help"/>
                                 <connections>
-                                    <action selector="soundPlay:" destination="oAh-er-byn" eventType="touchUpInside" id="Lrl-Wm-R51"/>
-                                    <segue destination="R06-9W-DUf" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="9c4-Ya-aDb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kz2-QV-e4Z">
-                                <rect key="frame" x="25" y="20" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <state key="normal" title="キャンセル"/>
-                                <connections>
-                                    <action selector="cancel:" destination="oAh-er-byn" eventType="touchUpInside" id="IiC-HY-hIm"/>
-                                    <action selector="cancelButton:" destination="jda-Um-l20" eventType="touchUpInside" id="JJn-N1-8Xj"/>
-                                    <action selector="soundPlay:" destination="oAh-er-byn" eventType="touchUpInside" id="VLS-5U-bLh"/>
-                                    <action selector="soundPlay:" destination="jda-Um-l20" eventType="touchUpInside" id="Yzt-nc-GHN"/>
+                                    <action selector="helpViewChange:" destination="oAh-er-byn" eventType="touchUpInside" id="tDN-K3-wuc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -905,6 +982,7 @@
                         <outlet property="cancelButton" destination="kz2-QV-e4Z" id="CwB-gQ-fcL"/>
                         <outlet property="deckButton" destination="zyA-IG-VMa" id="FsP-E7-XRD"/>
                         <outlet property="editButton" destination="U4i-4M-81w" id="7YT-XJ-2sS"/>
+                        <outlet property="helpButton" destination="qma-XX-M4Q" id="Nbq-Js-dVD"/>
                         <outlet property="titleLabel" destination="mKC-lw-7xo" id="ej2-Gg-rlc"/>
                         <outlet property="toHomeButton" destination="4KY-7O-3Ys" id="bB2-6J-SyP"/>
                     </connections>
@@ -930,7 +1008,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Xf-AU-8aI">
-                                <rect key="frame" x="25" y="20" width="90" height="30"/>
+                                <rect key="frame" x="25" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="キャンセル"/>
@@ -996,13 +1074,21 @@
                                 </connections>
                             </searchBar>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNw-Cq-PVh">
-                                <rect key="frame" x="453" y="20" width="90" height="30"/>
+                                <rect key="frame" x="415" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="ホームへ"/>
                                 <connections>
                                     <action selector="soundPlay:" destination="jda-Um-l20" eventType="touchUpInside" id="OtN-Yo-dqF"/>
                                     <segue destination="1W8-HK-ubf" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="QGq-Am-J1t"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciM-uP-BbR">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="jda-Um-l20" eventType="touchUpInside" id="qy1-UJ-wRu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1016,6 +1102,7 @@
                         <outlet property="cardCollectionView" destination="bTe-C9-xUp" id="l14-Ak-5f7"/>
                         <outlet property="deckNoLabel" destination="Vw2-8i-HYn" id="uiO-cr-T0g"/>
                         <outlet property="deckSegmentControl" destination="Y6n-bi-0HM" id="uCq-Hu-nAy"/>
+                        <outlet property="helpButton" destination="ciM-uP-BbR" id="kYz-Vn-ReW"/>
                         <outlet property="searchBar" destination="QF1-y5-ZPk" id="gfN-gv-Tcu"/>
                         <outlet property="searchDisplayController" destination="MUX-jY-Yw8" id="KWt-ir-4xV"/>
                         <outlet property="titleLabel" destination="fYT-oA-vJ7" id="jNd-h8-722"/>
@@ -1052,7 +1139,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aND-eH-RBM">
-                                <rect key="frame" x="25" y="20" width="90" height="30"/>
+                                <rect key="frame" x="25" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="編集終了"/>
@@ -1138,6 +1225,14 @@
                                 <rect key="frame" x="259" y="228" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVn-gH-0zG">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="rzP-RI-sEs" eventType="touchUpInside" id="EMG-3c-VXZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Cow-0I-Eb1"/>
@@ -1146,6 +1241,7 @@
                         <outlet property="SCView" destination="XYT-T4-Cc0" id="4fg-w3-6gX"/>
                         <outlet property="deckNoLabel" destination="PMl-3Y-7Vw" id="zIW-6d-X3C"/>
                         <outlet property="editEndButton" destination="aND-eH-RBM" id="UhZ-3L-zxP"/>
+                        <outlet property="helpButton" destination="iVn-gH-0zG" id="ZB4-az-40k"/>
                         <outlet property="inDeckCV" destination="3dI-Yo-n3L" id="hQh-EY-IEV"/>
                         <outlet property="inDeckLabel" destination="sgA-6K-pmn" id="24i-Mb-qih"/>
                         <outlet property="outOfDeckCV" destination="uim-fr-gSG" id="dpb-61-yiH"/>
@@ -1173,64 +1269,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gjc-yN-58E">
-                                <rect key="frame" x="25" y="20" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
-                                <state key="normal" title="キャンセル"/>
-                                <connections>
-                                    <action selector="cancelButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="Wxj-Ks-YHo"/>
-                                    <action selector="soundPlay:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="iDp-Mf-p7o"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHU-W7-kKq">
-                                <rect key="frame" x="453" y="20" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
-                                <state key="normal" title="ホームへ"/>
-                                <connections>
-                                    <action selector="soundPlay:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="GJK-EN-HFK"/>
-                                    <segue destination="jdj-S8-oqz" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="7xY-BB-uMF"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ofa-p8-NOK">
-                                <rect key="frame" x="20" y="65" width="528" height="240"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ofa-p8-NOK">
+                                <rect key="frame" x="20" y="15" width="528" height="290"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PictureFrame" translatesAutoresizingMaskIntoConstraints="NO" id="jk9-fw-zwC">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                        <rect key="frame" x="0.0" y="48" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タップして画像を取り込む" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-ng-JnR">
-                                        <rect key="frame" x="0.0" y="90" width="200" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nql-NP-gfm">
-                                        <rect key="frame" x="10" y="10" width="180" height="180"/>
+                                        <rect key="frame" x="11" y="58" width="180" height="180"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DeckFrame" translatesAutoresizingMaskIntoConstraints="NO" id="lRI-Kz-Wbm">
-                                        <rect key="frame" x="208" y="45" width="320" height="150"/>
+                                        <rect key="frame" x="199" y="89" width="325" height="153"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EoY-FZ-SG7">
-                                        <rect key="frame" x="0.0" y="198" width="200" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF7-sf-ktJ">
+                                        <rect key="frame" x="5" y="250" width="190" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    </view>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF7-sf-ktJ">
-                                        <rect key="frame" x="0.0" y="199" width="200" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OHW-vn-nu7">
-                                        <rect key="frame" x="220" y="51" width="100" height="32"/>
+                                        <rect key="frame" x="208" y="98" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ１" image="CheckOff">
@@ -1241,7 +1304,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gp-1y-9mq">
-                                        <rect key="frame" x="318" y="51" width="100" height="32"/>
+                                        <rect key="frame" x="312" y="98" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ２" image="CheckOff">
@@ -1252,7 +1315,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbs-vv-5pw">
-                                        <rect key="frame" x="420" y="51" width="100" height="32"/>
+                                        <rect key="frame" x="416" y="98" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ３" image="CheckOff">
@@ -1263,7 +1326,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONC-we-Orw">
-                                        <rect key="frame" x="220" y="85" width="100" height="32"/>
+                                        <rect key="frame" x="208" y="134" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ４" image="CheckOff">
@@ -1274,7 +1337,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBQ-f9-1Xu">
-                                        <rect key="frame" x="318" y="85" width="100" height="32"/>
+                                        <rect key="frame" x="312" y="134" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ５" image="CheckOff">
@@ -1285,7 +1348,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L0Z-Nd-sfF">
-                                        <rect key="frame" x="420" y="85" width="100" height="32"/>
+                                        <rect key="frame" x="416" y="134" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ６" image="CheckOff">
@@ -1296,7 +1359,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUF-F6-gd3">
-                                        <rect key="frame" x="220" y="120" width="100" height="32"/>
+                                        <rect key="frame" x="208" y="170" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ７" image="CheckOff">
@@ -1307,7 +1370,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZx-e7-df0">
-                                        <rect key="frame" x="318" y="120" width="100" height="32"/>
+                                        <rect key="frame" x="312" y="170" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ８" image="CheckOff">
@@ -1317,33 +1380,8 @@
                                             <action selector="deckButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="nYv-RK-sZa"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(10文字以内　「フュ」など特殊な文字は使えません)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KmX-zF-GDZ">
-                                        <rect key="frame" x="0.0" y="230" width="250" height="10"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="10"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="デッキ登録" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2b-KD-IDZ">
-                                        <rect key="frame" x="228" y="0.0" width="300" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="25"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CmP-ou-YjN">
-                                        <rect key="frame" x="420" y="120" width="100" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
-                                        <state key="normal" title="デッキ９" image="CheckOff">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deckButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="Wzd-rI-FAf"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7q-Yh-SLu">
-                                        <rect key="frame" x="313" y="155" width="110" height="32"/>
+                                        <rect key="frame" x="306" y="206" width="110" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
                                         <state key="normal" title="デッキ10" image="CheckOff">
@@ -1353,37 +1391,110 @@
                                             <action selector="deckButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="2Df-VD-H6a"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(10文字以内　「フュ」など特殊な文字は使えません)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KmX-zF-GDZ">
+                                        <rect key="frame" x="4" y="275" width="249" height="13"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="10"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="デッキ登録" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2b-KD-IDZ">
+                                        <rect key="frame" x="199" y="48" width="325" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CmP-ou-YjN">
+                                        <rect key="frame" x="416" y="170" width="100" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
+                                        <state key="normal" title="デッキ９" image="CheckOff">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deckButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="Wzd-rI-FAf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfY-cV-M6l">
+                                        <rect key="frame" x="401" y="253" width="123" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
+                                        <state key="normal" title="追加"/>
+                                        <connections>
+                                            <action selector="addButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="nTx-Pe-wz6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7H-Ou-RrI">
+                                        <rect key="frame" x="268" y="253" width="125" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
+                                        <state key="normal" title="取消"/>
+                                        <connections>
+                                            <action selector="deleteButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="CII-G9-AKQ"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タップして画像を取り込む" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-ng-JnR">
+                                        <rect key="frame" x="0.0" y="136" width="200" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ofa-p8-NOK" secondAttribute="height" multiplier="264:145" id="Lp6-6w-giu"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfY-cV-M6l">
-                                <rect key="frame" x="423" y="269" width="125" height="35"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gjc-yN-58E">
+                                <rect key="frame" x="25" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
-                                <state key="normal" title="追加"/>
+                                <state key="normal" title="キャンセル"/>
                                 <connections>
-                                    <action selector="addButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="nTx-Pe-wz6"/>
+                                    <action selector="cancelButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="Wxj-Ks-YHo"/>
+                                    <action selector="soundPlay:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="iDp-Mf-p7o"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7H-Ou-RrI">
-                                <rect key="frame" x="290" y="269" width="125" height="35"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHU-W7-kKq">
+                                <rect key="frame" x="415" y="20" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="17"/>
-                                <state key="normal" title="取消"/>
+                                <state key="normal" title="ホームへ"/>
                                 <connections>
-                                    <action selector="deleteButton:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="CII-G9-AKQ"/>
+                                    <action selector="soundPlay:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="GJK-EN-HFK"/>
+                                    <segue destination="jdj-S8-oqz" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="7xY-BB-uMF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="myp-Y7-phT">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="2Ro-Zl-L80" eventType="touchUpInside" id="wG7-hO-KfD"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3eb-kt-xwY" firstAttribute="trailing" secondItem="Ofa-p8-NOK" secondAttribute="trailing" constant="20" id="5gV-pG-haH"/>
+                            <constraint firstItem="Ofa-p8-NOK" firstAttribute="centerY" secondItem="OlT-SH-Lq9" secondAttribute="centerY" id="LyJ-mn-vau"/>
+                            <constraint firstItem="Ofa-p8-NOK" firstAttribute="leading" secondItem="3eb-kt-xwY" secondAttribute="leading" constant="20" id="VKb-0v-OXD"/>
+                            <constraint firstItem="3eb-kt-xwY" firstAttribute="bottom" secondItem="Ofa-p8-NOK" secondAttribute="bottom" constant="15" id="oyG-fv-W0O"/>
+                            <constraint firstItem="Ofa-p8-NOK" firstAttribute="centerX" secondItem="OlT-SH-Lq9" secondAttribute="centerX" id="tbj-o4-RUK"/>
+                            <constraint firstItem="Ofa-p8-NOK" firstAttribute="top" secondItem="3eb-kt-xwY" secondAttribute="top" constant="15" id="vSR-NO-7gL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3eb-kt-xwY"/>
                     </view>
                     <connections>
-                        <outlet property="TFView" destination="EoY-FZ-SG7" id="A09-wP-l2n"/>
                         <outlet property="addButton" destination="sfY-cV-M6l" id="zhT-XY-kah"/>
                         <outlet property="addTitleLabel" destination="L2b-KD-IDZ" id="gtg-QP-Xo2"/>
                         <outlet property="attentionLabel" destination="KmX-zF-GDZ" id="dtM-U9-udd"/>
+                        <outlet property="bottomConstraint" destination="oyG-fv-W0O" id="0on-Ee-meI"/>
                         <outlet property="cancelButton" destination="gjc-yN-58E" id="VI6-o4-5DH"/>
                         <outlet property="cardView" destination="Ofa-p8-NOK" id="PKf-20-ET3"/>
                         <outlet property="deck10Button" destination="I7q-Yh-SLu" id="3qr-06-ocC"/>
@@ -1397,11 +1508,15 @@
                         <outlet property="deck8Button" destination="iZx-e7-df0" id="XVT-ZW-Pad"/>
                         <outlet property="deck9Button" destination="CmP-ou-YjN" id="swB-md-njb"/>
                         <outlet property="deleteButton" destination="K7H-Ou-RrI" id="iJV-HC-uu8"/>
+                        <outlet property="helpButton" destination="myp-Y7-phT" id="Q8H-bV-sV6"/>
                         <outlet property="imageView" destination="nql-NP-gfm" id="aUy-dG-4J2"/>
+                        <outlet property="leftConstraint" destination="VKb-0v-OXD" id="bUx-LK-wpA"/>
                         <outlet property="pictureWordLabel" destination="5Pm-ng-JnR" id="03b-gw-3RN"/>
+                        <outlet property="rightConstraint" destination="5gV-pG-haH" id="xA1-NT-nu6"/>
                         <outlet property="textField" destination="sF7-sf-ktJ" id="MhD-Ou-HCm"/>
                         <outlet property="titleLabel" destination="nr1-9F-4eC" id="7H5-P7-ebq"/>
                         <outlet property="toHomeButton" destination="fHU-W7-kKq" id="U0b-ZU-vh2"/>
+                        <outlet property="topConstraint" destination="vSR-NO-7gL" id="w79-oY-gba"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8us-WB-nGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1507,6 +1622,14 @@
                                     <action selector="levelChanged:" destination="xoA-0A-OTX" eventType="valueChanged" id="GXC-tZ-Jyf"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6GZ-yQ-jxI">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="xoA-0A-OTX" eventType="touchUpInside" id="3Vs-v6-Vxz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="FxZ-ol-QIk"/>
@@ -1517,6 +1640,7 @@
                         <outlet property="SCView" destination="apw-Pg-ubp" id="uUg-T4-9Cq"/>
                         <outlet property="cancelButton" destination="AQu-Qc-iXV" id="rWB-sH-KKZ"/>
                         <outlet property="characterHintButton" destination="73K-Yh-A8M" id="4aR-vd-Nhp"/>
+                        <outlet property="helpButton" destination="6GZ-yQ-jxI" id="qoa-Hl-tWM"/>
                         <outlet property="level1" destination="d2F-Rd-seo" id="CcU-dn-KMK"/>
                         <outlet property="level2" destination="ynv-Qt-0Nw" id="hdp-GM-84N"/>
                         <outlet property="level3" destination="Rzx-ZH-won" id="PSd-SM-N4B"/>
@@ -1588,11 +1712,11 @@
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CS-xb-5bH">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CS-xb-5bH">
                                 <rect key="frame" x="368" y="250" width="180" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="スタート！"/>
+                                <state key="normal" title="準備OK!"/>
                                 <connections>
                                     <action selector="startButton:" destination="iGy-GI-lAT" eventType="touchUpInside" id="Ye4-e3-sLY"/>
                                 </connections>
@@ -1629,6 +1753,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Roj-b9-oy1">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="iGy-GI-lAT" eventType="touchUpInside" id="j8j-KT-Egv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="9QQ-8y-kXf"/>
@@ -1639,6 +1771,7 @@
                         <outlet property="choicesSettingLabel" destination="J27-mo-uEZ" id="2Js-QN-Ct1"/>
                         <outlet property="colorHintLabel" destination="maG-ha-jha" id="koo-d3-Nsn"/>
                         <outlet property="colorHintView" destination="k9f-QY-tWC" id="YEX-ts-E6c"/>
+                        <outlet property="helpButton" destination="Roj-b9-oy1" id="1wZ-5U-Fb5"/>
                         <outlet property="hintLabel" destination="z8U-ah-y5W" id="Eym-1C-aWp"/>
                         <outlet property="segmentedControlView" destination="Pbu-pV-Ahf" id="OG9-V5-rgz"/>
                         <outlet property="selectCardsPV" destination="RkY-7T-v3e" id="zys-xM-O2Y"/>
@@ -1718,7 +1851,8 @@
                         <outlet property="openMenuButton" destination="0Pc-eW-edd" id="RpW-zw-A1m"/>
                         <outlet property="problemNumberLabel" destination="keD-Dp-LuA" id="RjC-K3-TNJ"/>
                         <segue destination="ETG-QZ-gQe" kind="show" identifier="toResult" id="iEJ-un-nUy"/>
-                        <segue destination="c2B-YN-jpI" kind="unwind" identifier="unwindToLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="7H3-1q-fZH"/>
+                        <segue destination="c2B-YN-jpI" kind="unwind" identifier="toLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="7H3-1q-fZH"/>
+                        <segue destination="c2B-YN-jpI" kind="unwind" identifier="toHome" unwindAction="unwindToHomeWithSegue:" id="fGb-MI-xm8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GXN-cE-8U0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1774,7 +1908,8 @@
                         <outlet property="openMenuButton" destination="dmu-Cg-aFL" id="xGv-hH-LWs"/>
                         <outlet property="problemNumberLabel" destination="Ss2-8R-A8p" id="DaT-UC-AnJ"/>
                         <segue destination="ETG-QZ-gQe" kind="show" identifier="toResult" id="wtK-Ul-0qR"/>
-                        <segue destination="n5a-uz-Xxz" kind="unwind" identifier="unwindToLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="Ogx-j7-pV5"/>
+                        <segue destination="n5a-uz-Xxz" kind="unwind" identifier="toLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="Ogx-j7-pV5"/>
+                        <segue destination="n5a-uz-Xxz" kind="unwind" identifier="toHome" unwindAction="unwindToHomeWithSegue:" id="2nM-n7-ZEV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ai-gu-IaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1790,7 +1925,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="backGround.001" translatesAutoresizingMaskIntoConstraints="NO" id="cg5-5K-gMF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ResultBack" translatesAutoresizingMaskIntoConstraints="NO" id="cg5-5K-gMF">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1825,12 +1960,21 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6va-eJ-OnP">
+                                <rect key="frame" x="535" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="ETG-QZ-gQe" eventType="touchUpInside" id="yfK-kK-UWZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="I2S-fZ-cxD"/>
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="cg5-5K-gMF" id="xqB-92-2d4"/>
+                        <outlet property="helpButton" destination="6va-eJ-OnP" id="PHA-4J-fFy"/>
                         <outlet property="oneMoreButton" destination="sAO-Y9-fNF" id="jN0-SF-sjl"/>
                         <outlet property="percentLabel" destination="dEL-Q3-ZLI" id="QBk-za-fhI"/>
                         <outlet property="rewardImageView" destination="CIu-V9-EKh" id="LcA-Ah-0nF"/>
@@ -1855,18 +1999,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0v-oh-Gc0">
-                                <rect key="frame" x="16" y="73" width="110" height="45"/>
+                                <rect key="frame" x="16" y="83" width="110" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="難易度設定へ"/>
                                 <connections>
                                     <action selector="soundPlay:" destination="eji-8I-0JI" eventType="touchUpInside" id="Xak-dM-Xya"/>
-                                    <segue destination="b2e-zq-RtJ" kind="unwind" unwindAction="unwindToLevelChoiceWithSegue:" id="cuY-TU-ENc"/>
+                                    <action selector="toLevelChoice:" destination="eji-8I-0JI" eventType="touchUpInside" id="V7s-xw-tdg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RhN-9i-6WR">
-                                <rect key="frame" x="16" y="131" width="110" height="30"/>
+                                <rect key="frame" x="16" y="141" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="タップ音"/>
@@ -1876,7 +2020,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hg8-w2-AaU">
-                                <rect key="frame" x="16" y="169" width="110" height="30"/>
+                                <rect key="frame" x="16" y="179" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="正解音"/>
@@ -1886,7 +2030,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwU-VH-FhE">
-                                <rect key="frame" x="16" y="207" width="110" height="30"/>
+                                <rect key="frame" x="16" y="217" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="不正解音"/>
@@ -1896,7 +2040,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGy-kj-Rk0">
-                                <rect key="frame" x="16" y="255" width="110" height="45"/>
+                                <rect key="frame" x="16" y="260" width="110" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -1907,13 +2051,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-99-zH1">
-                                <rect key="frame" x="16" y="20" width="110" height="45"/>
+                                <rect key="frame" x="16" y="30" width="110" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <state key="normal" title="ホームへ"/>
                                 <connections>
                                     <action selector="soundPlay:" destination="eji-8I-0JI" eventType="touchUpInside" id="0nm-5q-Nnn"/>
-                                    <segue destination="b2e-zq-RtJ" kind="unwind" unwindAction="unwindToHomeWithSegue:" id="Icy-Xg-wSh"/>
+                                    <action selector="toHome:" destination="eji-8I-0JI" eventType="touchUpInside" id="PpW-Ah-p1q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJ8-zo-pfB">
+                                <rect key="frame" x="106" y="7" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Help"/>
+                                <connections>
+                                    <action selector="helpViewChange:" destination="eji-8I-0JI" eventType="touchUpInside" id="eyS-UM-beP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1924,6 +2076,7 @@
                     <connections>
                         <outlet property="changeProblemButton" destination="cGy-kj-Rk0" id="LnV-cj-ds4"/>
                         <outlet property="correctSoundButton" destination="Hg8-w2-AaU" id="krb-df-kjS"/>
+                        <outlet property="helpButton" destination="CJ8-zo-pfB" id="XzE-Td-3dY"/>
                         <outlet property="incorrectSoundButton" destination="FwU-VH-FhE" id="wZj-r8-xnV"/>
                         <outlet property="tapSoundButton" destination="RhN-9i-6WR" id="Yhw-hh-A9B"/>
                         <outlet property="toHomeButton" destination="Blh-99-zH1" id="h15-aA-3XP"/>
@@ -1931,7 +2084,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HXh-Oh-rN2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="b2e-zq-RtJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1681" y="3186"/>
         </scene>
@@ -2061,7 +2213,8 @@
                         <outlet property="syllabaryView" destination="NJQ-Vx-c75" id="61a-xG-DbZ"/>
                         <outlet property="youonButton" destination="iM1-EZ-rcl" id="Lsn-8U-e5n"/>
                         <segue destination="ETG-QZ-gQe" kind="show" identifier="toResult" id="zrt-UI-ybE"/>
-                        <segue destination="78g-6D-CAF" kind="unwind" identifier="unwindToLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="Bvq-cP-2TP"/>
+                        <segue destination="78g-6D-CAF" kind="unwind" identifier="toLevelChoice" unwindAction="unwindToLevelChoiceWithSegue:" id="Bvq-cP-2TP"/>
+                        <segue destination="78g-6D-CAF" kind="unwind" identifier="toHome" unwindAction="unwindToHomeWithSegue:" id="oh7-dd-5al"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rvz-ut-Xai" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2072,10 +2225,10 @@
     </scenes>
     <resources>
         <image name="BanMark" width="64" height="64"/>
-        <image name="Box" width="16" height="16"/>
         <image name="CheckOff" width="32" height="32"/>
         <image name="Correct" width="64" height="64"/>
         <image name="DeckFrame" width="762" height="542"/>
+        <image name="Help" width="24" height="24"/>
         <image name="Incorrect" width="64" height="64"/>
         <image name="Left" width="128" height="128"/>
         <image name="Level1" width="140" height="140"/>
@@ -2084,13 +2237,14 @@
         <image name="OffSpeaker" width="32" height="32"/>
         <image name="OnSpeaker" width="32" height="32"/>
         <image name="PictureFrame" width="500" height="500"/>
+        <image name="ResultBack" width="568" height="320"/>
         <image name="Right" width="128" height="128"/>
         <image name="Setting" width="64" height="64"/>
         <image name="Tap" width="64" height="64"/>
-        <image name="backGround.001" width="1704" height="960"/>
+        <image name="title" width="538" height="85"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iEJ-un-nUy"/>
+        <segue reference="zrt-UI-ybE"/>
         <segue reference="nCK-td-Kni"/>
         <segue reference="poF-bv-fVo"/>
     </inferredMetricsTieBreakers>

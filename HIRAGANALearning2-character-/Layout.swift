@@ -6,7 +6,6 @@
 //  Copyright © 2018年 yuuki uchiyama. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import ChameleonFramework
 
@@ -126,12 +125,12 @@ class VisualSetting{
         case 53:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
         case 54:return UIFont(name: "Hiragino Maru Gothic ProN", size: 56)!
         case 55:return UIFont(name: "Hiragino Maru Gothic ProN", size: 70)!
-        case 60:return UIFont(name: "Hiragino Maru Gothic ProN", size: 18)!
-        case 61:return UIFont(name: "Hiragino Maru Gothic ProN", size: 30)!
-        case 62:return UIFont(name: "Hiragino Maru Gothic ProN", size: 34)!
-        case 63:return UIFont(name: "Hiragino Maru Gothic ProN", size: 42)!
-        case 64:return UIFont(name: "Hiragino Maru Gothic ProN", size: 65)!
-        case 65:return UIFont(name: "Hiragino Maru Gothic ProN", size: 70)!
+        case 60:return UIFont(name: "Hiragino Maru Gothic ProN", size: 22)!
+        case 61:return UIFont(name: "Hiragino Maru Gothic ProN", size: 33)!
+        case 62:return UIFont(name: "Hiragino Maru Gothic ProN", size: 40)!
+        case 63:return UIFont(name: "Hiragino Maru Gothic ProN", size: 55)!
+        case 64:return UIFont(name: "Hiragino Maru Gothic ProN", size: 75)!
+        case 65:return UIFont(name: "Hiragino Maru Gothic ProN", size: 90)!
         default:return UIFont(name: "Hiragino Maru Gothic ProN", size: 15)!
         }
     }

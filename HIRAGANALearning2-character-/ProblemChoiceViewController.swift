@@ -40,7 +40,10 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
     
     var VS: VisualSetting!
     var SE: SoundEffect!
-
+    
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +64,12 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
         useColorHintChange(selectHintSC)
         if gameLevel == 2{
             problemSetting2View = ProblemSetting2View(frame: settingView.frame)
-            self.view.addSubview(problemSetting2View)
+            self.view.insertSubview(problemSetting2View, aboveSubview: settingView)
+            helpImageView = UIImageView(image: UIImage(named:"Help5"))
         }else{
             problemSetting1View = ProblemSetting1View(frame: settingView.frame)
-            self.view.addSubview(problemSetting1View)
+            self.view.insertSubview(problemSetting1View, aboveSubview: settingView)
+            helpImageView = UIImageView(image: UIImage(named:"Help4"))
         }
         // Do any additional setup after loading the view.
     }
@@ -104,6 +109,27 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
         
         VS.borderMake(view: colorHintView, side: colorHintView.frame.height, color: VS.borderColor)
         colorHintView.cornerLayout(.verySmall)
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -195,8 +221,8 @@ class ProblemChoiceViewController: UIViewController, UIPickerViewDataSource, UIP
     
     @IBAction func soundPlay(_ sender: UIButton) {
         switch sender.tag{
+        case 1:SE.play(.tap)
         case 2:SE.play(.cancel)
-        case 4:SE.play(.start)
         default:break
         }
     }

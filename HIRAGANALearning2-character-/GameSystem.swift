@@ -7,7 +7,6 @@
 //  Copyright © 2018年 yuuki uchiyama. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
 
@@ -401,15 +400,17 @@ class GameSystem{
     
 //    外枠のサイズ計算
     func answerFrameSize(_ answerSize:CGSize) -> CGSize{
-        let side = answerSize.width * 1.2
+        let width = answerSize.width * 1.2
+        let height = answerSize.height * 1.2
         
-        let size = CGSize(width: side, height: side)
-        return size
+        return CGSize(width: width, height: height)
     }
     
 //    正誤判定
     func judge(_ answer:String,_ choice:String) -> Bool{
-        if answer == choice{
+        let a = answer.katakanaToHiragana(true)
+        let c = choice.katakanaToHiragana(true)
+        if a == c{
             return true
         }else{
             return false

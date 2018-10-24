@@ -27,8 +27,6 @@ class MultipleSwitchViewController: UIViewController {
     @IBOutlet weak var decisionSwitchLabel: UILabel!
     var decisionSwitchKey = ""
     
-    
-    
     @IBOutlet weak var SETTEILabel: UILabel!
     @IBOutlet weak var decisionButton: UIButton!
     
@@ -37,7 +35,11 @@ class MultipleSwitchViewController: UIViewController {
     var alertController: UIAlertController!
     
     var SE: SoundEffect!
-
+    
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setMinimumDismissTimeInterval(0)
@@ -82,7 +84,7 @@ class MultipleSwitchViewController: UIViewController {
         decisionSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .small)
         decisionButton.titleLabel?.font = VS.fontAdjust(viewSize: .normal)
         useSwitchButton.titleLabel?.font = VS.fontAdjust(viewSize: .verySmall)
-        useSwitchButton.setImage(UIImage(named: "Check"), for: .selected)
+        useSwitchButton.setImage(UIImage(named: "CheckOn"), for: .selected)
         SETTEILabel.font = VS.fontAdjust(viewSize: .verySmall)
         
         cancelButton.buttonTapActionSetting(.circle)
@@ -91,6 +93,27 @@ class MultipleSwitchViewController: UIViewController {
         toNextButton.buttonTapActionSetting(.circle)
         toPreviousButton.buttonTapActionSetting(.circle)
         decisionSwitchButton.buttonTapActionSetting(.circle)
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help16"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     @IBAction func toNextSwitchSet(_ sender: Any) {

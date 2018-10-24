@@ -19,10 +19,13 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     var cardDataArray: [CardData]!
     var currentCDArray: [CardData]!
     
+    var startButton:UIButton!
+    
     var answerCD: CardData!
     var answerCharacterArray: [String]!
     var answerCharacter:String!
     var answerFrame = UIView()
+    var answerLabelArray:[UILabel] = []
     var positionOfAnswerCharacters: [CGRect]!
     var hintView: UIView!
     var answerImage: UIImage!
@@ -60,6 +63,9 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     
     var VS: VisualSetting!
     var SE: SoundEffect!
+    
+    var coverView:UIView!
+    var helpImageView:UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,14 +91,50 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        startUp()
+    }
+    
+    func startUp(){
+        startButton = UIButton()
+        startButton.frame.size = CGSize(width: choicesView.frame.width * 0.7, height: choicesView.frame.height * 0.7)
+        startButton.center = choicesView.center
+
+        startButton.setTitle("スタート！", for: .normal)
+        startButton.titleLabel?.font = VS.fontAdjust(viewSize: .important)
+        startButton.setTitleColor(UIColor.flatWhite, for: .normal)
+        
+        startButton.addTarget(self, action: #selector(gameStart), for: .touchUpInside)
+        self.view.addSubview(startButton)
+        
+        VS.borderMake(view: startButton, side: startButton.frame.height, color: UIColor.flatGray)
+        startButton.backgroundColor = VS.importantOutletColor
+        startButton.buttonTapActionSetting(.circle)
+        
+        if switchKey > 0 && switchControl == nil{
+            switchControl = SwitchControlSystem(switchKey, [startButton.frame], self.view, self.view)
+            switchControl.delegate = self
+        }
+    }
+    
+    @objc func gameStart(){
+        SE.play(.start)
         currentCDArray = cardDataArray
         problemSetting()
         answerSetting()
         problemNumberLabel.text = "あと\(problemNumber)問"
-        if switchKey > 0 && switchControl == nil{
-            switchControl = SwitchControlSystem(switchKey, positionOfChoices, self.view, choicesView)
-            switchControl.delegate = self
-        }
+        let startAnimation = CABasicAnimation(keyPath: "transform.scale")
+        startAnimation.duration = 0.5
+        startAnimation.fromValue = 1.2
+        startAnimation.toValue = 0.0
+        startAnimation.isRemovedOnCompletion = false
+        startAnimation.fillMode = kCAFillModeForwards
+        startButton.layer.add(startAnimation, forKey: nil)
+
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            self.startButton.alpha = 0.0
+        }, completion: {(finished:Bool) in
+            self.startButton.removeFromSuperview()
+        })
     }
     
     func layoutSetting(){
@@ -106,7 +148,6 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         choicesView.layer.cornerRadius = VS.cornerRadiusAdjust(choicesView.frame.size, type: .circle)
         
         openMenuButton.imageFit()
-
     }
     
 //    正解単語のセッティング
@@ -126,6 +167,11 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     func answerSetting(){
         answerCharacter = answerCharacterArray[0]
         optionsArray = gameSystem.downselect([answerCharacter], useSimilarBool, useDakuonBool, useYouonBool)
+        for chara in answerCD.characterInWord{
+            if let index = optionsArray.index(of: chara){
+                optionsArray.remove(at: index)
+            }
+        }
         choicesArray = gameSystem.extractCharacter(optionsArray, [answerCharacter], amountOfChoices)
         
         for i in 0 ..< choicesArray.count{
@@ -154,9 +200,13 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             }, completion: {(finished:Bool) in
                 button.backgroundColor = UIColor.groupTableViewBackground
                 button.buttonTapActionSetting(.circle)
+                
+                if self.switchControl != nil{
+                    self.switchControl.resetCursor(self.positionOfChoices, self.choicesView)
+                    self.switchControl.cursor.alpha = 1.0
+                    self.switchControl.resetTimer()
+                }
             })
-            
-
             
         }
         
@@ -176,6 +226,7 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         }
         label.backgroundColor = UIColor.clear
         answerView.addSubview(label)
+        answerLabelArray.append(label)
         
         answerFrame.frame.size = gameSystem.answerFrameSize(label.frame.size)
         answerFrame.center = label.center
@@ -184,16 +235,13 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         answerFrame.layer.borderColor = UIColor.flatYellow.cgColor
         answerView.insertSubview(answerFrame, belowSubview: label)
         
-        if !characterShowUpBool{
-            hintView = UIView(frame: positionOfAnswerCharacters[0])
-            if title.count == 2{
-                hintView.frame.size.width = hintView.frame.width * 1.3
-            }
+        if characterShowUpBool{
+            label.alpha = 0.3
+            label.font = VS.fontAdjust(viewSize: .important)
+        }else{
+            hintView = UIView(frame: label.frame)
             hintView.backgroundColor = answerView.backgroundColor
             answerView.addSubview(hintView)
-        }
-        if switchControl != nil{
-            switchControl.resetCursor(positionOfChoices, choicesView)
         }
     }
     
@@ -208,7 +256,11 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
             }
             perfectAnswerBool = true
             
-            if !characterShowUpBool{
+            if characterShowUpBool{
+                answerLabelArray[0].alpha = 1.0
+                answerLabelArray[0].font = VS.fontAdjust(viewSize: .veryImportant)
+                answerLabelArray.remove(at: 0)
+            }else{
                 hintView.removeFromSuperview()
             }
             
@@ -307,6 +359,10 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
     }
     
     @IBAction func openMenu(_ sender: Any) {
+        coverView = UIView(frame: self.view.frame)
+        coverView.backgroundColor = UIColor.flatBlack
+        coverView.alpha = 0.4
+        self.view.addSubview(coverView)
         openRight()
     }
     
@@ -337,6 +393,30 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
         problemSetting()
         answerSetting()
     }
+    
+    func changeHelpView(_ bool: Bool) {
+        if bool{
+            helpImageView = UIImageView(image: UIImage(named: "Help6"))
+            helpImageView.frame.size.width = self.view.frame.width * 3/4
+            helpImageView.frame.size.height = self.view.frame.height * 3/4
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            helpImageView.center.y = self.view.center.y
+            helpImageView.frame.origin.x = self.view.frame.origin.x
+            self.view.addSubview(helpImageView)
+        }else{
+            helpImageView.removeFromSuperview()
+        }
+    }
+    
+    func toHome(){
+        closeRight()
+        performSegue(withIdentifier: "toHome", sender: nil)
+    }
+    
+    func toLevelChoice() {
+        closeRight()
+        performSegue(withIdentifier: "toLevelChoice", sender: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -351,7 +431,9 @@ class SearchingViewController: UIViewController, SideMenuDelegete, SwitchControl
 
     
     func decisionKeyPushed(_ cursorNumber: Int) {
-        if answerCharacterArray.isEmpty{
+        if answerCD == nil{
+            gameStart()
+        }else if answerCharacterArray.isEmpty{
             if cursorNumber == 0{
                 sameProblem()
             }else{

@@ -30,12 +30,16 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
     var cursorAlert: UIAlertController!
     var alertController: UIAlertController!
     var cursorSpeedPickerView: UIPickerView = UIPickerView()
-    var cursorSpeedArray:[Float] = [0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
+    var cursorSpeedArray:[Float] = [0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0]
     
     let userDefaults = UserDefaults.standard
     
     var SE: SoundEffect!
-
+    
+    @IBOutlet weak var helpButton: UIButton!
+    var helpImageView:UIImageView!
+    var helpView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +86,27 @@ class SingleSwitchViewController: UIViewController,UIPickerViewDataSource, UIPic
         lineView.layer.cornerRadius = lineView.frame.width / 5
         lineView.layer.borderWidth = 4.0
         lineView.layer.borderColor = UIColor.flatLime.cgColor
-
+        
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected{
+            helpButton.shadowSetting()
+            helpView = UIView(frame: self.view.frame)
+            helpView.backgroundColor = UIColor.flatGray
+            helpView.alpha = 0.8
+            self.view.insertSubview(helpView, belowSubview: helpButton)
+            helpImageView = UIImageView(image: UIImage(named:"Help15"))
+            helpImageView.frame = self.view.frame
+            helpImageView.contentMode = UIViewContentMode.scaleAspectFit
+            self.view.insertSubview(helpImageView, belowSubview: helpButton)
+        }else{
+            helpImageView.removeFromSuperview()
+            helpView.removeFromSuperview()
+            helpButton.shadowDisappear()
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

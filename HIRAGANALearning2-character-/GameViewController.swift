@@ -21,16 +21,17 @@ class GameViewController: SlideMenuController, SlideMenuControllerDelegate {
 
     
     override func awakeFromNib() {
-
+        delegate = self
         sideMenuVC = storyboard?.instantiateViewController(withIdentifier: "sideMenu") as! SideMenuViewController
         
         
         SlideMenuOptions.rightViewWidth = self.view.frame.width / 4
-        print(SlideMenuOptions.rightViewWidth)
         rightViewController = sideMenuVC
         SlideMenuOptions.panGesturesEnabled = false
         SlideMenuOptions.contentViewDrag = false
         SlideMenuOptions.tapGesturesEnabled = true
+        SlideMenuOptions.contentViewOpacity = 0.0
+
         
         gameLevel = UserDefaults.standard.integer(forKey: Constants.gameLevelKey)
         switch gameLevel {
@@ -55,6 +56,17 @@ class GameViewController: SlideMenuController, SlideMenuControllerDelegate {
 
     }
     
+    func rightWillClose() {
+        if sideMenuVC.helpButton.isSelected{
+            sideMenuVC.helpViewChange(sideMenuVC.helpButton)
+        }
+        switch gameLevel {
+        case 0:searchingVC.coverView.removeFromSuperview()
+        case 1:sortingVC.coverView.removeFromSuperview()
+        case 2:syllabaryVC.coverView.removeFromSuperview()
+        default:break
+        }
+    }
     
     
     override func viewDidLoad() {

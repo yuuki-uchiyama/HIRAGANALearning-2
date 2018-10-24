@@ -10,6 +10,9 @@ import UIKit
 
 protocol SideMenuDelegete {
     func changeProblem()
+    func changeHelpView(_ bool:Bool)
+    func toHome()
+    func toLevelChoice()
 }
 
 // ゲームの設定画面
@@ -25,6 +28,9 @@ class SideMenuViewController: UIViewController {
     var delegete:SideMenuDelegete?
     
     var SE: SoundEffect!
+    let userDefaults = UserDefaults.standard
+    
+    @IBOutlet weak var helpButton: UIButton!
 
     
     override func viewDidLoad() {
@@ -50,33 +56,53 @@ class SideMenuViewController: UIViewController {
             button.buttonTapActionSetting(.circle)
         }
         
-        if !UserDefaults.standard.bool(forKey: Constants.tapSoundKey){
+        if !userDefaults.bool(forKey: Constants.tapSoundKey){
             tapSoundButton.alpha = 0.2
         }
-        if !UserDefaults.standard.bool(forKey: Constants.correctSoundKey){
+        if !userDefaults.bool(forKey: Constants.correctSoundKey){
             correctSoundButton.alpha = 0.2
         }
-        if !UserDefaults.standard.bool(forKey: Constants.incorrectSoundKey){
+        if !userDefaults.bool(forKey: Constants.incorrectSoundKey){
             incorrectSoundButton.alpha = 0.2
+        }
+        helpButton.helpButtonAction()
+    }
+    
+    @IBAction func helpViewChange(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        self.delegete?.changeHelpView(sender.isSelected)
+        if sender.isSelected{
+            helpButton.shadowSetting()
+        }else{
+            helpButton.shadowDisappear()
         }
     }
     
+    @IBAction func toHome(_ sender: Any) {
+        self.delegete?.toHome()
+    }
+    
+    @IBAction func toLevelChoice(_ sender: Any) {
+        self.delegete?.toLevelChoice()
+
+    }
+    
     @IBAction func tapSound(_ sender: UIButton) {
-        let bool = !UserDefaults.standard.bool(forKey: Constants.tapSoundKey)
-        UserDefaults.standard.set(bool, forKey: Constants.tapSoundKey)
+        let bool = !userDefaults.bool(forKey: Constants.tapSoundKey)
+        userDefaults.set(bool, forKey: Constants.tapSoundKey)
         if bool{sender.alpha = 1.0}else{sender.alpha = 0.2}
         SE.boolChange(.tap)
     }
     
     @IBAction func correctSound(_ sender: UIButton) {
-        let bool = !UserDefaults.standard.bool(forKey: Constants.correctSoundKey)
-        UserDefaults.standard.set(bool, forKey: Constants.correctSoundKey)
+        let bool = !userDefaults.bool(forKey: Constants.correctSoundKey)
+        userDefaults.set(bool, forKey: Constants.correctSoundKey)
         if bool{sender.alpha = 1.0}else{sender.alpha = 0.2}
         SE.boolChange(.correct)
     }
     @IBAction func incorrectSound(_ sender: UIButton) {
-        let bool = !UserDefaults.standard.bool(forKey: Constants.incorrectSoundKey)
-        UserDefaults.standard.set(bool, forKey: Constants.incorrectSoundKey)
+        let bool = !userDefaults.bool(forKey: Constants.incorrectSoundKey)
+        userDefaults.set(bool, forKey: Constants.incorrectSoundKey)
         if bool{sender.alpha = 1.0}else{sender.alpha = 0.2}
         SE.boolChange(.incorrect)
     }
